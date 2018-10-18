@@ -1,0 +1,2 @@
+# X-TEC-TEColones
+TEColones es la primera ecomoneda universitaria virtual que da valor a la sostenibilidad. Se otorga a cambio de los materiales valorizables que se separan y se llevan a reciclar mediante un sistema de incentivos en el que se pueden canjear por descuentos en productos y servicios sostenibles. TEColones busca incentivar a la población universitaria del X-TEC en materia de reciclaje y propiciar de esta manera, el cambio de hábitos de consumo en los estudiantes
