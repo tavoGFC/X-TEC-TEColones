@@ -6,25 +6,24 @@ using System.Web.Mvc;
 
 namespace TEColones.Controllers
 {
-    public class HomeController : Controller
+    public class LogInController : Controller
     {
-        public ActionResult Index()
+        public ActionResult LogIn()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult ForgotPassword()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        public ActionResult Index()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            string user = Request["IdUser"].ToString();
+            return RedirectToAction("Home", "Home", new { user });
         }
     }
 }
