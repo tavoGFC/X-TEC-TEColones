@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Iniciar Sesion";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>TEColones Iniciar Sesion</title>
+</head>
+
+<body>
+    <div class="jumbotron">
+        <h1>XTEC-TEColones</h1>
+
+    </div>
+
+    <div class="row">
+        @using (Html.BeginForm("Index", "LogIn", FormMethod.Post))
+        {
+            <div class="col-md-4">
+                <label for="IdUser">Numero de Carnet o Empleado</label>
+                <input id="IdUser" type="text" name="IdUser" />
+            </div>
+            <div class="col-md-4">
+                <label for="PasswordUser">Contraseña</label>
+                <input id="PasswordUser" type="password" />
+            </div>
+
+            <div class="col-md-4">
+                <a href="~/LogIn/ForgotPassword" title="Olvido su contraseña"> Olvido su Contraseña</a>
+            </div>
+            <div class="col-md-4">
+                <button type="submit"> Iniciar Sesion</button>
+            </div>
+        }
+        <div class="col-md-4">            
+            <button id="btnLogIn" onclick="location.href='@Url.Action("CreateAccount", "CreateAccount")'" type="button" class="btn-danger">Crear Cuenta</button>
+        </div>
+
+    </div>
+</body>
+</html>
