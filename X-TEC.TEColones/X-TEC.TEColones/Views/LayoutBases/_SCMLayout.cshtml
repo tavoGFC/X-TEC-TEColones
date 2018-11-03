@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title | X-TEC TEColones</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header navbar-right">
+                <div class="nav-divider">
+                    <div class="divider">
+                        <a style="color:ghostwhite"> @ViewBag.Message </a>
+                        <img src="http://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png" style="width:40px;height:40px" />
+                        <button class="btn"><i class="glyphicon glyphicon-cog"></i></button>
+                    </div>
+                    <div class="divider text-right">
+                        <a href="~/LogIn/LogIn">Cerrar Sesion</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-link">
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Pagina Principal", "Home", "SCMHome")</li>
+                <li>@Html.ActionLink("Registrar Material", "Index", "RegisterMaterial")</li>
+            </ul>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year | X-TEC TEColones</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
