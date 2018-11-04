@@ -32,10 +32,9 @@ namespace X_TEC.TEColones.Tests.Controllers
             LogInController controller = new LogInController();
 
             // Act
-            ViewResult result = controller.About() as ViewResult;
+           
 
             // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
         }
 
         [TestMethod]
@@ -45,10 +44,6 @@ namespace X_TEC.TEColones.Tests.Controllers
             LogInController controller = new LogInController();
 
             // Act
-            ViewResult result = controller.Contact() as ViewResult;
-
-            // Assert
-            Assert.IsNotNull(result);
         }
     }
 }

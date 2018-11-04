@@ -164,6 +164,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\StudentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -210,7 +211,6 @@
       <BrowseToURL>~/Views/Administrator/AdminDashboard/Index.cshtml</BrowseToURL>
     </Content>
     <Content Include="Views\Administrator\AdminHome\AdminHome.cshtml" />
-    <Content Include="Views\Student\CreateAccount\CreateAccount.cshtml" />
     <Content Include="Views\Student\AssignTEColones\AssignTEColones.cshtml" />
     <Content Include="Views\Student\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\Student\Home\Home.cshtml" />
@@ -222,10 +222,10 @@
     <Content Include="Views\Administrator\Promotion\ViewPromotion.cshtml" />
     <Content Include="Views\StorageCenterManager\RegisterMaterial\RegisterMaterial.cshtml" />
     <Content Include="Views\StorageCenterManager\SCMHome\SCMHome.cshtml" />
+    <Content Include="Views\Student\CreateAccount\CreateAccount.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -239,6 +239,12 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\X-TEC.TEColones.Persistence\X-TEC.TEColones.Persistence.csproj">
+      <Project>{2d1f19db-cc18-43d6-9a20-cd74230e5d84}</Project>
+      <Name>X-TEC.TEColones.Persistence</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
