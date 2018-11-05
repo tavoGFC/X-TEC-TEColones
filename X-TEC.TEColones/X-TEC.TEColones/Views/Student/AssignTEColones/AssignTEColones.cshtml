@@ -1,11 +1,80 @@
 ﻿
 @{
-    ViewBag.Title = "AssignTEColones";
+    ViewBag.Title = "Asignar TEColones";
     Layout = "~/Views/LayoutBases/_StudentLayout.cshtml";
 }
 
-<head>
-    <title>Asignar TEColones | TEColones</title>
-</head>
-<h2>AssignTEColones </h2>
+<h2>Asginar TEColones </h2>
+<hr />
 
+
+<body>
+    <div class="row">
+        <div class="col-md-4">
+            <label for="TEColones">TEColones Disponibles</label>
+            <p id="TEColones">1000</p>
+        </div>
+        <div class="col-md-4">
+            <label for="ExchangeRateDR">Tasa de Cambio (Comdedor)</label>
+            <p id="ExchangeRateDR">T 1 = $0.5</p>
+        </div>
+        <div class="col-md-4">
+            <label for="ExchangeRateE">Tasa de Cambio (Derechos de Estudio)</label>
+            <p id="ExchangeRateE">T 1 = $0.22</p>
+        </div>
+        <div class="col-md-4">
+            <button id="btnDinningRoom" data-toggle="modal" data-target="#AssignDinningRoom" type="button" class="btn-danger">Asignar a Comedor</button>
+            <button id="btnEnrollment"  data-toggle="modal" data-target="#AssignnEnrollment" type="button" class="btn-danger">Asignar a Derechos de Estudio</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AssignDinningRoom">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="needs-validation" novalidate>
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" style="font-weight:bold">Usar en el Comedor</h5>
+                    </div>
+                    <div class="modal-body">
+                        <label for="TCToAssignDR">Indique cuantos TEColones va  a utilizar:</label>
+                        <div class="form-group">
+                            <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
+                            <input id="TCToAssignDR" name="TCToAssignDR" class="border-0" type="range" min="0" max="100" />
+                            <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" style="border:groove">Aceptar</button>
+                        <button type="button" class="btn btn-danger rounded-0" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AssignnEnrollment">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="needs-validation" novalidate>
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" style="font-weight:bold">Usar en Derechos de Estudio</h5>
+                    </div>
+                    <div class="modal-body">
+                        <label for="TCToAssignE">Indique cuantos TEColones va  a utilizar:</label>
+                        <div class="form-group">
+                            <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
+                            <input id="TCToAssignE" name="TCToAssignE" class="border-0" type="range" min="0" max="100" />
+                            <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" style="border:double">Aceptar</button>
+                        <button type="button" class="btn btn-danger rounded-0" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>

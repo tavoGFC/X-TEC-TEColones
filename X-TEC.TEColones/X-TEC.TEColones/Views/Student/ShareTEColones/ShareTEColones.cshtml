@@ -1,8 +1,58 @@
 ﻿
 @{
-    ViewBag.Title = "ShareTEColones";
+    ViewBag.Title = "Compartir TEColones";
     Layout = "~/Views/LayoutBases/_StudentLayout.cshtml";
 }
 
-<h2>ShareTEColones</h2>
+<h2>Compartir TEColones Disponibles</h2>
+<hr />
 
+
+<body>
+    <div class="row">
+        <div class="row">
+            <label for="TEColones">TEColones Disponibles:</label>
+            <p id="TEColones">1500</p>
+        </div>
+        <div class="row">
+            <label for="IdUserToShare">Carnet de Estudiante a Compartir:</label>
+            <input id="IdUserToShare" type="text" name="IdUserToShare" />
+        </div>
+        <div class="row">
+            <label for="TCToShare">Indique la cantidad de TEColones a compartir:</label>
+            <div class="form-group">
+                <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
+                <input id="TCToShare" name="TCToShare" class="border-0" type="range" min="0" max="100" />
+                <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <button id="btnShare" data-toggle="modal" data-target="#VerifyShare" type="button" class="btn btn-success rounded-0">Compartir</button>
+        </div>
+    </div>
+  
+    <div class="modal fade" id="VerifyShare">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="needs-validation" novalidate>
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" style="font-weight:bold">Compartir TEColones</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Esta seguro que desea compartir # TEColones a:</p>
+                        <div class="form-row">
+                            <label for="UserName">Nombre:</label>
+                            <p id="UserName">$Nombre de Estudiante</p>
+                            <label for="IdUser">Carnet:</label>
+                            <p id="IdUser">#Numero de Carnet</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary rounded-0">Aceptar</button>
+                        <button type="button" class="btn btn-danger rounded-0" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
