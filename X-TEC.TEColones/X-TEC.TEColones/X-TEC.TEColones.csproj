@@ -153,7 +153,6 @@
     <Compile Include="Controllers\Administrator\AdminDashboardController.cs" />
     <Compile Include="Controllers\Administrator\PromotionController.cs" />
     <Compile Include="Controllers\Administrator\ReportController.cs" />
-    <Compile Include="Controllers\StorageCenterManager\RegisterMaterialController.cs" />
     <Compile Include="Controllers\StorageCenterManager\SCMHomeController.cs" />
     <Compile Include="Controllers\Student\AssignTEColonesController.cs" />
     <Compile Include="Controllers\Student\CreateAccountController.cs" />
@@ -220,7 +219,6 @@
     <Content Include="Views\Administrator\Promotion\CreatePromotion.cshtml" />
     <Content Include="Views\Administrator\Report\Report.cshtml" />
     <Content Include="Views\Administrator\Promotion\ViewPromotion.cshtml" />
-    <Content Include="Views\StorageCenterManager\RegisterMaterial\RegisterMaterial.cshtml" />
     <Content Include="Views\StorageCenterManager\SCMHome\SCMHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
