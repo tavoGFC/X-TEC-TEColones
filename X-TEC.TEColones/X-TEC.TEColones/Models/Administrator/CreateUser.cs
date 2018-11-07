@@ -72,7 +72,7 @@ namespace X_TEC.TEColones.Models.Administrator
         [RegularExpression(@"^[\w\s]*$", ErrorMessage = "Caracteres especiales no permitidos")]
         public string Password { get; set; }
 
-        /*
+        
         /// <summary>
         /// Get or Set Photo User
         /// </summary>
@@ -84,6 +84,5 @@ namespace X_TEC.TEColones.Models.Administrator
 
         //[FileExtensions(Extensions = "jpg,jpeg,png")]
         public HttpPostedFileBase PhotoFile { get; set; }
-        */
     }
 }
