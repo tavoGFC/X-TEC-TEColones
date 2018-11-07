@@ -8,14 +8,14 @@ using System.Web;
 
 namespace X_TEC.TEColones.Models.Administrator
 {
-    public class CreateNewAdminModel
+    public class CreateUser
     {
         /// <summary>
         /// Get or Set User Type
         /// </summary>
         [Required(ErrorMessage = "Campo Requerido")]
         [DisplayName("Nombre:")]
-        private string userType { get; set };
+        private string userType { get; set; }
 
         /// <summary>
         /// Get or Set FirstName User
@@ -43,7 +43,7 @@ namespace X_TEC.TEColones.Models.Administrator
         /// <summary>
         /// Get or Set Identidication User
         /// </summary>
-        [DisplayName("Numero de Carnet:")]
+        [DisplayName("Numero de Cedula:")]
         [Required(ErrorMessage = "Campo Requerido")]
         public string Identification { get; set; }
 

@@ -165,7 +165,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Administrator\AdminHomeModel.cs" />
-    <Compile Include="Models\Administrator\CreateNewAdminModel.cs" />
+    <Compile Include="Models\Administrator\CreateUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
