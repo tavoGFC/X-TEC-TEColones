@@ -35,6 +35,10 @@ namespace X_TEC.TEColones.Controllers
         public ActionResult Index()
         {
             string user = Request["IdUser"].ToString();
+            return RedirectToAction("Home", "AdminHome", new { user });
+            //return RedirectToAction("Home", "Home", new { user });
+
+            /*string user = Request["IdUser"].ToString();
             if (user.Equals("admin"))
             {
                 return RedirectToAction("Home", "AdminHome");
@@ -47,6 +51,7 @@ namespace X_TEC.TEColones.Controllers
             {
                 return RedirectToAction("Home", "Home", new { user });
             }
+            */
         }
     }
 }

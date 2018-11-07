@@ -10,6 +10,13 @@
 <body>
     <div class="navbar navbar navbar-fixed-top">
         <div class="container">
+            <div class="navbar-header">
+
+                @* @Html.ActionLink("Application name", "Index", "AdminHome", new { area = "" }, new { @class = "navbar-brand" }) *@
+                <a style="font-size:30px;color:white">X-<img src="https://www.tec.ac.cr/sites/all/themes/tec/img/logo.svg" alt="W3Schools.com"></a>
+
+                <a style="color:orangered"> {Links} Info X-TEC|TEColones {Pagina de info oficial} </a>
+            </div>
             <div class="navbar-header navbar-right">
                 <div class="nav-divider">
                     <div class="divider">
@@ -37,6 +44,7 @@
             </ul>
         </div>
     </div>
+
     <div class="container body-content">
         @RenderBody()
         <hr />
