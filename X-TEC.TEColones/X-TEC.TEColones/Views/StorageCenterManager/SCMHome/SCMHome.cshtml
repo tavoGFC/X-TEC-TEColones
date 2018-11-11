@@ -5,60 +5,97 @@
 }
 
 
-
-
 <!DOCTYPE html>
-
 <html>
 
-
-<head>
-    <title>Inicio</title>
-</head>
-
 <body>
-
-    <h1>Registrar material recibido</h1>
-
-    <div class="row">
-
-        <div class="col-md-2">
-            <label>Carton y Papel</label>
-            <input id="cartonypapelInput" type="number" /> <t>kg</t>
-        </div>
-
-        <div class="col-md-2">
-            <label for="plasticoInput">Plástico</label>
-            <input id="plasticoInput" type="number" /><t>kg</t>
-        </div>
-
-        <div class="col-md-2">
-            <label for="tetrapackInput">Tetrapack</label>
-            <input id="tetrapackInput" type="number" /><t>kg</t>
-        </div>
-
-        <div class="col-md-2">
-            <label for="vidrioInput">Vidrio</label>
-            <input id="vidrioInput" type="number" /><t>kg</t>
-        </div>
-
-
-
-    </div>
-
-    <div class="row">
-        <div>
-            <t>Carnet del Estudiante: </t>
-            <input id="carnetInput" type="number" />
+    <div class="py-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="">Registrar Material</h1>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="row">
-        <div>
-            <button id="botonIngresar">Ingresar</button>
+    <div class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h5 class="">Carton y Papel</h5>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="">Plastico</h5>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="">Tetrapack</h5>
+                </div>
+                <div class="col-md-3">
+                    <h5 class="">Vidrio</h5>
+                </div>
+                <div class="col-md-3">
+                    <form class="form-inline">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="idInputPyC">  <!--INPUT DEL PAPEL Y CARTON-->
+                            <t>kg</t>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <form class="form-inline">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="idInputPlastico">  <!--INPUT DEL PLASTICO-->
+                            <t>kg</t>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <form class="form-inline">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="idInputTetrapack">  <!--INPUT DEL TETRAPACK-->
+                            <t>kg</t>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <form class="form-inline">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="idInputVidrio">  <!--INPUT DEL VIDRIO-->
+                            <t>kg</t>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3"><img class="img-fluid d-block" src="~/Content/Recursos/iconoPapel.png" width="50" height="50"></div>
+                <div class="col-md-3"><img class="img-fluid d-block" src="~/Content/Recursos/iconoPlastico.png" width="50" height="50"></div>
+                <div class="col-md-3"><img class="img-fluid d-block" src="~/Content/Recursos/iconoTetrapack.png" width="50" height="50"></div>
+                <div class="col-md-3"><img class="img-fluid d-block" src="~/Content/Recursos/iconoVidrio.png" width="50" height="50"></div>
+            </div>
+        </div>
+    </div>
+    <div class="py-0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <h5 class="">Carnet del Estudiante:</h5>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <form class="form-inline">
+                        <div class="input-group">
+                            <input type="number" class="form-control" id="idInputCarnet">
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4"><a class="btn btn-primary" href="#">Ingresar</a></div>
+                <div class="col-md-4"></div>
+            </div>
         </div>
     </div>
 
 </body>
-</html>
 
+</html>
