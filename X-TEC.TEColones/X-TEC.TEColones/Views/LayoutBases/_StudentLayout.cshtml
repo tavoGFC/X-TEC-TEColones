@@ -2,44 +2,31 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/theme.css" />
+
+
     <title>@ViewBag.Title | X-TEC TEColones</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                
-                @* @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" }) *@
-                <a style="font-size:30px;color:white">X-<img src="https://www.tec.ac.cr/sites/all/themes/tec/img/logo.svg" alt="W3Schools.com"></a>
-                
-                <a style="color:orangered"> {Links} Info X-TEC|TEColones {Pagina de info oficial} </a>
-            </div>
-            <div class="nav-divider navbar-right">
-                <div class="divider">
-                    <a style="color:ghostwhite"> @ViewBag.Message </a>
-                    <img src="http://www.stickpng.com/assets/images/585e4bf3cb11b227491c339a.png" style="width:40px;height:40px"/>
-                    <button class="btn"><i class="glyphicon glyphicon-cog" ></i></button>
-                </div>
-                <div class="divider text-right">
-                    <a href="~/LogIn/LogIn">Cerrar Sesion</a>
-                </div>
-            </div>
-        </div>
+
+
+    <div class=" navbar navbar-inverse navbar-fixed-top">
+
     </div>
-    <div class="navbar navbar-link">
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Pagina Principal", "Home", "Home")</li>
-                <li>@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
-                <li>@Html.ActionLink("Asignar TEColones", "Index", "AssignTEColones")</li>
-                <li>@Html.ActionLink("Compartir TEColones", "Index", "ShareTEColones")</li>
-            </ul>
-        </div>
+    <div class="navbar justify-content-center">
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item">@Html.ActionLink("Pagina Principal", "Home", "Home")</li>
+            <li class="breadcrumb-item">@Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
+            <li class="breadcrumb-item">@Html.ActionLink("Asignar TEColones", "Index", "AssignTEColones")</li>
+            <li class="breadcrumb-item">@Html.ActionLink("Compartir TEColones", "Index", "ShareTEColones")</li>
+        </ul>
     </div>
     <div class="container body-content">
+
         @RenderBody()
         <hr />
         <footer>

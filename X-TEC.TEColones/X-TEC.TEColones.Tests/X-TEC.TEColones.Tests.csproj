@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework">
@@ -89,6 +92,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBase\UnitTestVerifyUser.cs" />
+    <Compile Include="DataBase\UnitTestExistUser.cs" />
+    <Compile Include="DataBase\UnitTestInsert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
@@ -99,6 +105,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\X-TEC.TEColones.Models\X-TEC.TEColones.Models.csproj">
+      <Project>{7ee6f834-8f02-43b1-b8d5-48b4b56ebfd2}</Project>
+      <Name>X-TEC.TEColones.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\X-TEC.TEColones.Persistence\X-TEC.TEColones.Persistence.csproj">
+      <Project>{2d1f19db-cc18-43d6-9a20-cd74230e5d84}</Project>
+      <Name>X-TEC.TEColones.Persistence</Name>
+    </ProjectReference>
     <ProjectReference Include="..\X-TEC.TEColones\X-TEC.TEColones.csproj">
       <Project>{FE196978-C46C-4442-BC3B-3A20ACDA7158}</Project>
       <Name>X-TEC.TEColones</Name>

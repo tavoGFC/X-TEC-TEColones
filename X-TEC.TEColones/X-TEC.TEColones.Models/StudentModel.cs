@@ -10,12 +10,21 @@ namespace X_TEC.TEColones.Models
 {
     public class StudentModel
     {
+
+        public StudentModel()
+        {
+            Description = " ";
+            Photo = " ";
+        }
+
+        public int Id { get; set; }
+
         /// <summary>
         /// Get or Set FirstName User
         /// </summary>
         [Required(ErrorMessage = "Campo Requerido")]
         [DisplayName("Nombre:")]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; }   
         
         /// <summary>
         /// Get or Set LastName User

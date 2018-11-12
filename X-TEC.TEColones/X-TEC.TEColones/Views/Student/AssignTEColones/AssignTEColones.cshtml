@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Asignar TEColones";
     Layout = "~/Views/LayoutBases/_StudentLayout.cshtml";
 }
@@ -12,19 +11,19 @@
     <div class="row">
         <div class="col-md-4">
             <label for="TEColones">TEColones Disponibles</label>
-            <p id="TEColones">1000</p>
+            <p id="TEColones">@Model.cantidad_tecolones</p>
         </div>
         <div class="col-md-4">
             <label for="ExchangeRateDR">Tasa de Cambio (Comdedor)</label>
-            <p id="ExchangeRateDR">T 1 = $0.5</p>
+            <p id="ExchangeRateDR">T 1 = @model.tasa_cambio_1</p>
         </div>
         <div class="col-md-4">
             <label for="ExchangeRateE">Tasa de Cambio (Derechos de Estudio)</label>
-            <p id="ExchangeRateE">T 1 = $0.22</p>
-        </div>
+            <p id="ExchangeRateE">T 1 =@model.tasa_cambio_ 2 </p>
+</div>
         <div class="col-md-4">
             <button id="btnDinningRoom" data-toggle="modal" data-target="#AssignDinningRoom" type="button" class="btn-danger">Asignar a Comedor</button>
-            <button id="btnEnrollment"  data-toggle="modal" data-target="#AssignnEnrollment" type="button" class="btn-danger">Asignar a Derechos de Estudio</button>
+            <button id="btnEnrollment" data-toggle="modal" data-target="#AssignnEnrollment" type="button" class="btn-danger">Asignar a Derechos de Estudio</button>
         </div>
     </div>
 
@@ -42,7 +41,7 @@
                             <input id="TCToAssignDR" name="TCToAssignDR" class="border-0" type="range" min="0" max="100" />
                             <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
                         </div>
-                    </div>
+                    </div>-
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary" style="border:groove">Aceptar</button>
                         <button type="button" class="btn btn-danger rounded-0" data-dismiss="modal">Cancelar</button>
