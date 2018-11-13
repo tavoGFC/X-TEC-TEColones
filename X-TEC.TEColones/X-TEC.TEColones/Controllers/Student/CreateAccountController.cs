@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using X_TEC.TEColones.Models;
+using X_TEC.TEColones.Models.StudentModels;
 using X_TEC.TEColones.Persistence;
 
 namespace X_TEC.TEColones.Controllers.Student
@@ -12,14 +12,14 @@ namespace X_TEC.TEColones.Controllers.Student
     public class CreateAccountController : Controller
     {
         // GET: CreateAccount
-        public ActionResult CreateAccount(string message, StudentModel student)
+        public ActionResult CreateAccount(string message, CreateUser student)
         {
             ViewBag.Message = message;
             return View("~/Views/Student/CreateAccount/CreateAccount.cshtml", student);
         }
 
         [HttpPost]
-        public ActionResult SignUp(StudentModel student)
+        public ActionResult SignUp(CreateUser student)
         {
 
             if (DBConnection.InsertStudent(student))

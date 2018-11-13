@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
-using X_TEC.TEColones.Models;
+using X_TEC.TEColones.Models.StudentModels;
 
 namespace X_TEC.TEColones.Persistence
 {
@@ -18,7 +18,7 @@ namespace X_TEC.TEColones.Persistence
 
 
 
-        public static bool InsertStudent(StudentModel student)
+        public static bool InsertStudent(CreateUser student)
         {
             try
             {           
@@ -106,9 +106,9 @@ namespace X_TEC.TEColones.Persistence
         /// </summary>
         /// <param name="identification"></param>
         /// <returns></returns>
-        public static Student VerifyStudent(string identification, string password)
+        public static StudentModel VerifyStudent(string identification, string password)
         {
-            Student student = new Student();
+            StudentModel student = new StudentModel();
             try
             {
                 connection.Close();

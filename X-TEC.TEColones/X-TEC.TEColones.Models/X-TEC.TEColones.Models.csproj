@@ -53,15 +53,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin\Admin.cs" />
-    <Compile Include="Admin\AdminHomeModel.cs" />
-    <Compile Include="Admin\CreateUser.cs" />
-    <Compile Include="SCM\SCM.cs" />
-    <Compile Include="Student\AssignTCSViewModel.cs" />
+    <Compile Include="AdminModels\Admin.cs" />
+    <Compile Include="AdminModels\CreateUser.cs" />
+    <Compile Include="SCMModels\SCM.cs" />
+    <Compile Include="StudentModels\AssignTCSViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Student\ShareTCSViewModel.cs" />
-    <Compile Include="Student\Student.cs" />
-    <Compile Include="Student\StudentModel.cs">
+    <Compile Include="StudentModels\ShareTCSViewModel.cs" />
+    <Compile Include="StudentModels\StudentModel.cs" />
+    <Compile Include="StudentModels\CreateUser.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="User.cs" />

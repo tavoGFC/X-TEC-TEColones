@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using X_TEC.TEColones.Models;
+using X_TEC.TEColones.Models.StudentModels;
 using X_TEC.TEColones.Persistence;
 
 namespace X_TEC.TEColones.Controllers
@@ -46,7 +46,7 @@ namespace X_TEC.TEColones.Controllers
             switch (typeUser)
             {
                 case 1:
-                    Models.Student student = DBConnection.VerifyStudent(user, password);
+                    StudentModel student = DBConnection.VerifyStudent(user, password);
                     if (student.Id != 0)
                     {
                         student.Photo = "http://cdn.onlinewebfonts.com/svg/img_569204.png";                        

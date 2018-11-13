@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace X_TEC.TEColones.Models
+namespace X_TEC.TEColones.Models.StudentModels
 {
-    public class Student : User
+    public class StudentModel : User
     {
-        public Student()
+        public StudentModel()
         {
             AssignTCS = new AssignTCSViewModel();
             ShareTCS = new ShareTCSViewModel();
