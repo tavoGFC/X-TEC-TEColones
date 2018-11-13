@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[Material]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Type] VARCHAR(50) NOT NULL, 
+    [ValueTCS] FLOAT NOT NULL
+)

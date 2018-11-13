@@ -11,10 +11,23 @@ namespace X_TEC.TEColones.Controllers.Student
     {
 
         //GET:Home
-        public ActionResult Home(StudentModel user)
+        public ActionResult Home(Models.Student userS)
         {
-            ViewBag.Message = "Bienvenido " +user.Identification;
-            return View("~/Views/Student/Home/Home.cshtml");
+            userS.AssignTCS = new AssignTCSViewModel
+            {
+                TCS = 1200.5f,
+                ExrDinningRoom = 0.80f,
+                ExrEnrollment = 0.35f
+
+            };
+            userS.ShareTCS = new ShareTCSViewModel
+            {
+                TCSToShare = " ",
+                UserToShareId = " ",
+                UserToShereName = " "
+
+            };
+            return View("~/Views/Student/Home/Home.cshtml", userS);
         }
 
         

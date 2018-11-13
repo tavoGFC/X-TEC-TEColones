@@ -171,7 +171,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\theme.css" />
+    <Content Include="Content\Recursos\TEColonesBanner.jpg" />
+    <Content Include="Content\Recursos\theme.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -223,6 +224,7 @@
     <Content Include="Views\StorageCenterManager\RegisterMaterial\RegisterMaterial.cshtml" />
     <Content Include="Views\StorageCenterManager\SCMHome\SCMHome.cshtml" />
     <Content Include="Views\Student\CreateAccount\CreateAccount.cshtml" />
+    <Content Include="Views\LayoutBases\AcceptTransfer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -106,9 +106,9 @@ namespace X_TEC.TEColones.Persistence
         /// </summary>
         /// <param name="identification"></param>
         /// <returns></returns>
-        public static StudentModel VerifyStudent(string identification, string password)
+        public static Student VerifyStudent(string identification, string password)
         {
-            StudentModel student = new StudentModel();
+            Student student = new Student();
             try
             {
                 connection.Close();
@@ -133,7 +133,7 @@ namespace X_TEC.TEColones.Persistence
                         return student;
                     }
                     else
-                    {
+                    {                       
                         student.FirstName = reader["FirstName"].ToString();
                         student.LastName = reader["LastName"].ToString();
                         student.Photo = reader["Photo"].ToString();

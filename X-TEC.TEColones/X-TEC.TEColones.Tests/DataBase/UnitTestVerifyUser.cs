@@ -11,13 +11,13 @@ namespace X_TEC.TEColones.Tests.DataBase
         [TestMethod]
         public void VerifyUser_Student_Exito()
         {
-            string identification = "2014035394";
-            string password = "gustavo123";
+            //string identification = "2014035394";
+            //string password = "gustavo123";
 
-            StudentModel model = DBConnection.VerifyStudent(identification, password);
-            Console.WriteLine("Bienvenido!!!: " + model.FirstName + "  " + model.LastName);
+            //StudentModel model = DBConnection.VerifyStudent(identification, password);
+            //Console.WriteLine("Bienvenido!!!: " + model.FirstName + "  " + model.LastName);
 
-            Assert.AreEqual(1, model.Id);
+            //Assert.AreEqual(1, model.Id);
 
         }
 
@@ -25,13 +25,13 @@ namespace X_TEC.TEColones.Tests.DataBase
         [TestMethod]
         public void VerifyUser_Student_Error()
         {
-            string identification = "2014035394";
-            string password = "gustavo12345";
+            //string identification = "2014035394";
+            //string password = "gustavo12345";
 
-            StudentModel model = DBConnection.VerifyStudent(identification, password);
-            Console.WriteLine("Password o Identificacion incorrecto!!");
+            //StudentModel model = DBConnection.VerifyStudent(identification, password);
+            //Console.WriteLine("Password o Identificacion incorrecto!!");
 
-            Assert.AreEqual(0, model.Id);
+            //Assert.AreEqual(0, model.Id);
 
         }
 
