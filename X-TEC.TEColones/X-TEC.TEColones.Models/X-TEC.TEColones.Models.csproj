@@ -53,15 +53,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin_SCM.cs" />
-    <Compile Include="AssignTCSViewModel.cs" />
+    <Compile Include="Admin\Admin.cs" />
+    <Compile Include="SCM\SCM.cs" />
+    <Compile Include="Student\AssignTCSViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShareTCSViewModel.cs" />
-    <Compile Include="Student.cs" />
-    <Compile Include="StudentModel.cs">
+    <Compile Include="Student\ShareTCSViewModel.cs" />
+    <Compile Include="Student\Student.cs" />
+    <Compile Include="Student\StudentModel.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="User.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

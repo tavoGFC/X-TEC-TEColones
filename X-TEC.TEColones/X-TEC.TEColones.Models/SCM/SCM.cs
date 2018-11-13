@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace X_TEC.TEColones.Models
 {
-    public class Admin_SCM : User
+    public class SCM : User
     {
 
         public string Identification { get; set; }
