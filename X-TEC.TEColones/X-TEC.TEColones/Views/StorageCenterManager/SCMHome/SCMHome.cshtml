@@ -7,12 +7,14 @@
 }
 
 
+
 <!DOCTYPE html>
 <html>
 
 <body>
 
-    <div class="py-4">
+
+    <div class="py-0">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -22,8 +24,9 @@
         </div>
     </div>
 
-    <form action="Insertar" method="post">
-
+    <!--  <form action="Home" method="post">  -->
+    @using (Html.BeginForm("Home", "SCMHome", Model, FormMethod.Post))
+    {
         <div class="py-4">
             <div class="container">
                 <div class="row">
@@ -96,7 +99,9 @@
                 </div>
             </div>
         </div>
-    </form>
-</body>
+    }
+        <!--</form> -->
+
+    </body>
 
 </html>

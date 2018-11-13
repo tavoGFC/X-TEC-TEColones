@@ -10,28 +10,36 @@ namespace X_TEC.TEColones.Controllers.StorageCenterManager
 {
     public class SCMHomeController : Controller
     {
-
-        SCMModel empleado = new SCMModel();
+        
 
         // GET: SCMHome
         public ActionResult Home()
         {
-            
-            empleado.Name = "Rebeca Beaker";
+            SCMModel empleado = new SCMModel();
+            empleado.Name = "Juanito"; //de la DB
+            empleado.College = "X-TEC";
+            empleado.Department = "Centro de acopio";
+            empleado.EmployeeNumber = 123456789;
+
             return View("~/Views/StorageCenterManager/SCMHome/SCMHome.cshtml",empleado);
         }
 
         [HttpPost]
-        public ActionResult Insertar(int InputCarnet, int InputPyC = 0, int InputPlastico = 0, int InputTetrapack = 0, int InputVidrio = 0) //LOS NOMBRES DE LOS PARAMETROS TIENEN QUE SER LOS NOMBRES DE LOS INPUT EN EL HTML
+        public ActionResult Home(SCMModel emple) 
         {
+            //SCMModel emple =  TempData["data"] as SCMModel;
+            //System.Diagnostics.Debug.WriteLine("NOMBRE: " + emple.Name);
+            //string carnet = Request["InputCarnet"].ToString();
+            //emple.Name = "El Barto";
+            //System.Diagnostics.Debug.WriteLine("CARNET INGRESADO: " +  InputCarnet);
+            //System.Diagnostics.Debug.WriteLine("PYC INGRESADO: " + Request["InputCarnet"]);
+            //System.Diagnostics.Debug.WriteLine("PLASTICO INGRESADO: " + InputPlastico);
+            //System.Diagnostics.Debug.WriteLine("TETRAPACK INGRESADO: " + InputTetrapack);
+            //System.Diagnostics.Debug.WriteLine("VIDRIO INGRESADO: " + InputVidrio);
 
-            System.Diagnostics.Debug.WriteLine("CARNET INGRESADO: " + InputCarnet);
-            System.Diagnostics.Debug.WriteLine("PYC INGRESADO: " + InputPyC);
-            System.Diagnostics.Debug.WriteLine("PLASTICO INGRESADO: " + InputPlastico);
-            System.Diagnostics.Debug.WriteLine("TETRAPACK INGRESADO: " + InputTetrapack);
-            System.Diagnostics.Debug.WriteLine("VIDRIO INGRESADO: " + InputVidrio);
 
-            return Home();
+
+            return View("~/Views/StorageCenterManager/SCMHome/SCMHome.cshtml", emple);
         }
     }
 }

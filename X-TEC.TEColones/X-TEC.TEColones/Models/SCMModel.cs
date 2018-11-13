@@ -9,7 +9,14 @@ namespace X_TEC.TEColones.Models
     {
 
         public int EmployeeNumber { get; set; }
-        public string Department = "Centro de Acopio" ;
+        public string Department { get; set;}
+
+
+
+        public void wawa()
+        {
+            System.Diagnostics.Debug.WriteLine(" WAWAWWAWAA ");
+        }
 
     }
 }
