@@ -1,10 +1,16 @@
-﻿<!DOCTYPE html>
+@model X_TEC.TEColones.Models.Student
+<!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="~/Content/Recursos/theme.css" type="text/css">
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/Content/Recursos/theme.css" /> 
+
+
+    <title>@ViewBag.Title | X-TEC TEColones</title>
 </head>
 
 <body>
@@ -14,10 +20,10 @@
                 <div class="col-md-6"><img class="img-fluid d-block" src="~/Content/Recursos/TEColonesBanner.jpg"></div>
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-md-6"><a class="btn btn-link btn-lg w-100" href="#" id="nombrEstudianteID">Nombre del Estudiante</a></div>  <!--LINK NOMBRE ESTUDIANTE-->
-                        <div class="col-md-6"><img class="img-fluid d-block rounded-circle" src="~/Content/Recursos/FotoTest.jpg" width="150" height="150" id="imagenPerfilLayout"></div>  <!-- FOTO PERFIL -->
+                        <div class="col-md-6"><a class="btn btn-link btn-lg w-100" href="#" >@Model.FirstName  @Model.LastName</a></div>  <!--LINK NOMBRE ESTUDIANTE-->
+                        <div class="col-md-6"><img class="img-fluid d-block rounded-circle" src="@Model.Photo" width="70" height="70" id="imagenPerfilLayout"></div>  <!-- FOTO PERFIL -->
                         <div class="col-md-6"></div>
-                        <div class="col-md-6"><a class="btn btn-link" href="#">Cerrar sesion</a></div>  <!--LINK CERRAR SESION-->
+                        <div class="col-md-6"><a class="btn btn-link" href="~/LogIn/LogIn">Cerrar Sesion</a></div>  <!--LINK CERRAR SESION-->
                     </div>
                 </div>
             </div>
@@ -30,10 +36,14 @@
             </button>
             <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
                 <ul class="navbar-nav">
-                    <li class="nav-item mx-2"> <a class="nav-link" href="#">Inicio</a> </li>
-                    <li class="nav-item mx-2"> <a class="nav-link" href="#">Dashboard</a> </li>
-                    <li class="nav-item mx-2"> <a class="nav-link" href="#">Asignar TEColones</a> </li>
-                    <li class="nav-item mx-2"> <a class="nav-link" href="#">Compartir TEColones</a> </li>
+                    @{ 
+                        TempData["mydata"] = @Model;
+                    }
+
+                    <li class="nav-item mx-2"> @Html.ActionLink("Inicio", "Home", "Home", Model, null) </li>
+                    <li class="nav-item mx-2"> @Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
+                    <li class="nav-item mx-2"> @Html.ActionLink("Asignar TEColones", "Index", "AssignTEColones")</li>
+                    <li class="nav-item mx-2"> @Html.ActionLink("Compartir TEColones", "Index", "ShareTEColones")</li>
                     <!--  <li class="nav-item mx-2"> <a class="nav-link" href="#">Programa TEColones </a> </li>  -->
                 </ul>
             </div>
@@ -41,7 +51,7 @@
     </nav>
 
     <div class="container body-content">
-        @RenderBody()   <!--TODOS LOS LAYOUT TIENEN QUE TENER ESTO, sino no sirven-->
+        @RenderBody()  
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year | X-TEC TEColones</p>

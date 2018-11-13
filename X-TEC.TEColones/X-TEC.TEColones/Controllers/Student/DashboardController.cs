@@ -9,9 +9,10 @@ namespace X_TEC.TEColones.Controllers.Student
     public class DashboardController : Controller
     {
         // GET: Dashboard
-        public ActionResult Index()
+        public ActionResult Index() //Models.Student user
         {
-            return View("~/Views/Student/Dashboard/Dashboard.cshtml");
+            Models.Student user = TempData["mydata"] as Models.Student;
+            return View("~/Views/Student/Dashboard/Dashboard.cshtml", user);
         }
     }
 }

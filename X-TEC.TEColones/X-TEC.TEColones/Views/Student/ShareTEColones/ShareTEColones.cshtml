@@ -1,8 +1,86 @@
-﻿
+﻿@model X_TEC.TEColones.Models.Student
 @{
-    ViewBag.Title = "ShareTEColones";
+    ViewBag.Title = "Compartir TEColones";
     Layout = "~/Views/LayoutBases/_StudentLayout.cshtml";
 }
+<!DOCTYPE html>
 
-<h2>ShareTEColones</h2>
+<hmtl>
+    <body>
+        <h2>Compartir TEColones Disponibles</h2>
+        <hr />
+        @using (Html.BeginForm("ShareTCS", "ShareTEColones", Model, FormMethod.Post))
+        {
+            <div class="row">
+                <div class="row">
+                    <label for="TEColones">TEColones Disponibles:</label>
+                    <p id="TEColones">@Model.AssignTCS.TCS</p>
+                </div>
+                <div class="row">
+                    <label for="IdUserToShare">Carnet de Estudiante a Compartir:</label>
+                    <input id="IdUserToShare" type="text" name="IdUserToShare" />
+                </div>
+                <div class="row">
+                    <label for="TCToShare">Indique la cantidad de TEColones a compartir:</label>
+                    <div class="form-group">
+                        <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
+                        <input id="TCSToShare" name="TCSToShare" class="border-0" type="range" min="0" max="100" />
+                        <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <button id="btnShare" data-toggle="modal" data-target="#VerifyShare" type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-25">Compartir</button>
+                </div>
+            </div>
+        }
+        @if (ViewBag.exists != null)
+        {
+            <div class="modal" id="VerifyShare">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        @{
+                            TempData["mydata"] = @Model;
+                        }
+                        @using (Html.BeginForm("ApplyTansfer", "ShareTEColones", Model, FormMethod.Post))
+                        {
 
+                            <form id="needs-validation" novalidate>
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-center" style="font-weight:bold">Compartir TEColones</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Esta seguro que desea compartir @Model.ShareTCS.TCSToShare TEColones a:</p>
+                                    <div class="form-row">
+                                        <label for="UserName">Nombre: </label>
+                                        <p id="UserName">@Model.ShareTCS.UserToShereName</p>
+                                        <div class="row divider"></div>
+                                        <label for="IdUser">Carnet: </label>
+                                        <p id="IdUser">@Model.ShareTCS.UserToShareId</p>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    @*<--nclick="location.href='@Url.Action("ApplyTansfer", "ShareTEColones", Model )'"  -->*@
+                                    <button type="submit" class="btn btn-primary rounded-0">Aceptar</button>
+                                    <button type="button" class="btn btn-danger rounded-0" data-dismiss="modal">Cancelar</button>
+                                </div>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js">
+        </script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js">
+        </script>
+
+        <script type="text/javascript">
+            $('#VerifyShare').modal('show');
+        </script>
+
+    </body>
+</hmtl>

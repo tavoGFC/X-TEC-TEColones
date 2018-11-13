@@ -1,6 +1,4 @@
-﻿@{
-    /**/
-
+@{
     ViewBag.Title = "Iniciar Sesion";
     Layout = null;
 }
@@ -9,7 +7,7 @@
 
 <html>
 <head>
-
+    
     <link rel="stylesheet" href="~/Content/Recursos/theme.css" />
 
     <title>TEColones Iniciar Sesion</title>
@@ -21,7 +19,7 @@
 
     </div>
     <h5>@ViewBag.Message</h5>
-
+       
     <div class="py-5">
         @using (Html.BeginForm("LogIn", "LogIn", FormMethod.Post))
         {

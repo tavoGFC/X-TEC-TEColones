@@ -1,11 +1,92 @@
-﻿
+﻿@model X_TEC.TEColones.Models.Student
+
 @{
-    ViewBag.Title = "AssignTEColones";
+    ViewBag.Title = "Asignar TEColones";
     Layout = "~/Views/LayoutBases/_StudentLayout.cshtml";
 }
 
-<head>
-    <title>Asignar TEColones | TEColones</title>
-</head>
-<h2>AssignTEColones </h2>
 
+<!DOCTYPE html>
+
+<html>
+
+<body>
+    <h2>Asginar TEColones </h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <label for="TEColones">TEColones Disponibles</label>
+            <p id="TEColones"> @Model.AssignTCS.TCS</p>
+        </div>
+        <div class="col-md-4">
+            <label for="ExchangeRateDR">Tasa de Cambio (Comdedor)</label>
+            <p id="ExchangeRateDR">T 1 = ₡ @Model.AssignTCS.ExrDinningRoom </p>
+        </div>
+        <div class="col-md-4">
+            <label for="ExchangeRateE">Tasa de Cambio (Derechos de Estudio)</label>
+            <p id="ExchangeRateE">T 1 = ₡  @Model.AssignTCS.ExrEnrollment </p>
+        </div>
+        <div class="col-md-4">
+            <button id="btnDinningRoom" data-toggle="modal" data-target="#AssignDinningRoom" type="button" class="btn btn-dark">Asignar a Comedor</button>
+            <button id="btnEnrollment" data-toggle="modal" data-target="#AssignnEnrollment" type="button" class="btn btn-dark">Asignar a Derechos de Estudio</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AssignDinningRoom">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="needs-validation" novalidate>
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" style="font-weight:bold">Usar en el Comedor</h5>
+                    </div>
+                    <div class="modal-body">
+                        <label for="TCToAssignDR">Indique cuantos TEColones va  a utilizar:</label>
+                        <div class="form-group">
+                            <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
+                            <input id="TCToAssignDR" name="TCToAssignDR" class="border-0" type="range" min="0" max="100" />
+                            <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
+                        </div>
+                    </div>-
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" style="border:groove">Aceptar</button>
+                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AssignnEnrollment">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="needs-validation" novalidate>
+                    <div class="modal-header">
+                        <h5 class="modal-title text-center" style="font-weight:bold">Usar en Derechos de Estudio</h5>
+                    </div>
+                    <div class="modal-body">
+                        <label for="TCToAssignE">Indique cuantos TEColones va  a utilizar:</label>
+                        <div class="form-group">
+                            <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
+                            <input id="TCToAssignE" name="TCToAssignE" class="border-0" type="range" min="0" max="100" />
+                            <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" style="border:double">Aceptar</button>
+                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- JS code -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js">
+    </script>
+    <!--JS below-->
+
+</body>
+</html>

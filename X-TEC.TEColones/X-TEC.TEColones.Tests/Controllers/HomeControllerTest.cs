@@ -13,13 +13,13 @@ namespace X_TEC.TEColones.Tests.Controllers
     public class HomeControllerTest
     {
         [TestMethod]
-        public void Index()
+        public void LogIn()
         {
             // Arrange
             LogInController controller = new LogInController();
 
             // Act
-            ViewResult result = controller.Index() as ViewResult;
+            ViewResult result = controller.LogIn() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
@@ -28,6 +28,15 @@ namespace X_TEC.TEColones.Tests.Controllers
         [TestMethod]
         public void About()
         {
+
+            // Arrange
+            LogInController controller = new LogInController();
+
+            // Act
+           
+
+            // Assert
+
             
         }
 
@@ -35,7 +44,9 @@ namespace X_TEC.TEColones.Tests.Controllers
         public void Contact()
         {
             // Arrange
-            
+            LogInController controller = new LogInController();
+
+            // Act
         }
     }
 }
