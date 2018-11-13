@@ -153,7 +153,6 @@
     <Compile Include="Controllers\Administrator\AdminDashboardController.cs" />
     <Compile Include="Controllers\Administrator\PromotionController.cs" />
     <Compile Include="Controllers\Administrator\ReportController.cs" />
-    <Compile Include="Controllers\StorageCenterManager\RegisterMaterialController.cs" />
     <Compile Include="Controllers\StorageCenterManager\SCMHomeController.cs" />
     <Compile Include="Controllers\Student\AssignTEColonesController.cs" />
     <Compile Include="Controllers\Student\CreateAccountController.cs" />
@@ -164,6 +163,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DBConnection.cs" />
+    <Compile Include="Models\SCMModel.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +173,14 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Recursos\FotoTest.jpg" />
+    <Content Include="Content\Recursos\iconoPapel.png" />
+    <Content Include="Content\Recursos\iconoPlastico.png" />
+    <Content Include="Content\Recursos\iconoTetrapack.png" />
+    <Content Include="Content\Recursos\iconoVidrio.png" />
+    <Content Include="Content\Recursos\styleguide.html" />
+    <Content Include="Content\Recursos\TEColonesBanner.jpg" />
+    <Content Include="Content\Recursos\theme.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -180,6 +190,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Recursos\theme.scss" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -220,12 +231,11 @@
     <Content Include="Views\Administrator\Promotion\CreatePromotion.cshtml" />
     <Content Include="Views\Administrator\Report\Report.cshtml" />
     <Content Include="Views\Administrator\Promotion\ViewPromotion.cshtml" />
-    <Content Include="Views\StorageCenterManager\RegisterMaterial\RegisterMaterial.cshtml" />
     <Content Include="Views\StorageCenterManager\SCMHome\SCMHome.cshtml" />
+    <Content Include="Views\Template\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
