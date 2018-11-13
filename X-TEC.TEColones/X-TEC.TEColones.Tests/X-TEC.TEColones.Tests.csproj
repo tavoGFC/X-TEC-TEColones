@@ -96,7 +96,6 @@
     <Compile Include="DataBase\UnitTestExistUser.cs" />
     <Compile Include="DataBase\UnitTestInsert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Controllers\HomeControllerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -113,6 +112,9 @@
       <Project>{2d1f19db-cc18-43d6-9a20-cd74230e5d84}</Project>
       <Name>X-TEC.TEColones.Persistence</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

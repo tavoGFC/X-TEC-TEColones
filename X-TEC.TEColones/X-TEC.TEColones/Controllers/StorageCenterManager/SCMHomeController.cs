@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
-using X_TEC.TEColones.Models;
+using X_TEC.TEColones.Models.SCM;
 
 namespace X_TEC.TEColones.Controllers.StorageCenterManager
 {
@@ -15,17 +14,18 @@ namespace X_TEC.TEColones.Controllers.StorageCenterManager
         // GET: SCMHome
         public ActionResult Home()
         {
-            SCMModel empleado = new SCMModel();
-            empleado.Name = "Juanito"; //de la DB
-            empleado.College = "X-TEC";
-            empleado.Department = "Centro de acopio";
-            empleado.EmployeeNumber = 123456789;
+            SCM empleado = new SCM();
+            //SCMModel empleado = new SCMModel();
+            //empleado.Name = "Juanito"; //de la DB
+            //empleado.College = "X-TEC";
+            //empleado.Department = "Centro de acopio";
+            //empleado.EmployeeNumber = 123456789;
 
             return View("~/Views/StorageCenterManager/SCMHome/SCMHome.cshtml",empleado);
         }
 
         [HttpPost]
-        public ActionResult Home(SCMModel emple) 
+        public ActionResult Home(SCM emple) //(SCMModel emple) 
         {
             //SCMModel emple =  TempData["data"] as SCMModel;
             //System.Diagnostics.Debug.WriteLine("NOMBRE: " + emple.Name);

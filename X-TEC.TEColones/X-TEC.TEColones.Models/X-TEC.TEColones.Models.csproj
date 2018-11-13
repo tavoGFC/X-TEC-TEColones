@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\Admin.cs" />
+    <Compile Include="Admin\AdminHomeModel.cs" />
+    <Compile Include="Admin\CreateUser.cs" />
     <Compile Include="SCM\SCM.cs" />
     <Compile Include="Student\AssignTCSViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
