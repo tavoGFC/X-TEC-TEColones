@@ -233,9 +233,7 @@
     <Content Include="Views\StorageCenterManager\SCMHome\SCMHome.cshtml" />
     <Content Include="Views\Student\CreateAccount\CreateAccount.cshtml" />
   </ItemGroup>
-  <ItemGroup />
-    <Content Include="Views\Template\_Layout.cshtml" />
-  </ItemGroup>
+  
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>

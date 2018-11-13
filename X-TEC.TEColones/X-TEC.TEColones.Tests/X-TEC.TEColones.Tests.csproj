@@ -113,10 +113,6 @@
       <Project>{2d1f19db-cc18-43d6-9a20-cd74230e5d84}</Project>
       <Name>X-TEC.TEColones.Persistence</Name>
     </ProjectReference>
-    <ProjectReference Include="..\X-TEC.TEColones\X-TEC.TEColones.csproj">
-      <Project>{FE196978-C46C-4442-BC3B-3A20ACDA7158}</Project>
-      <Name>X-TEC.TEColones</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
