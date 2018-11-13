@@ -1,8 +1,102 @@
 ﻿
+@model X_TEC.TEColones.Models.SCMModel
+
 @{
     ViewBag.Title = "Pagina Principal";
     Layout = "~/Views/LayoutBases/_SCMLayout.cshtml";
 }
 
-<h2>Pagina Principal para los ECAs</h2>
 
+<!DOCTYPE html>
+<html>
+
+<body>
+
+    <div class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="">Registrar Material</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <form action="Insertar" method="post">
+
+        <div class="py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h5 class="">Carton y Papel</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="">Plastico</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="">Tetrapack</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <h5 class="">Vidrio</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="InputPyC">
+                            <t>kg</t>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="InputPlastico">
+                            <t>kg</t>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="InputTetrapack">
+                            <t>kg</t>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3">
+
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="InputVidrio">
+                            <t>kg</t>
+                        </div>
+
+                    </div>
+                    <div class="col-md-3"><img class="img-fluid d-block" src="~/Content/Recursos/iconoPapel.png" width="50" height="50"></div>
+                    <div class="col-md-3"><img class="img-fluid d-block" src="~/Content/Recursos/iconoPlastico.png" width="50" height="50"></div>
+                    <div class="col-md-3"><img class="img-fluid d-block" src="~/Content/Recursos/iconoTetrapack.png" width="50" height="50"></div>
+                    <div class="col-md-3"><img class="img-fluid d-block" src="~/Content/Recursos/iconoVidrio.png" width="50" height="50"></div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <h5 class="">Carnet del Estudiante:</h5>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+
+                        <div class="input-group">
+                            <input type="number" class="form-control" name="InputCarnet">
+                        </div>
+
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4"><input type="submit" class="btn btn-primary" value="Ingresar" /></div>
+
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>

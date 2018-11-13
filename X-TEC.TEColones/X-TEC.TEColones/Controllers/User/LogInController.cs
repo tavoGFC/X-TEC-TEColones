@@ -14,7 +14,7 @@ namespace X_TEC.TEColones.Controllers
         /// <returns></returns>
         public ActionResult LogIn()
         {
-            return View();
+            return View("~/Views/StorageCenterManager/miECAHome/miECAHome.cshtml");
         }
 
         /// <summary>
