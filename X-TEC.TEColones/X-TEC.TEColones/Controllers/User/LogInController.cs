@@ -14,7 +14,7 @@ namespace X_TEC.TEColones.Controllers
         /// <returns></returns>
         public ActionResult LogIn()
         {
-            return View("~/Views/StorageCenterManager/miECAHome/miECAHome.cshtml");
+            return View("~/Views/Administrator/AdminHome/AdminHome.cshtml");
         }
 
         /// <summary>
@@ -34,9 +34,11 @@ namespace X_TEC.TEColones.Controllers
         [HttpPost]
         public ActionResult Index()
         {
-            string user = Request["IdUser"].ToString();
-            return RedirectToAction("Home", "AdminHome", new { user });
-            //return RedirectToAction("Home", "Home", new { user });
+            //string user = Request["IdUser"].ToString();
+
+            return RedirectToAction("Home", "AdminHome");
+            
+            //return RedirectToAction("Home", "SCMHome");
 
             /*string user = Request["IdUser"].ToString();
             if (user.Equals("admin"))

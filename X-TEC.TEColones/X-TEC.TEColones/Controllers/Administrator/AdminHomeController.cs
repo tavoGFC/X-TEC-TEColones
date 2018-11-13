@@ -10,10 +10,10 @@ namespace X_TEC.TEColones.Controllers.Administrator
     {
         string _user;
         // GET: AdminHome
-        public ActionResult Home(string user)
+        public ActionResult Home()
         {
-            _user = user;
-            ViewBag.Message = "Bienvenido " + _user;
+           // _user = user;
+            ViewBag.Message = "Bienvenido ";
             return View("~/Views/Administrator/AdminHome/AdminHome.cshtml");
         }
     }
