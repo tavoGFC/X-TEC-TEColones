@@ -232,6 +232,7 @@
     <Content Include="Views\Administrator\Report\Report.cshtml" />
     <Content Include="Views\Administrator\Promotion\ViewPromotion.cshtml" />
     <Content Include="Views\StorageCenterManager\SCMHome\SCMHome.cshtml" />
+    <Content Include="Views\Template\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
