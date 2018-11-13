@@ -1,13 +1,55 @@
-﻿@{
+﻿@model X_TEC.TEColones.Models.AdminHomeModel
+
+@{
     ViewBag.Title = "Inicio";
     Layout = "~/Views/LayoutBases/_AdminLayout.cshtml";
 }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pagina Princiapl</title>
 
+    <style>
+    </style>
+    <script>
+        function redraw() {
+            draw(document.getElementById("myList").value);
+        }
+
+        function draw(speed) {
+            var canvas = document.getElementById("myCanvas");
+            var context = canvas.getContext("2d");
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            var centerX = canvas.width / 2;
+            var centerY = canvas.height / 2;
+            var radius = canvas.height / 2 - 20;
+
+            context.beginPath();
+            context.arc(centerX, centerY, radius, Math.PI * 0.10, Math.PI * -1.1, true);
+
+            var gradience = context.createRadialGradient(centerX, centerY, radius - radius / 2, centerX, centerY, radius - radius / 8);
+            gradience.addColorStop(0, 'white');
+            gradience.addColorStop(1, 'blaack');
+
+            context.fillStyle = gradience;
+            context.fill();
+            context.closePath();
+            context.restore();
+
+            context.beginPath();
+            context.strokeStyle = 'white';
+            context.translate(centerX, centerY);
+            var increment = 1;
+            context.font = "30px Helvetica";
+            for (var i = -19; i <= 19; i++) {
+                angle = Math.PI / 30 * i;
+                sineAngle = Math.sin(angle);
+                cosAngle = -Math.cos(angle);
 
 <head>
     <title>Pagina Princiapl</title>
 </head>
 
-<body>
+<body onload="draw(0);">
     <h1>Pagina Principal para los Usuarios Admins</h1>
 </body>

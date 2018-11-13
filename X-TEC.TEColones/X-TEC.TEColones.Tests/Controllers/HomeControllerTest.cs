@@ -28,6 +28,7 @@ namespace X_TEC.TEColones.Tests.Controllers
         [TestMethod]
         public void About()
         {
+
             // Arrange
             LogInController controller = new LogInController();
 
@@ -35,6 +36,8 @@ namespace X_TEC.TEColones.Tests.Controllers
            
 
             // Assert
+
+            
         }
 
         [TestMethod]
