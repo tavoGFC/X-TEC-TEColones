@@ -4,5 +4,234 @@
     Layout = "~/Views/LayoutBases/_AdminLayout.cshtml";
 }
 
-<h2>Index Dashboard para Admin</h2>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+        // Load Charts and the corechart package.
+        //google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.load('current', { 'packages': ['bar'] });
+        google.charts.load('current', { 'packages': ['corechart', 'line'] });
+        google.charts.load('current', { 'packages': ['table'] });
+
+
+
+
+        // Draw the COLUMN chart for TONELADASxMES when Charts is loaded.
+        google.charts.setOnLoadCallback(drawToneladasMesChart);
+
+        // Draw the pie chart for the Anthony's pizza when Charts is loaded.
+        google.charts.setOnLoadCallback(drawMaterialesSedeChart);
+
+
+        google.charts.setOnLoadCallback(drawUsuariosIntercambiandoMesChart);
+
+
+        google.charts.setOnLoadCallback(drawDineroBeneficiosChart);
+
+
+        google.charts.setOnLoadCallback(drawTable);
+
+        // Callback that draws the COLUMN chart for EL DIAGRAMA.
+        function drawToneladasMesChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Meses', 'Toneladas'],
+                ['Ene', 1000],
+                ['Feb', 1170],
+                ['Mar', 660],
+                ['Abr', 1030],
+                ['May', 1030],
+                ['Jun', 1030],
+                ['Jul', 1030],
+                ['Ago', 1030],
+                ['Sep', 1030],
+                ['Oct', 1030],
+                ['Nov', 1030],
+                ['Dic', 1030]
+            ]);
+
+            var options = {
+                chart: {
+                    title: 'Toneladas por Mes',
+                    subtitle: 'subtitulo',
+                    width: 500,
+                    height: 300
+                }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('chart_ToneladasMes'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+
+        // Callback that draws the pie chart for Anthony's pizza.
+        function drawMaterialesSedeChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Sedes', 'Toneladas'],
+                ['Campus Central', 1000],
+                ['Sede Santa Clara', 1170],
+                ['Recintos San Jose', 660],
+                ['CA Barrio Amon', 1030],
+                ['CTT Zapote', 1030],
+                ['CTTEC San Carlos', 1030],
+                ['Sede Interuniversitaria', 1030],
+                ['Centro Academico Limon', 1030],
+                ['Centro Academico Alajuela', 1030]
+            ]);
+
+            var options = {
+                chart: {
+                    title: 'Toneladas por Sede',
+                    subtitle: 'subtitulo',
+                    width: 500,
+                    height: 300
+                }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('chart_ToneladasSede'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+
+        function drawUsuariosIntercambiandoMesChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Meses', 'Cant Personas'],
+                ['Ene', 3],
+                ['Feb', 4],
+                ['Mar', 5],
+                ['Abr', 16],
+                ['May', 22],
+                ['Jun', 39],
+                ['Jul', 15],
+                ['Ago', 66],
+                ['Sep', 96],
+                ['Oct', 2],
+                ['Nov', 50],
+                ['Dic', 38]
+            ]);
+
+            var options = {
+                title: 'Personas Obteniendo TEColones por Mes',
+                pointsVisible: true,
+                hAxis: {
+                    title: 'Meses'
+                },
+                vAxis: {
+                    title: 'Cantidad de Personas'
+                },
+                backgroundColor: '#f1f8e9'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_UsuariosIntercambiando'));
+            chart.draw(data, options);
+        }
+
+
+        function drawDineroBeneficiosChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Meses', 'Cant Dinero'],
+                ['Ene', 100],
+                ['Feb', 300],
+                ['Mar', 1500],
+                ['Abr', 8000],
+                ['May', 10000],
+                ['Jun', 10005],
+                ['Jul', 1100],
+                ['Ago', 500],
+                ['Sep', 900],
+                ['Oct', 2000],
+                ['Nov', 900],
+                ['Dic', 5000]
+            ]);
+
+            var options = {
+                title: 'Cantidad de Dinero Otorgado en Beneficios',
+                pointsVisible: true,
+                hAxis: {
+                    title: 'Meses'
+                },
+                vAxis: {
+                    title: 'Cantidad de Dinero'
+                },
+                backgroundColor: '#f1f8e9'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_DineroBeneficios'));
+            chart.draw(data, options);
+        }
+
+        function drawTable() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Nombre');
+            data.addColumn('string', 'Carnet');
+            data.addColumn('number', 'Cantidad de material (kg)');
+            data.addRows([
+                ["Ricardo", "2014040801", 8000],
+                ["Andres", "201523515", 7000],
+                ["Randy", "2014067801", 6000],
+                ["Martin", "2060040806", 5000],
+                ["Gustavo", "2014668078", 4000],
+                ["Alonso", "20140637", 3000],
+                ["Luciano", "20146237", 2000],
+                ["Nelson", "201456233", 1000],
+                ["Pepe", "20145236", 900],
+                ["Monchito", "20145126", 500]
+            ]);
+
+            var table = new google.visualization.Table(document.getElementById('table_div'));
+
+            table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
+        }
+
+        //-------------------------------VELOCIMETRO--------------------------------------------
+        google.charts.load('current', { 'packages': ['gauge'] });
+        google.charts.setOnLoadCallback(drawGauge);
+        function drawGauge() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['Toneladas', 0.5]
+            ]);
+
+            var options = {
+                width: 400, height: 200,
+                greenFrom: 1.5, greenTo: 2,
+                yellowFrom: 1, yellowTo: 1.5,
+                max: 2
+            };
+
+            var chart = new google.visualization.Gauge(document.getElementById('chart_gauge'));
+
+            chart.draw(data, options);
+        }
+            //---------------------------------------------------------------------------------------
+    </script>
+    <title>Index</title>
+</head>
+
+
+<body>
+
+    <table class="columns" align="center">
+        <tr>
+            <td><div id="chart_gauge" style="border: 2px solid #ccc; width: 400px; height: 300px;"></div></td>
+            <td><div id="chart_ToneladasMes" style="border: 2px solid #ccc; width: 400px; height: 300px;"></div></td>
+            <td><div id="chart_ToneladasSede" style="border: 2px solid #ccc; width: 500px; height: 300px;"></div></td>
+        </tr>
+
+        <tr>
+            <td><div id="chart_UsuariosIntercambiando" style="border: 2px solid #ccc; width: 400px; height: 300px;"></div></td>
+            <td><div id="chart_DineroBeneficios" style="border: 2px solid #ccc; width: 400px; height: 300px;"></div></td>
+            <td> <label>TOP 10 DE ESTUDIANTES</label> <div id="table_div" style="border: 2px solid #ccc; width: 400px; height: 300px;"></div></td>
+        </tr>
+    </table>
+
+
+
+</body>
+</html>
