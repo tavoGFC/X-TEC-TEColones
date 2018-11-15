@@ -287,6 +287,8 @@
     <Content Include="Views\Administrator\Promotion\ViewPromotion.cshtml" />
     <Content Include="Views\StorageCenterManager\SCMHome\SCMHome.cshtml" />
     <Content Include="Views\Student\CreateAccount\CreateAccount.cshtml" />
+    <Content Include="Views\Administrator\Configuration\TwitterConfiguration.cshtml" />
+    <Content Include="Views\Administrator\Configuration\TEColonesConfiguration.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
