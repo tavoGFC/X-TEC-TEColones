@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tweetinvi;
+using X_TEC.TEColones.Models.AdminModels;
 
 namespace X_TEC.TEColones.Persistence
 {
@@ -14,6 +15,15 @@ namespace X_TEC.TEColones.Persistence
         public string ACCESS_TOKEN;
         public string ACCESS_TOKEN_SECRET;
 
+        //private ConfigurationModel Config = new ConfigurationModel();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="consumerKey"></param>
+        /// <param name="consumerSecret"></param>
+        /// <param name="accessToken"></param>
+        /// <param name="accessTokenSecret"></param>
         public void SetCredentials(string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret)
         {
             CONSUMER_KEY = consumerKey;
@@ -21,7 +31,10 @@ namespace X_TEC.TEColones.Persistence
             ACCESS_TOKEN = accessToken;
             ACCESS_TOKEN_SECRET = accessTokenSecret;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mensaje"></param>
         public void Publish(string mensaje)
         {
             //Auth.SetUserCredentials(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);

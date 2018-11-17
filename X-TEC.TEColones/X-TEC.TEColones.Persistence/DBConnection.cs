@@ -17,7 +17,11 @@ namespace X_TEC.TEColones.Persistence
         private static SqlConnection connection = new SqlConnection(connectionString);
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="student"></param>
+        /// <returns></returns>
         public static bool InsertStudent(CreateUser student)
         {
             try
