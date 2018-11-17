@@ -6,12 +6,12 @@ using System.Web.Mvc;
 
 namespace X_TEC.TEColones.Controllers.Administrator
 {
-    public class ConfigurationController : Controller
+    public class MaterialConfigController : Controller
     {
         // GET: Configuration
         public ActionResult Index()
         {
-            return View("~/Views/Administrator/Configuration/Configuration.cshtml");
+            return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml");
         }
     }
 }

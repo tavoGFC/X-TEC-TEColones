@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "TwitterConfiguration";
+    Layout = "~/Views/LayoutBases/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Configuracion de la Cuenta de Twitter de X-TEC</title>
+</head>
+
+<body>
+    <div class="py-2">
+        <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">@Html.ActionLink("Tasa de Conversion Material-TEColones", "Index", "MaterialConfig")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">@Html.ActionLink("Tasa de Conversion TEColones - Colones", "Index", "TEColonesConfig")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">@Html.ActionLink("Cuenta Twitter", "Index", "TwitterConfig")</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="py-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 align="center">Consumer Key: <input type="text" name="inputConsumerKey"/> </h3>
+                    <h3 align="center">Consumer Secret: <input type="text" name="inputConsumerSecret"/></h3>
+                    <h3 align="center">Access Token: <input type="text" name="inputAccessToken"/></h3>
+                    <h3 align="center">Access Token Secret: <input type="text" name="inputAccessTokenSecret"/></h3>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+</html>
+

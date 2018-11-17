@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Configuracion";
+    Layout = "~/Views/LayoutBases/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+    <title>Configuraciones</title>
+</head>
+
+<body>
+    <div class="py-2">
+        <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">@Html.ActionLink("Tasa de Conversion Material-TEColones", "Index", "MaterialConfig")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">@Html.ActionLink(" Tasa de Conversion TEColones - Colones", "Index", "TEColonesConfig")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">@Html.ActionLink(" Cuenta Twitter", "Index", "TwitterConfig")</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="py-3">
+        <table align="center">
+            <tr>
+                <th>Categoria</th>
+                <th>TEColones por kg</th>
+            </tr>
+            <tr>
+                <td>Plastico</td>
+                <td><input type="number" name="inputPlastic" placeholder="123456" /></td>
+            </tr>
+            <tr>
+                <td>Vidrio</td>
+                <td><input type="number" name="inputGlass" placeholder="123456" /></td>
+            </tr>
+            <tr>
+                <td>Papel</td>
+                <td><input type="number" name="inputPaper" placeholder="123456" /></td>
+            </tr>
+            <tr>
+                <td>Aluminio</td>
+                <td><input type="number" name="inputAluminium" placeholder="123456" /></td>
+            </tr>
+        </table>
+    </div>
+
+    <!--</form> -->
+</body>
+
+</html>

@@ -206,11 +206,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Administrator\AdminHomeController.cs" />
-    <Compile Include="Controllers\Administrator\ConfigurationController.cs" />
+    <Compile Include="Controllers\Administrator\MaterialConfigController.cs" />
     <Compile Include="Controllers\Administrator\CreateUserController.cs" />
     <Compile Include="Controllers\Administrator\AdminDashboardController.cs" />
     <Compile Include="Controllers\Administrator\PromotionController.cs" />
     <Compile Include="Controllers\Administrator\ReportController.cs" />
+    <Compile Include="Controllers\Administrator\TEColonesConfigController.cs" />
+    <Compile Include="Controllers\Administrator\TwitterConfigController.cs" />
     <Compile Include="Controllers\StorageCenterManager\SCMHomeController.cs" />
     <Compile Include="Controllers\Student\AssignTEColonesController.cs" />
     <Compile Include="Controllers\Student\CreateAccountController.cs" />
@@ -228,6 +230,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Recursos\iconoTEColones.png" />
     <Content Include="Content\Recursos\FotoTest.jpg" />
     <Content Include="Content\Recursos\iconoPapel.png" />
     <Content Include="Content\Recursos\iconoPlastico.png" />
@@ -280,15 +283,15 @@
     <Content Include="Views\Student\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\Student\Home\Home.cshtml" />
     <Content Include="Views\Student\ShareTEColones\ShareTEColones.cshtml" />
-    <Content Include="Views\Administrator\Configuration\Configuration.cshtml" />
+    <Content Include="Views\Administrator\Configuration\MaterialConfig.cshtml" />
     <Content Include="Views\Administrator\CreateUser\CreateUser.cshtml" />
     <Content Include="Views\Administrator\Promotion\CreatePromotion.cshtml" />
     <Content Include="Views\Administrator\Report\Report.cshtml" />
     <Content Include="Views\Administrator\Promotion\ViewPromotion.cshtml" />
     <Content Include="Views\StorageCenterManager\SCMHome\SCMHome.cshtml" />
     <Content Include="Views\Student\CreateAccount\CreateAccount.cshtml" />
-    <Content Include="Views\Administrator\Configuration\TwitterConfiguration.cshtml" />
-    <Content Include="Views\Administrator\Configuration\TEColonesConfiguration.cshtml" />
+    <Content Include="Views\Administrator\Configuration\TwitterConfig.cshtml" />
+    <Content Include="Views\Administrator\Configuration\TEColonesConfig.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

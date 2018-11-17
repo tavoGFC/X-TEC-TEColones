@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace X_TEC.TEColones.Models.AdminModels
 {
-    class Configuration
+    class ConfigurationModel
     {
 
         public int ValorPlastico { get; set; }
@@ -20,6 +20,8 @@ namespace X_TEC.TEColones.Models.AdminModels
         public int TasaComedor { get; set; }
 
         public int TasaMatricula { get; set; }
+
+        //public TwitterConnection TweetsConnection;
 
 
 
