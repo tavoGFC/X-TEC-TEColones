@@ -152,10 +152,18 @@ namespace X_TEC.TEColones.Persistence
             return student;
         }
 
+        #region Operaciones
+       public int Suma(int a, int b)
+        {
+            int c = a + b;
+            return c;
+        }
+        #endregion
+
 
 
 
     }
 
-    
+
 }

@@ -206,13 +206,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Administrator\AdminHomeController.cs" />
-    <Compile Include="Controllers\Administrator\MaterialConfigController.cs" />
+    <Compile Include="Controllers\Administrator\ConfigurationController.cs" />
     <Compile Include="Controllers\Administrator\CreateUserController.cs" />
     <Compile Include="Controllers\Administrator\AdminDashboardController.cs" />
     <Compile Include="Controllers\Administrator\PromotionController.cs" />
     <Compile Include="Controllers\Administrator\ReportController.cs" />
-    <Compile Include="Controllers\Administrator\TEColonesConfigController.cs" />
-    <Compile Include="Controllers\Administrator\TwitterConfigController.cs" />
     <Compile Include="Controllers\StorageCenterManager\SCMHomeController.cs" />
     <Compile Include="Controllers\Student\AssignTEColonesController.cs" />
     <Compile Include="Controllers\Student\CreateAccountController.cs" />
