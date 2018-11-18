@@ -13,69 +13,146 @@
 <body>
     <h2>Asginar TEColones </h2>
     <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <label for="TEColones">TEColones Disponibles</label>
-            <p id="TEColones"> @Model.AssignTCS.TCS</p>
-        </div>
-        <div class="col-md-4">
-            <label for="ExchangeRateDR">Tasa de Cambio (Comdedor)</label>
-            <p id="ExchangeRateDR">T 1 = ₡ @Model.AssignTCS.ExrDinningRoom </p>
-        </div>
-        <div class="col-md-4">
-            <label for="ExchangeRateE">Tasa de Cambio (Derechos de Estudio)</label>
-            <p id="ExchangeRateE">T 1 = ₡  @Model.AssignTCS.ExrEnrollment </p>
-        </div>
-        <div class="col-md-4">
-            <button id="btnDinningRoom" data-toggle="modal" data-target="#AssignDinningRoom" type="button" class="btn btn-dark">Asignar a Comedor</button>
-            <button id="btnEnrollment" data-toggle="modal" data-target="#AssignnEnrollment" type="button" class="btn btn-dark">Asignar a Derechos de Estudio</button>
+    <div class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label for="TEColones" style="">TEColones Disponibles:</label>
+                        </div>
+                        <div class="col-md-4">
+                            <p id="TEColones"> <img src="~/Content/Recursos/iconTCS.png" width="32" height="32" /> @Model.TCS </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="container">
+                        <p style="font-weight:bold">Tasa de Conversion</p>
+                        <div class="row">
+                            <div class="col-md-4">Beneficio</div>
+                            <div class="col-md-4">Valor en TEColones</div>
+                            <div class="col-md-4">Valor en Colones</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="list-group">
+                                    @{
+                                        foreach (var benefit in Model.AssignTCS.Benefits)
+                                        {
+
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                @benefit.Type
+                                                <span style="font-weight:bold; font-size:15px" class="badge badge-info badge-pill text-center">
+                                                    <img src="~/Content/Recursos/iconTCS.png" width="15" height="15" />  1
+                                                </span>
+                                                <span style="font-weight:bold; font-size:15px" class="badge badge-primary badge-pill text-center">
+                                                    ₡ @benefit.ExchangeRate
+                                                </span>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-    <div class="modal fade" id="AssignDinningRoom">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form id="needs-validation" novalidate>
-                    <div class="modal-header">
-                        <h5 class="modal-title text-center" style="font-weight:bold">Usar en el Comedor</h5>
-                    </div>
-                    <div class="modal-body">
-                        <label for="TCToAssignDR">Indique cuantos TEColones va  a utilizar:</label>
-                        <div class="form-group">
-                            <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
-                            <input id="TCToAssignDR" name="TCToAssignDR" class="border-0" type="range" min="0" max="100" />
-                            <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
-                        </div>
-                    </div>-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" style="border:groove">Aceptar</button>
-                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
-                    </div>
-                </form>
+    <div class="py-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <button id="btnDinningRoom" data-toggle="modal" data-target="#AssignDinningRoom" type="button" class="btn btn-dark w-100">Asignar a Comedor</button>
+                </div>
+                <div class="col-md-3">
+                    <button id="btnEnrollment" data-toggle="modal" data-target="#AssignnEnrollment" type="button" class="btn btn-dark w-100">Asignar a Derechos de Estudio</button>
+                </div>
+                <div class="col-md-3"></div>
             </div>
         </div>
     </div>
 
+
+    @{
+        TempData["student"] = @Model;
+    }
+
+    <div class="modal fade" id="AssignDinningRoom">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                @using (Html.BeginForm("AssignTCS_Comedor", "AssignTEColones", FormMethod.Post))
+                {
+                    <form id="needs-validation" novalidate="">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center" style="font-weight:bold">Usar TEColones en el Comedor</h5>
+                        </div>
+                        <div class="modal-body">
+                            <label for="TCSToAssgin">Indique cuantos TEColones va a utilizar: <output style="font-weight:bold" for="TCSToAssgin" id="outRange" name="outRange"></output> </label>
+                            <div class="form-group">
+                                <div class="form-group col-10">
+                                    <div class="container">
+                                        <div class="row pi-draggable" draggable="false">
+                                            <div class="col-md-1"> <span class="font-weight-light indigo-text mr-2 mt-1">1</span> </div>
+                                            <div class="col-md-9"> <input id="TCSToAssgin" name="TCSToAssgin" class="custom-range focus" type="range" min="1" max="@Model.TCS" onchange="updateTextInput(this.value); updateConvert(this.value)"></div>
+                                            <div class="col-md-1"> <span class="font-weight-light indigo-text ml-2 mt-1">@Model.TCS</span> </div>
+                                        </div>
+                                        <div class="py-sm-4">
+                                            <div class="row">
+                                                <label> Colones asignados: <output style="font-weight:bold" for="TCSToAssgin" id="amount" name="amount"></output> </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Aceptar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+
+
     <div class="modal fade" id="AssignnEnrollment">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form id="needs-validation" novalidate>
-                    <div class="modal-header">
-                        <h5 class="modal-title text-center" style="font-weight:bold">Usar en Derechos de Estudio</h5>
-                    </div>
-                    <div class="modal-body">
-                        <label for="TCToAssignE">Indique cuantos TEColones va  a utilizar:</label>
-                        <div class="form-group">
-                            <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
-                            <input id="TCToAssignE" name="TCToAssignE" class="border-0" type="range" min="0" max="100" />
-                            <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
+                @using (Html.BeginForm("AssignTCS_Matricula", "AssignTEColones", FormMethod.Post))
+                {
+                    <form id="needs-validation" novalidate="">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center" style="font-weight:bold">Usar en Derechos de Estudio</h5>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" style="border:double">Aceptar</button>
-                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Cancelar</button>
-                    </div>
-                </form>
+                        <div class="modal-body">
+                            <label for="TCSToAssgin">Indique cuantos TEColones va a utilizar: <output style="font-weight:bold" for="TCSToAssgin1" id="outRange1" name="outRange1"></output> </label>
+                            <div class="form-group">
+                                <div class="form-group col-10">
+                                    <div class="container">
+                                        <div class="row pi-draggable" draggable="false">
+                                            <div class="col-md-1"> <span class="font-weight-light indigo-text mr-2 mt-1">1</span> </div>
+                                            <div class="col-md-9"> <input id="TCSToAssgin1" name="TCSToAssgin1" class="custom-range focus" type="range" min="1" max="@Model.TCS" onchange="updateTextInput1(this.value); updateConvert1(this.value)"></div>
+                                            <div class="col-md-1"> <span class="font-weight-light indigo-text ml-2 mt-1">@Model.TCS</span> </div>
+                                        </div>
+                                        <div class="py-sm-4">
+                                            <div class="row">
+                                                <label> Colones asignados: <output style="font-weight:bold" for="TCSToAssgin1" id="amount1" name="amount1"></output> </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Aceptar</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                }
             </div>
         </div>
     </div>
@@ -87,6 +164,25 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js">
     </script>
     <!--JS below-->
+
+    <script type="text/javascript">
+        function updateTextInput(val) {
+            document.getElementById('outRange').value = val;
+        }
+
+        function updateTextInput1(val) {
+            document.getElementById('outRange1').value = val;
+        }
+
+        function updateConvert(val) {
+            document.getElementById('amount').value = val * @Model.AssignTCS.ExRDinningRoom;
+        }
+
+        function updateConvert1(val) {
+            document.getElementById('amount1').value = val * @Model.AssignTCS.ExREnrollment;
+        }
+        
+    </script>
 
 </body>
 </html>

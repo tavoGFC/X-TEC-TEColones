@@ -15,7 +15,7 @@ namespace X_TEC.TEColones.Controllers
         /// </summary>
         /// <returns></returns>
         public ActionResult LogIn(string message)
-        {
+        {           
             ViewBag.Message = message;
             return View();
         }
@@ -49,8 +49,16 @@ namespace X_TEC.TEColones.Controllers
                     StudentModel student = DBConnection.VerifyStudent(user, password);
                     if (student.Id != 0)
                     {
-                        student.Photo = "http://cdn.onlinewebfonts.com/svg/img_569204.png";                        
-                        return RedirectToActionPermanent("Home", "Home", student);
+                        if (student.PhotoBytes.Count() == 0)
+                        {
+                            student.Photo = "http://cdn.onlinewebfonts.com/svg/img_569204.png";
+                        }
+                        else
+                        {
+                            student.RenderImage();
+                        }
+                        TempData["student"] = student;
+                        return RedirectToAction("Home", "Home");
                     }
                     message = "Verifique los datos ingresados incorrecto";
                     break;

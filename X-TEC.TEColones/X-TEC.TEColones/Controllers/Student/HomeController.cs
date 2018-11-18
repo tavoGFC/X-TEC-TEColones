@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using X_TEC.TEColones.Models.StudentModels;
+using X_TEC.TEColones.Persistence;
 
 namespace X_TEC.TEColones.Controllers.Student
 {
@@ -11,23 +12,12 @@ namespace X_TEC.TEColones.Controllers.Student
     {
 
         //GET:Home
-        public ActionResult Home(StudentModel userS)
+        public ActionResult Home()
         {
-            userS.AssignTCS = new AssignTCSViewModel
-            {
-                TCS = 1200.5f,
-                ExrDinningRoom = 0.80f,
-                ExrEnrollment = 0.35f
-
-            };
-            userS.ShareTCS = new ShareTCSViewModel
-            {
-                TCSToShare = " ",
-                UserToShareId = " ",
-                UserToShereName = " "
-
-            };
-            return View("~/Views/Student/Home/Home.cshtml", userS);
+            StudentModel user = (StudentModel)TempData["student"];
+            DBConnection.GetBenefit(user);
+            DBConnection.GetMaterial(user);
+            return View("~/Views/Student/Home/Home.cshtml", user);
         }
 
         

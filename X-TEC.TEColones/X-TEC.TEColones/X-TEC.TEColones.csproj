@@ -228,11 +228,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Recursos\FotoTest.jpg" />
     <Content Include="Content\Recursos\iconoPapel.png" />
     <Content Include="Content\Recursos\iconoPlastico.png" />
     <Content Include="Content\Recursos\iconoTetrapack.png" />
     <Content Include="Content\Recursos\iconoVidrio.png" />
+    <Content Include="Content\Recursos\iconTCS.png" />
     <Content Include="Content\Recursos\styleguide.html" />
     <Content Include="Content\Recursos\TEColonesBanner.jpg" />
     <Content Include="Content\Recursos\theme.css" />
@@ -246,6 +246,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Recursos\theme.scss" />
+    <None Include="Properties\PublishProfiles\xtectecolones - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

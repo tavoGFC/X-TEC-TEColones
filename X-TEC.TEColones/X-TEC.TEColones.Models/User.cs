@@ -22,6 +22,9 @@ namespace X_TEC.TEColones.Models
 
         public string Photo { get; set; }
 
+        public byte[] PhotoBytes { get; set; }
+
+
 
     }
 }

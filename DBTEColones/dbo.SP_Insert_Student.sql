@@ -1,4 +1,15 @@
-﻿/*
+USE [XTEColones]
+GO
+
+/****** Object: SqlProcedure [dbo].[SP_Insert_Student] Script Date: 11/18/2018 16:48:43 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+/*
 Author: Gustavo Fallas
 Insert new register for student
 Return 1 if all goes fine or 0 if fails (exist)
@@ -17,29 +28,29 @@ CREATE PROCEDURE SP_Insert_Student
     @Headquarter VARCHAR(50) ,
     @Email VARCHAR(100),    
     @Password VARCHAR(12),    
-    @PhotoData VARCHAR(MAX)
+    @PhotoData VARBINARY(MAX)
 
 AS
 BEGIN
 	BEGIN TRY
-		
+		/*DECLARE @var_Photo VARBINARY(MAX);
+		SET @var_Photo = (SELECT CAST(@PhotoData AS varbinary(MAX)));*/
+
 		--insert User
-		DECLARE @idUser INT;
 		BEGIN TRANSACTION
-			INSERT INTO [User](FirstName, LastName, University, Headquarter, Email, Password, Photo) 
-			VALUES(@FirstName, @LastName, @University, @Headquarter, @Email, ENCRYPTBYPASSPHRASE('password', @Password), @PhotoData);
-			SET @idUser = SCOPE_IDENTITY();
+			INSERT INTO [User](Id, FirstName, LastName, University, Headquarter, Email, Password, Photo) 
+			VALUES(@Identification, @FirstName, @LastName, @University, @Headquarter, @Email, ENCRYPTBYPASSPHRASE('password', @Password), @PhotoData);
 		COMMIT
 
 		--insert Student
 		BEGIN TRANSACTION
-			INSERT INTO [Student](Id, Identification, Description, Skills)
-			VALUES (@idUser, @Identification, @Description, @Skills);
+			INSERT INTO [Student](Id, Description, Skills, TCS)
+			VALUES (@Identification, @Description, @Skills, 0);
 		COMMIT
 
 		--insert PhoneNumber_Student
 		BEGIN TRANSACTION
-			INSERT INTO [PhoneNumbers](Id, PhoneNumber) VALUES(@idUser, @PhoneNumber);
+			INSERT INTO [PhoneNumber](Id, PhoneNumber) VALUES(@Identification, @PhoneNumber);
 		COMMIT
 
 		RETURN 1;

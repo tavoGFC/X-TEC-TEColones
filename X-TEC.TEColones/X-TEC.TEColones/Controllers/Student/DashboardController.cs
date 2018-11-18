@@ -12,7 +12,7 @@ namespace X_TEC.TEColones.Controllers.Student
         // GET: Dashboard
         public ActionResult Index() //Models.Student user
         {
-            StudentModel user = TempData["mydata"] as StudentModel;
+            StudentModel user = TempData["student"] as StudentModel;
             return View("~/Views/Student/Dashboard/Dashboard.cshtml", user);
         }
     }

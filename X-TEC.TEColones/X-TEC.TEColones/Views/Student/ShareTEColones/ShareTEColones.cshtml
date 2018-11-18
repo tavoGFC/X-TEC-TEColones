@@ -7,41 +7,69 @@
 
 <hmtl>
     <body>
+        @{
+            TempData["student"] = @Model;
+        }
         <h2>Compartir TEColones Disponibles</h2>
         <hr />
-        @using (Html.BeginForm("ShareTCS", "ShareTEColones", Model, FormMethod.Post))
+
+        @using (Html.BeginForm("ShareTCS", "ShareTEColones", FormMethod.Post))
         {
-            <div class="row">
-                <div class="row">
-                    <label for="TEColones">TEColones Disponibles:</label>
-                    <p id="TEColones">@Model.AssignTCS.TCS</p>
-                </div>
-                <div class="row">
-                    <label for="IdUserToShare">Carnet de Estudiante a Compartir:</label>
-                    <input id="IdUserToShare" type="text" name="IdUserToShare" />
-                </div>
-                <div class="row">
-                    <label for="TCToShare">Indique la cantidad de TEColones a compartir:</label>
-                    <div class="form-group">
-                        <span class="font-weight-bold indigo-text mr-2 mt-1">0</span>
-                        <input id="TCSToShare" name="TCSToShare" class="border-0" type="range" min="0" max="100" />
-                        <span class="font-weight-bold indigo-text ml-2 mt-1">100</span>
+            <div class="py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="TEColones" style="">TEColones Disponibles:</label>
+                        </div>
+                        <div class="col-md-5">
+                            <p id="TEColones"> <img src="~/Content/Recursos/iconTCS.png" width="32" height="32"/> @Model.TCS </p>                            
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <button id="btnShare" data-toggle="modal" data-target="#VerifyShare" type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-25">Compartir</button>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row form-group">
+                                <label for="IdUserToShare">Carnet de Estudiante a Compartir:</label>
+                                <div class="col-10">
+                                    <input class="form-control-sm" id="IdUserToShare" type="text" name="IdUserToShare" required="" oninvalid="this.setCustomValidity('Ingrese un numero de carnet')" oninput="setCustomValidity('')">
+                                    <output for="IdUserToShare" class="text-danger">@ViewBag.Message</output>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row form-group">
+                                <label for="TCToShare">Indique la cantidad de TEColones a compartir: <output style="font-weight:bold" for="TCSToShare" id="outRange" name="outRange"></output> </label>
+                                <div class="form-group col-10">
+                                    <div class="container">
+                                        <div class="row pi-draggable" draggable="true">
+                                            <div class="col-md-1"> <span class="font-weight-light indigo-text mr-2 mt-1">1</span> </div>
+                                            <div class="col-md-9"> <input id="TCSToShare" name="TCSToShare" class="custom-range focus" type="range" min="1" max=@Model.TCS onchange="updateTextInput(this.value);"></div>
+                                            <div class="col-md-1"> <span class="font-weight-light indigo-text ml-2 mt-1">@Model.TCS</span> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4"><button id="btnShare" data-toggle="modal" data-target="#VerifyShare" type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-100">Compartir</button></div>
+                        <div class="col-md-4"></div>
+                    </div>
                 </div>
             </div>
         }
+
         @if (ViewBag.exists != null)
         {
             <div class="modal" id="VerifyShare">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        @{
-                            TempData["mydata"] = @Model;
-                        }
-                        @using (Html.BeginForm("ApplyTansfer", "ShareTEColones", Model, FormMethod.Post))
+
+                        @using (Html.BeginForm("ApplyTansfer", "ShareTEColones", FormMethod.Post))
                         {
 
                             <form id="needs-validation" novalidate>
@@ -49,17 +77,17 @@
                                     <h5 class="modal-title text-center" style="font-weight:bold">Compartir TEColones</h5>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Esta seguro que desea compartir @Model.ShareTCS.TCSToShare TEColones a:</p>
+                                    <p>Esta seguro que desea compartir  <b style="font-weight:bold">@Model.ShareTCS.TCSToShare</b> TEColones a:</p>
                                     <div class="form-row">
-                                        <label for="UserName">Nombre: </label>
-                                        <p id="UserName">@Model.ShareTCS.UserToShereName</p>
-                                        <div class="row divider"></div>
-                                        <label for="IdUser">Carnet: </label>
-                                        <p id="IdUser">@Model.ShareTCS.UserToShareId</p>
+                                        <div class="row pi-draggable" draggable="true">
+                                            <div class="col-md-6"> <label for="UserName">Nombre: </label> </div>
+                                            <div class="col-md-6"> <p style="font-weight:bold" id="UserName">@Model.ShareTCS.UserToShereName</p> </div>
+                                            <div class="col-md-6"> <label for="IdUser">Carnet: </label> </div>
+                                            <div class="col-md-6"> <p style="font-weight:bold" id="IdUser">@Model.ShareTCS.UserToShareId</p> </div>
+                                        </div>                                        
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    @*<--nclick="location.href='@Url.Action("ApplyTansfer", "ShareTEColones", Model )'"  -->*@
                                     <button type="submit" class="btn btn-primary rounded-0">Aceptar</button>
                                     <button type="button" class="btn btn-danger rounded-0" data-dismiss="modal">Cancelar</button>
                                 </div>
@@ -70,7 +98,6 @@
             </div>
         }
 
-
         <script src="https://code.jquery.com/jquery-3.1.1.min.js">
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js">
@@ -80,7 +107,36 @@
 
         <script type="text/javascript">
             $('#VerifyShare').modal('show');
+
+            function updateTextInput(val) {
+                document.getElementById('outRange').value = val;
+            }
         </script>
+
+        @*
+
+         <script type="text/javascript">
+            var rangeSlider = function () {
+                var slider = $('#TCSToShare'),
+                    value = $("#outRange");
+
+                slider.each(function () {
+
+                    value.each(function () {
+                        var value = $(this).prev().attr('value');
+                        $(this).html(value);
+                    });
+
+                    slider.on('input', function () {
+                        $(this).next(value).html(this.value);
+                    });
+                });
+            };
+
+            rangeSlider();
+        </script>
+        *@
+
 
     </body>
 </hmtl>
