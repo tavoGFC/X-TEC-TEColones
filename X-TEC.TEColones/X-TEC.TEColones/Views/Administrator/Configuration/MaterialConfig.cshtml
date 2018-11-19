@@ -1,4 +1,7 @@
-﻿@{
+﻿@model X_TEC.TEColones.Models.AdminModels.ConfigurationModel
+
+
+@{
     ViewBag.Title = "Configuracion";
     Layout = "~/Views/LayoutBases/_AdminLayout.cshtml";
 }
@@ -49,19 +52,19 @@
             </tr>
             <tr>
                 <td>Plastico</td>
-                <td><input type="number" name="inputPlastic" placeholder="123456" /></td>
+                <td><input type="number" name="inputPlastic" placeholder="@Model.GlassValue"/></td>
             </tr>
             <tr>
                 <td>Vidrio</td>
-                <td><input type="number" name="inputGlass" placeholder="123456" /></td>
+                <td><input type="number" name="inputGlass" placeholder="@Model.GlassValue" /></td>
             </tr>
             <tr>
                 <td>Papel</td>
-                <td><input type="number" name="inputPaper" placeholder="123456" /></td>
+                <td><input type="number" name="inputPaper" placeholder="@Model.GlassValue"/></td>
             </tr>
             <tr>
                 <td>Aluminio</td>
-                <td><input type="number" name="inputAluminium" placeholder="123456" /></td>
+                <td><input type="number" name="inputAluminum" placeholder="@Model.GlassValue" /></td>
             </tr>
         </table>
     </div>

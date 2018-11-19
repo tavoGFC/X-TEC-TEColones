@@ -7,12 +7,13 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
 using X_TEC.TEColones.Models.StudentModels;
+using X_TEC.TEColones.Models.AdminModels;
 
 namespace X_TEC.TEColones.Persistence
 {
     public class DBConnection
     {
-        private static readonly string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=DBTEColones;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private static readonly string connectionString = @"Data Source=projectce.database.windows.net;User ID=mustang;Password=********;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         private static SqlConnection connection = new SqlConnection(connectionString);
 
@@ -152,6 +153,67 @@ namespace X_TEC.TEColones.Persistence
             return student;
         }
 
+        /// <summary>
+        /// Insert new keys and tokens of twitter into the data base.
+        /// </summary>
+        /// <param name="ConsumerKey"></param>
+        /// <param name="ConsumerSecret"></param>
+        /// <param name="AcessToken"></param>
+        /// <param name="AccessTokenSecret"></param>
+        public static void InsertTwitterData(string ConsumerKey, string ConsumerSecret, string AcessToken, string AccessTokenSecret)
+        {
+            try
+            {
+                connection.Close();
+
+                SqlCommand command = new SqlCommand("SP_Insert_TwitterData", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("CONSUMER_KEY", ConsumerKey);
+                command.Parameters.AddWithValue("CONSUMER_SECRET", ConsumerSecret);
+                command.Parameters.AddWithValue("ACCESS_TOKEN", AcessToken);
+                command.Parameters.AddWithValue("ACCESS_TOKEN_SECRET", AccessTokenSecret);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Inserting Data" + ex.Message);
+            }
+        }
+
+        public static void GetTwitterData(ConfigurationModel Config)
+        {
+            try
+            {
+                connection.Close();
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_Insert_TwitterData", connection)
+                {
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader reader = command.ExecuteReader();
+            
+                while (reader.Read())
+                {
+                    Config.CONSUMER_KEY = reader[0].ToString();
+                    Config.CONSUMER_SECRET = reader[1].ToString();
+                    Config.ACCESS_TOKEN = reader[2].ToString();
+                    Config.ACCESS_TOKEN_SECRET = reader[3].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Inserting Data" + ex.Message);
+            }
+        }
+
         #region Operaciones
        public int Suma(int a, int b)
         {
@@ -159,10 +221,6 @@ namespace X_TEC.TEColones.Persistence
             return c;
         }
         #endregion
-
-
-
-
     }
 
 

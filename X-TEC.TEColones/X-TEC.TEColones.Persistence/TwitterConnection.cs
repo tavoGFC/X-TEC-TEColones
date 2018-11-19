@@ -10,29 +10,26 @@ namespace X_TEC.TEColones.Persistence
 {
     class TwitterConnection
     {
-        public string CONSUMER_KEY;
-        public string CONSUMER_SECRET;
-        public string ACCESS_TOKEN;
-        public string ACCESS_TOKEN_SECRET;
-
-        //private ConfigurationModel Config = new ConfigurationModel();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="consumerKey"></param>
-        /// <param name="consumerSecret"></param>
-        /// <param name="accessToken"></param>
-        /// <param name="accessTokenSecret"></param>
+         /// <summary>
+         ///  Set the data for the account.
+         /// </summary>
+         /// <param name="consumerKey"></param>
+         /// <param name="consumerSecret"></param>
+         /// <param name="accessToken"></param>
+         /// <param name="accessTokenSecret"></param>
         public void SetCredentials(string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret)
         {
-            CONSUMER_KEY = consumerKey;
-            CONSUMER_SECRET = consumerSecret;
-            ACCESS_TOKEN = accessToken;
-            ACCESS_TOKEN_SECRET = accessTokenSecret;
+            ConfigurationModel Config = new ConfigurationModel
+            {
+                CONSUMER_KEY = consumerKey,
+                CONSUMER_SECRET = consumerSecret,
+                ACCESS_TOKEN = accessToken,
+                ACCESS_TOKEN_SECRET = accessTokenSecret
+            };
         }
+
         /// <summary>
-        /// 
+        /// Make a publication on the Twitter account with a given mesaage.
         /// </summary>
         /// <param name="mensaje"></param>
         public void Publish(string mensaje)

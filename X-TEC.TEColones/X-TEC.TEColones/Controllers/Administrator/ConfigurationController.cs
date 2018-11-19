@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using X_TEC.TEColones.Models.AdminModels;
 
 namespace X_TEC.TEColones.Controllers.Administrator
 {
@@ -10,12 +11,13 @@ namespace X_TEC.TEColones.Controllers.Administrator
     {
      
         /// <summary>
-        /// Get page of configuration values of the materials
+        /// Get page of configuration values of the materials.
         /// </summary>
         /// <returns></returns>
         public ActionResult MaterialValueConfiguration()
         {
-            return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml");
+            ConfigurationModel Config = new ConfigurationModel();
+            return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", Config);
         }
 
         /// <summary>
@@ -28,7 +30,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
         }
 
         /// <summary>
-        /// Get page of configuration of the credentials of the twitter account
+        /// Get page of configuration of the credentials of the twitter account.
         /// /// </summary>
         /// <returns></returns>
         public ActionResult TwitterConfiguration()
