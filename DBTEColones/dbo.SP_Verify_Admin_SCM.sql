@@ -1,11 +1,19 @@
-﻿/*
+/****** Object:  StoredProcedure [dbo].[SP_Verify_Admin_SCM]    Script Date: 11/18/2018 23:34:03 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+/*
 Author: Gustavo Fallas
 Verify password and identification Admin o SCM
 Return data if is correct, or return 0
 */
 
 
-CREATE PROCEDURE SP_Verify_Admin_SCM
+ALTER PROCEDURE [dbo].[SP_Verify_Admin_SCM]
 	@Identification int,
 	@PasswordVerify VARCHAR(12)
 AS BEGIN
@@ -21,10 +29,8 @@ AS BEGIN
 		IF (@Password = @PasswordVerify)
 			BEGIN
 				--ASCM.Admin: 1=Admin | 0=SCM
-				SELECT  U.FirstName, U.LastName, U.University, U.Headquarter, U.Email, U.Photo,
-						ASCM.Department, ASCM.Admin FROM [User] U
-				INNER JOIN [Admin_SCM] ASCM ON U.Id = ASCM.Id
-				WHERE U.Id = @Identification
+				SELECT  ASCM.Admin FROM [Admin_SCM] ASCM
+				WHERE ASCM.Id = @Identification
 			END
 			ELSE
 				SELECT @RETURN 
@@ -36,3 +42,6 @@ AS BEGIN
 			RETURN 0;
 	END CATCH	
 END
+GO
+
+

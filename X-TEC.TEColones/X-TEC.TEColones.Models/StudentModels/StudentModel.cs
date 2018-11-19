@@ -33,13 +33,6 @@ namespace X_TEC.TEColones.Models.StudentModels
 
         public HomeViewModel HomeVM { get; set; }
 
-        public void RenderImage()
-        {  
-            //Convert byte arry to base64string   
-            string imreBase64Data = Convert.ToBase64String(PhotoBytes);
-            string imgDataURL = string.Format("data:image/png;base64,{0}", imreBase64Data);
-
-            Photo = imgDataURL;
-        }
+        
     }
 }

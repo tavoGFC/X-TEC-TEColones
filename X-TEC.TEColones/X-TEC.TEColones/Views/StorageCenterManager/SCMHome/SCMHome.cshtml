@@ -2,11 +2,9 @@
 @model X_TEC.TEColones.Models.SCMModels.SCM
 
 @{
-    ViewBag.Title = "Pagina Principal";
+    ViewBag.Title = "Pagina Principal Encargado";
     Layout = "~/Views/LayoutBases/_SCMLayout.cshtml";
 }
-
-
 
 <!DOCTYPE html>
 <html>
@@ -23,9 +21,11 @@
             </div>
         </div>
     </div>
-
+    @{
+        TempData["student"] = @Model;
+    }
     <!--  <form action="Home" method="post">  -->
-    @using (Html.BeginForm("Home", "SCMHome", Model, FormMethod.Post))
+    @using (Html.BeginForm("Register", "SCMHome", FormMethod.Post))
     {
         <div class="py-4">
             <div class="container">
@@ -87,7 +87,7 @@
                     <div class="col-md-4">
 
                         <div class="input-group">
-                            <input type="number" class="form-control" name="InputCarnet">
+                            <input type="number" class="form-control" name="InputCarnet" required>
                         </div>
 
                     </div>
@@ -100,8 +100,8 @@
             </div>
         </div>
     }
-        <!--</form> -->
+    <!--</form> -->
 
-    </body>
+</body>
 
 </html>

@@ -46,24 +46,30 @@ namespace X_TEC.TEColones.Controllers.Student
         public ActionResult ApplyTansfer()
         {
             StudentModel user = (StudentModel)TempData["student"];
-
-            if (DBConnection.ShareTCS(user))
+            if (user.TCS != 0)
             {
-                int tcs = Int32.Parse(user.ShareTCS.TCSToShare);
-                user.TCS -= tcs;
-                ViewBag.exists = null;
-                ViewBag.Message = "";
-                user.ShareTCS.TCSToShare = "0";
-                user.ShareTCS.UserToShareId = "0";
-                return PartialView("~/Views/Student/ShareTEColones/ShareTEColones.cshtml", user);
+                if (DBConnection.ShareTCS(user))
+                {
+                    int tcs = Int32.Parse(user.ShareTCS.TCSToShare);
+                    user.TCS -= tcs;
+                    ViewBag.exists = null;
+                    ViewBag.Message = "";
+                    user.ShareTCS.TCSToShare = "0";
+                    user.ShareTCS.UserToShareId = "0";
+                    return PartialView("~/Views/Student/ShareTEColones/ShareTEColones.cshtml", user);
+                }
+                else
+                {
+                    ViewBag.exists = null;
+                    ViewBag.Message = "Por favor intente de nuevo mas tarde";
+                    return PartialView("~/Views/Student/ShareTEColones/ShareTEColones.cshtml", user);
+                }
             }
-            else
-            {
-                ViewBag.exists = null;
-                ViewBag.Message = "Por favor intente de nuevo";
-                return PartialView("~/Views/Student/ShareTEColones/ShareTEColones.cshtml", user);
-            }            
+            ViewBag.Message = "No cuenta con suficientes TEColones";
+            return PartialView("~/Views/Student/ShareTEColones/ShareTEColones.cshtml", user);
+
         }
+
 
     }
 }

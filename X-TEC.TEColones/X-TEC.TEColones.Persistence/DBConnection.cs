@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using System.Configuration;
-using X_TEC.TEColones.Models.StudentModels;
-using System.IO;
 using System.Globalization;
 using System.Web.Configuration;
+using X_TEC.TEColones.Models.StudentModels;
+using X_TEC.TEColones.Models.SCMModels;
 
 namespace X_TEC.TEColones.Persistence
 {
@@ -20,7 +20,8 @@ namespace X_TEC.TEColones.Persistence
         public static ConnectionStringSettings connString = rootWebConfig.ConnectionStrings.ConnectionStrings["DBXTEColones"];
                
         private static SqlConnection connection = new SqlConnection(connString.ConnectionString);
-                      
+
+        #region Student
 
         /// <summary>
         /// 
@@ -174,58 +175,6 @@ namespace X_TEC.TEColones.Persistence
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="identification"></param>
-        /// <returns></returns>
-        public static StudentModel VerifyStudent(string identification, string password)
-        {
-            StudentModel student = new StudentModel();
-            try
-            {
-                connection.Close();
-                connection.Open();
-
-                SqlCommand command = new SqlCommand("SP_Verify_Get_Student", connection)
-                {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("Identification", identification);
-                command.Parameters.AddWithValue("PasswordVerify", password);                
-                var reader = command.ExecuteReader();
-                if (reader.Read())
-                {  
-                    //incorrect password or identification
-                    if (reader[0].ToString().Equals("0"))
-                    {
-                        student.Id = 0;
-                        return student;
-                    }
-                    else
-                    {
-                        student.Id = Int32.Parse(identification);                    
-                        student.FirstName = reader["FirstName"].ToString();
-                        student.LastName = reader["LastName"].ToString();
-                        student.University = reader["University"].ToString();
-                        student.Headquarter = reader["University"].ToString();
-                        student.Email = reader["University"].ToString();
-                        student.PhotoBytes = (byte[])reader["Photo"];
-                        student.Description = reader["Description"].ToString();
-                        student.Skills = reader["Skills"].ToString();
-                        student.TCS = (int)reader["TCS"];
-                        student.PhoneNumber = reader["PhoneNumber"].ToString();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error VerifyStudent " + ex.Message);
-            }
-            return student;
-        }        
-
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <param name="student"></param>
         public static void GetBenefit(StudentModel student)
         {
@@ -314,7 +263,7 @@ namespace X_TEC.TEColones.Persistence
                 command.Parameters.AddWithValue("TCS", tcs);
                 command.Parameters.AddWithValue("CS", cs);
                 command.Parameters.AddWithValue("ExRtoDate", exrDate);
-               
+
                 var returnParameter = command.Parameters.Add("@ReturnVal", SqlDbType.Int);
                 returnParameter.Direction = ParameterDirection.ReturnValue;
                 command.ExecuteNonQuery();
@@ -331,6 +280,164 @@ namespace X_TEC.TEColones.Persistence
             }
             return false;
         }
+        #endregion
+
+
+        #region  StoregeCenterManager
+        
+
+        #endregion
+
+        #region LogIn
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="identification"></param>
+        /// <returns></returns>
+        public static StudentModel VerifyStudent(string identification, string password)
+        {
+            StudentModel student = new StudentModel();
+            try
+            {
+                connection.Close();
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_Verify_Get_Student", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("Identification", identification);
+                command.Parameters.AddWithValue("PasswordVerify", password);                
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {  
+                    //incorrect password or identification
+                    if (reader[0].ToString().Equals("0"))
+                    {
+                        student.Id = 0;
+                        return student;
+                    }
+                    else
+                    {
+                        student.Id = Int32.Parse(identification);                    
+                        student.FirstName = reader["FirstName"].ToString();
+                        student.LastName = reader["LastName"].ToString();
+                        student.University = reader["University"].ToString();
+                        student.Headquarter = reader["University"].ToString();
+                        student.Email = reader["University"].ToString();
+                        student.PhotoBytes = (byte[])reader["Photo"];
+                        student.Description = reader["Description"].ToString();
+                        student.Skills = reader["Skills"].ToString();
+                        student.TCS = (int)reader["TCS"];
+                        student.PhoneNumber = reader["PhoneNumber"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error VerifyStudent " + ex.Message);
+            }
+            return student;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="identification"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static Tuple<int, bool> VerifyAdminSCM(string identification, string password)
+        {
+            Tuple<int, bool> user;
+            try
+            {
+                connection.Close();
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_Verify_Admin_SCM", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("Identification", identification);
+                command.Parameters.AddWithValue("PasswordVerify", password);
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    //incorrect password or identification
+                    if (reader[0].ToString().Equals("0"))
+                    {
+                        user = Tuple.Create(0, false);
+                        return user;
+                    }
+                    else
+                    {
+                        bool isAdmin = (bool)reader["Admin"];
+                        user = Tuple.Create(Int32.Parse(identification), isAdmin);
+                        return user;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error VerifyStudent " + ex.Message);
+            }
+            return Tuple.Create(0, false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static SCM GetSCM(int id)
+        {
+            SCM scm = new SCM();
+            try
+            {
+                connection.Close();
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_Get_AdminSCM", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("Identification", id);
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    //not return data
+                    if (reader[0].ToString().Equals("0"))
+                    {
+                        scm.Id = 0;
+                        return scm;
+                    }
+                    else
+                    {
+                        scm.Id = id;
+                        scm.FirstName = reader["FirstName"].ToString();
+                        scm.LastName = reader["LastName"].ToString();
+                        scm.University = reader["University"].ToString();
+                        scm.Headquarter = reader["University"].ToString();
+                        scm.Email = reader["University"].ToString();
+                        scm.PhotoBytes = (byte[])reader["Photo"];
+                        scm.Department = reader["Department"].ToString();
+                        scm.PhoneNumber = reader["PhoneNumber"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error GetSCM " + ex.Message);
+            }
+            return scm;
+        }
+
+        
+
+        #endregion
+
+
 
     }
 }

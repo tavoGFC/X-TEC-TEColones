@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace X_TEC.TEColones.Models.SCMModels
 {
-    public class Material
+    public class Register
     {
-        public Material()
+        public Register()
         {
 
         }

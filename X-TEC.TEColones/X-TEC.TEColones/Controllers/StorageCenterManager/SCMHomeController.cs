@@ -14,19 +14,16 @@ namespace X_TEC.TEColones.Controllers.StorageCenterManager
         // GET: SCMHome
         public ActionResult Home()
         {
-            SCM empleado = new SCM();
-            //SCMModel empleado = new SCMModel();
-            //empleado.Name = "Juanito"; //de la DB
-            //empleado.College = "X-TEC";
-            //empleado.Department = "Centro de acopio";
-            //empleado.EmployeeNumber = 123456789;
+            SCM scm = (SCM)TempData["scm"];
 
-            return View("~/Views/StorageCenterManager/SCMHome/SCMHome.cshtml",empleado);
+            return View("~/Views/StorageCenterManager/SCMHome/SCMHome.cshtml", scm);
         }
 
         [HttpPost]
-        public ActionResult Home(SCM emple) //(SCMModel emple) 
+        public ActionResult Register() //(SCMModel emple) 
         {
+            SCM scm = (SCM)TempData["scm"];
+            string carnet = Request["InputCarnet"].ToString();
             //SCMModel emple =  TempData["data"] as SCMModel;
             //System.Diagnostics.Debug.WriteLine("NOMBRE: " + emple.Name);
             //string carnet = Request["InputCarnet"].ToString();
@@ -39,7 +36,7 @@ namespace X_TEC.TEColones.Controllers.StorageCenterManager
 
 
 
-            return View("~/Views/StorageCenterManager/SCMHome/SCMHome.cshtml", emple);
+            return View("~/Views/StorageCenterManager/SCMHome/SCMHome.cshtml", scm);
         }
     }
 }

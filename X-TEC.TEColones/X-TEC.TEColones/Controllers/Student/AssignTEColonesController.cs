@@ -24,14 +24,19 @@ namespace X_TEC.TEColones.Controllers.Student
         public ActionResult AssignTCS_Comedor()
         {
             StudentModel user = (StudentModel)TempData["student"];
-            int tcsToAssign = Int32.Parse(Request["TCSToAssgin"]);
-            float colones = user.AssignTCS.ExRDinningRoom * tcsToAssign;
 
-            if(DBConnection.InsertLogAssign(user.Id, "Comedor", tcsToAssign, colones, user.AssignTCS.ExRDinningRoom))
+            if (user.TCS != 0)
             {
-                user.TCS -= tcsToAssign;
-            }
 
+                int tcsToAssign = Int32.Parse(Request["TCSToAssgin"]);
+                float colones = user.AssignTCS.ExRDinningRoom * tcsToAssign;
+
+                if (DBConnection.InsertLogAssign(user.Id, "Comedor", tcsToAssign, colones, user.AssignTCS.ExRDinningRoom))
+                {
+                    user.TCS -= tcsToAssign;
+                }
+            }
+            ViewBag.Error = "No cuenta con suficientes TEColones";
             return PartialView("~/Views/Student/AssignTEColones/AssignTEColones.cshtml", user);
         }
 
@@ -39,14 +44,17 @@ namespace X_TEC.TEColones.Controllers.Student
         public ActionResult AssignTCS_Matricula()
         {
             StudentModel user = (StudentModel)TempData["student"];
-            int tcsToAssign = Int32.Parse(Request["TCSToAssgin1"]);
-            float colones = user.AssignTCS.ExREnrollment * tcsToAssign;
-
-            if (DBConnection.InsertLogAssign(user.Id, "Matricula", tcsToAssign, colones, user.AssignTCS.ExREnrollment))
+            if (user.TCS != 0)
             {
-                user.TCS -= tcsToAssign;
-            }
+                int tcsToAssign = Int32.Parse(Request["TCSToAssgin1"]);
+                float colones = user.AssignTCS.ExREnrollment * tcsToAssign;
 
+                if (DBConnection.InsertLogAssign(user.Id, "Matricula", tcsToAssign, colones, user.AssignTCS.ExREnrollment))
+                {
+                    user.TCS -= tcsToAssign;
+                }
+            }
+            ViewBag.Error = "No cuenta con suficientes TEColones";
             return PartialView("~/Views/Student/AssignTEColones/AssignTEColones.cshtml", user);
         }
     }
