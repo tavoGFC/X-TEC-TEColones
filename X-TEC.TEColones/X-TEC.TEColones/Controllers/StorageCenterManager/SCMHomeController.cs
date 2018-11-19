@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using X_TEC.TEColones.Models.SCMModels;
+using X_TEC.TEColones.Persistence;
 
 namespace X_TEC.TEColones.Controllers.StorageCenterManager
 {
@@ -24,19 +25,23 @@ namespace X_TEC.TEColones.Controllers.StorageCenterManager
         {
             SCM scm = (SCM)TempData["scm"];
             string carnet = Request["InputCarnet"].ToString();
-            //SCMModel emple =  TempData["data"] as SCMModel;
-            //System.Diagnostics.Debug.WriteLine("NOMBRE: " + emple.Name);
-            //string carnet = Request["InputCarnet"].ToString();
-            //emple.Name = "El Barto";
-            //System.Diagnostics.Debug.WriteLine("CARNET INGRESADO: " +  InputCarnet);
-            //System.Diagnostics.Debug.WriteLine("PYC INGRESADO: " + Request["InputCarnet"]);
-            //System.Diagnostics.Debug.WriteLine("PLASTICO INGRESADO: " + InputPlastico);
-            //System.Diagnostics.Debug.WriteLine("TETRAPACK INGRESADO: " + InputTetrapack);
-            //System.Diagnostics.Debug.WriteLine("VIDRIO INGRESADO: " + InputVidrio);
+            string valuePaper = Request["InputPyC"];
+            string valuePlastic = Request["InputPlastico"];
+            string valueTetrapack = Request["InputTetrapack"];
+            string valueGlass = Request["InputVidrio"];
 
+            if (DBConnection.ExistUser(carnet).Equals(1))
+            {
+               
+                return PartialView("~/Views/StorageCenterManager/SCMHome/SCMHome.cshtml", scm);
+            }
+            else
+            {
+                ViewBag.Message = "Usuario no existe, ingrese uno valido";
+                return PartialView("~/Views/StorageCenterManager/SCMHome/SCMHome.cshtml", scm);
+            }
 
-
-            return View("~/Views/StorageCenterManager/SCMHome/SCMHome.cshtml", scm);
+            //return View("~/Views/StorageCenterManager/SCMHome/SCMHome.cshtml", scm);
         }
     }
 }
