@@ -8,12 +8,13 @@ using System.Data;
 using System.Configuration;
 using X_TEC.TEColones.Models.StudentModels;
 using X_TEC.TEColones.Models.AdminModels;
+using System.Globalization;
 
 namespace X_TEC.TEColones.Persistence
 {
     public class DBConnection
     {
-        private static readonly string connectionString = @"Data Source=projectce.database.windows.net;User ID=mustang;Password=********;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private static readonly string connectionString = @"Data Source=RANDYMARTZ436A;Initial Catalog=xttcDB;Integrated Security=True;Pooling=False";
 
         private static SqlConnection connection = new SqlConnection(connectionString);
 
@@ -23,7 +24,7 @@ namespace X_TEC.TEColones.Persistence
         /// </summary>
         /// <param name="student"></param>
         /// <returns></returns>
-        public static bool InsertStudent(CreateUser student)
+        public static bool InsertStudent(Models.StudentModels.CreateUser student)
         {
             try
             {           
@@ -154,7 +155,7 @@ namespace X_TEC.TEColones.Persistence
         }
 
         /// <summary>
-        /// Insert new keys and tokens of twitter into the data base.
+        /// Insert new two keys and two tokens of the twitter account into the data base.
         /// </summary>
         /// <param name="ConsumerKey"></param>
         /// <param name="ConsumerSecret"></param>
@@ -185,7 +186,10 @@ namespace X_TEC.TEColones.Persistence
                 Console.WriteLine("Error Inserting Data" + ex.Message);
             }
         }
-
+        /// <summary>
+        /// Get the the two keys and two tokens of the twitter account from the data base. 
+        /// </summary>
+        /// <param name="Config"></param>
         public static void GetTwitterData(ConfigurationModel Config)
         {
             try
@@ -203,19 +207,67 @@ namespace X_TEC.TEColones.Persistence
                 while (reader.Read())
                 {
                     Config.CONSUMER_KEY = reader[0].ToString();
+                    //Console.WriteLine(Config.CONSUMER_KEY);
+
                     Config.CONSUMER_SECRET = reader[1].ToString();
+                    //Console.WriteLine(Config.CONSUMER_SECRET);
+
                     Config.ACCESS_TOKEN = reader[2].ToString();
+                    //Console.WriteLine(Config.ACCESS_TOKEN);
+
                     Config.ACCESS_TOKEN_SECRET = reader[3].ToString();
+                    //Console.WriteLine(Config.ACCESS_TOKEN_SECRET);
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error Inserting Data" + ex.Message);
             }
+            connection.Close();
+        }
+
+       
+        public static void InsertMaterialTCSValue(int PlasticNewValue, int GlassNewValue, int PaperNewValue, int AluminumNewValue)
+        {
+
+
+        }
+
+        /// <summary>
+        /// Get the value in TEColones of the Materials
+        /// </summary>
+        /// <param name="Config"></param>
+        public static void GetMaterialTCSValue(ConfigurationModel Config)
+        {
+            try
+            {
+                connection.Close();
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT TOP 4 Type, ValueTCS FROM Material", connection)
+                {
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Config.PlasticValue = float.Parse(reader["ValueTCS"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
+                    Config.PaperValue = float.Parse(reader["ValueTCS"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
+                    Config.GlassValue = float.Parse(reader["ValueTCS"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
+                    Config.AluminumValue = float.Parse(reader["ValueTCS"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Getting Data" + ex.Message);
+            }
+            connection.Close();
+
         }
 
         #region Operaciones
-       public int Suma(int a, int b)
+        public int Suma(int a, int b)
         {
             int c = a + b;
             return c;

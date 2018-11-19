@@ -9,18 +9,18 @@ namespace X_TEC.TEColones.Models.AdminModels
     public class ConfigurationModel
     {
 
-        public int PlasticValue { get; set; }
+        public float PlasticValue { get; set; }
 
-        public int GlassValue = 12;
-        //public int GlassValue { get; set; }
+        //public int GlassValue = 12;
+        public float GlassValue { get; set; }
 
-        public int PaperValue { get; set; }
+        public float PaperValue { get; set; }
 
-        public int AluminumValue { get; set; }
+        public float AluminumValue { get; set; }
 
-        public int DinningExchange { get; set; }
+        public float DinningExchange { get; set; }
 
-        public int StudyExchange { get; set; }
+        public float StudyExchange { get; set; }
 
         public string CONSUMER_KEY { get; set; }
 
