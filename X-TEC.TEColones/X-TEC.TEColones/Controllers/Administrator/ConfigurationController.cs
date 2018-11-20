@@ -46,7 +46,6 @@ namespace X_TEC.TEColones.Controllers.Administrator
         #endregion
 
         #region UpdatedMainViewTabs
-
         public ActionResult UpdatedMaterialValueConfiguration(ConfigurationModel Config)
         {
             return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", Config);
