@@ -117,7 +117,11 @@ namespace X_TEC.TEColones.Persistence
             connection.Close();  
         }
         
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="NewDinningExchange"></param>
+        /// <param name="NewStudyExchange"></param>
         public static void InsertNewBenefitsValue(float NewDinningExchange, float NewStudyExchange)
         {
             try

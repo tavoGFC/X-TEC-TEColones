@@ -1,4 +1,4 @@
-﻿@model X_TEC.TEColones.Models.AdminModels.ConfigurationModel
+﻿@model X_TEC.TEColones.Models.AdminModels.AdminModel
 
 
 @{
@@ -53,19 +53,19 @@
                 </tr>
                 <tr>
                     <td>Plastico</td>
-                    <td><input type="number" id="inputPlastic" name="inputPlastic" placeholder="@Model.PlasticValue" /></td>
+                    <td><input type="number" id="inputPlastic" name="inputPlastic" placeholder="@Model.ConfigurationModel.PlasticValue" /></td>
                 </tr>
                 <tr>
                     <td>Papel</td>
-                    <td><input type="number" id="inputPaper" name="inputPaper" placeholder="@Model.PaperValue" /></td>
+                    <td><input type="number" id="inputPaper" name="inputPaper" placeholder="@Model.ConfigurationModel.PaperValue" /></td>
                 </tr>
                 <tr>
                     <td>Vidrio</td>
-                    <td><input type="number" id="inputGlass" name="inputGlass" placeholder="@Model.GlassValue" /></td>
+                    <td><input type="number" id="inputGlass" name="inputGlass" placeholder="@Model.ConfigurationModel.GlassValue" /></td>
                 </tr>
                 <tr>
                     <td>Aluminio</td>
-                    <td><input type="number" id="inputAluminum" name="inputAluminum" placeholder="@Model.AluminumValue" /></td>
+                    <td><input type="number" id="inputAluminum" name="inputAluminum" placeholder="@Model.ConfigurationModel.AluminumValue" /></td>
                 </tr>
             </table>
         </div>

@@ -17,9 +17,10 @@ namespace X_TEC.TEColones.Controllers.Administrator
         /// <returns></returns>
         public ActionResult MaterialValueConfiguration()
         {
-            ConfigurationModel Config = new ConfigurationModel();
-            DBConnection.GetMaterialTCSValue(Config);
-            return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", Config);
+            AdminModel AdminModel = new AdminModel();
+            //ConfigurationModel Config = new ConfigurationModel();
+            DBConnection.GetMaterialTCSValue(AdminModel.ConfigurationModel);
+            return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", AdminModel);
         }
 
         /// <summary>

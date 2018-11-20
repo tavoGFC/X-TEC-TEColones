@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminModels\Admin.cs" />
+    <Compile Include="AdminModels\AdminModel.cs" />
     <Compile Include="AdminModels\ConfigurationModel.cs" />
     <Compile Include="AdminModels\CreateUser.cs" />
     <Compile Include="SCMModels\SCM.cs" />
