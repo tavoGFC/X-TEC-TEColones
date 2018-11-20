@@ -27,34 +27,35 @@
             </li>
         </ul>
     </div>
-
-    <div class="py-2">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3 align="center">Tasa de Cambio</h3>
-                    <h4 align="center">(Matrícula)</h4>
-                    <p class="" align="center" style="font-size:30px;">
-                        <img src="~/Content/Recursos/iconoTEColones.png" width="55" height="55" align="middle"> 1 =
-                        <input type="number" name="inputTCSStudy" placeholder="0.2" width="50" height="50" step=".01" />
-                    </p>
-
-
-                    <h3 align="center">Tasa de Cambio</h3>
-                    <h4 align="center">(Comedor)</h4>
-                    <p class="" align="center" style="font-size:30px;">
-                        <img src="~/Content/Recursos/iconoTEColones.png" width="55" height="55" align="middle"> 1 =
-                        <input type="number" name="inputTCSDinning" placeholder="0.4" maxlength="2" size="2" step=".01" />
-                    </p>
+    @using (Html.BeginForm("GetNewExchangeTCSValues", "Configuration", FormMethod.Post))
+    {
+        <div class="py-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 align="center">Tasa de Cambio</h3>
+                        <h4 align="center">(Matrícula)</h4>
+                        <p class="" align="center" style="font-size:30px;">
+                            <img src="~/Content/Recursos/iconoTEColones.png" width="55" height="55" align="middle"> 1 =
+                            <input type="number" name="inputTCSStudy" placeholder="0.2" width="50" height="50" step=".01" />
+                        </p>
+                        <h3 align="center">Tasa de Cambio</h3>
+                        <h4 align="center">(Comedor)</h4>
+                        <p class="" align="center" style="font-size:30px;">
+                            <img src="~/Content/Recursos/iconoTEColones.png" width="55" height="55" align="middle"> 1 =
+                            <input type="number" name="inputTCSDinning" placeholder="0.4" maxlength="2" size="2" step=".01" />
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-
-
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-75">Guardar</button>
+        </div>
+        <div class="row justify-content-center">
+            <button type="reset" class="btn btn-primary text-center justify-content-center align-items-center w-75">Cancelar</button>
+        </div>
+    }
 </body>
 
 

@@ -43,32 +43,39 @@
             </li>
         </ul>
     </div>
-
-    <div class="py-3">
-        <table align="center">
-            <tr>
-                <th>Categoria</th>
-                <th>TEColones por kg</th>
-            </tr>
-            <tr>
-                <td>Plastico</td>
-                <td><input type="number" name="inputPlastic" placeholder="fff"/></td>
-            </tr>
-            <tr>
-                <td>Vidrio</td>
-                <td><input type="number" name="inputGlass" placeholder="ffff" /></td>
-            </tr>
-            <tr>
-                <td>Papel</td>
-                <td><input type="number" name="inputPaper" placeholder="ffff"/></td>
-            </tr>
-            <tr>
-                <td>Aluminio</td>
-                <td><input type="number" name="inputAluminum" placeholder="ffff" /></td>
-            </tr>
-        </table>
-    </div>
-
+    @using (Html.BeginForm("GetNewMaterialTCSValues", "Configuration", FormMethod.Post))
+    {
+        <div class="py-3">
+            <table align="center">
+                <tr>
+                    <th>Categoria</th>
+                    <th>TEColones por kg</th>
+                </tr>
+                <tr>
+                    <td>Plastico</td>
+                    <td><input type="number" id="inputPlastic" name="inputPlastic" placeholder="@Model.PlasticValue" /></td>
+                </tr>
+                <tr>
+                    <td>Papel</td>
+                    <td><input type="number" id="inputPaper" name="inputPaper" placeholder="@Model.PaperValue" /></td>
+                </tr>
+                <tr>
+                    <td>Vidrio</td>
+                    <td><input type="number" id="inputGlass" name="inputGlass" placeholder="@Model.GlassValue" /></td>
+                </tr>
+                <tr>
+                    <td>Aluminio</td>
+                    <td><input type="number" id="inputAluminum" name="inputAluminum" placeholder="@Model.AluminumValue" /></td>
+                </tr>
+            </table>
+        </div>
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-75">Guardar</button>
+        </div>
+        <div class="row justify-content-center">
+            <button type="reset" class="btn btn-primary text-center justify-content-center align-items-center w-75">Cancelar</button>
+        </div>
+    }
     <!--</form> -->
 </body>
 

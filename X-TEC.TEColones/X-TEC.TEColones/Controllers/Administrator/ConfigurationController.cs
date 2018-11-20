@@ -18,15 +18,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult MaterialValueConfiguration()
         {
             ConfigurationModel Config = new ConfigurationModel();
-            DBConnection.GetMaterialTCSValue(Config);
-            Console.WriteLine("++++++++++++++++++++++++++++++++++++++++");
-            Console.WriteLine
-                (
-                Config.PlasticValue.ToString(),
-                Config.PaperValue.ToString(), 
-                Config.GlassValue.ToString(), 
-                Config.AluminumValue.ToString()
-                );
+            //DBConnection.GetMaterialTCSValue(Config);
             return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", Config);
         }
 
@@ -37,7 +29,8 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult TCSValueConfiguration()
         {
             ConfigurationModel Config = new ConfigurationModel();
-            return View("~/Views/Administrator/Configuration/TEColonesConfig.cshtml");
+            //DBConnection.GetBenefitsValue(Config);
+            return View("~/Views/Administrator/Configuration/TEColonesConfig.cshtml", Config);
         }
 
         /// <summary>
@@ -47,9 +40,34 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult TwitterConfiguration()
         {
             ConfigurationModel Config = new ConfigurationModel();
-            DBConnection.GetTwitterData(Config);
+            //DBConnection.GetTwitterData(Config);
             return View("~/Views/Administrator/Configuration/TwitterConfig.cshtml", Config);
         }
 
+        
+        /// <summary>
+        /// Sends the new TCS values of the material from the input table and send them to the database.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetNewMaterialTCSValues()
+        {
+            //float PlasticNewValue = float.Parse(Request["inputPlastic"].ToString());
+            //float PaperNewValue = float.Parse(Request["inputPlastic"].ToString());
+            //float GlassNewValue = float.Parse(Request["inputPlastic"].ToString());
+            //float AluminumNewValue = float.Parse(Request["inputPlastic"].ToString());
+
+            //DBConnection.InsertMaterialTCSValue(PlasticNewValue, PaperNewValue, GlassNewValue, AluminumNewValue);
+
+            return MaterialValueConfiguration();
+        }
+
+        
+        [HttpPost]
+        public ActionResult GetNewExchangeTCSValues()
+        {
+            return TCSValueConfiguration();
+        }
+        
     }
 }

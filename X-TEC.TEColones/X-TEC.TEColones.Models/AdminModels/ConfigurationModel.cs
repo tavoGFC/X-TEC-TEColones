@@ -11,7 +11,6 @@ namespace X_TEC.TEColones.Models.AdminModels
 
         public float PlasticValue { get; set; }
 
-        //public int GlassValue = 12;
         public float GlassValue { get; set; }
 
         public float PaperValue { get; set; }
