@@ -12,12 +12,16 @@ namespace X_TEC.TEColones.Models.AdminModels
         public AdminModel()
         {
             ConfigurationModel = new ConfigurationModel();
+            PromotionModel = new PromotionModel();
         }
+
         public ConfigurationModel ConfigurationModel { get; set; }
 
-        public string Identification { get; set; }
+        public PromotionModel PromotionModel  { get; set; }
 
         public string Department { get; set; }
+
+        public string PhoneNumber { get; set; }
 
 
 

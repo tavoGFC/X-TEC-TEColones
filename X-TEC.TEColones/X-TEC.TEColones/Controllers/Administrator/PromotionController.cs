@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using X_TEC.TEColones.Models.AdminModels;
 
 namespace X_TEC.TEColones.Controllers.Administrator
 {
@@ -11,12 +12,14 @@ namespace X_TEC.TEColones.Controllers.Administrator
         // GET: Promotion
         public ActionResult ViewPromotion()
         {
-            return View("~/Views/Administrator/Promotion/ViewPromotion.cshtml");
+            AdminModel AdminModel = (AdminModel)TempData["admin"];
+            return View("~/Views/Administrator/Promotion/ViewPromotion.cshtml", AdminModel);
         }
 
         public ActionResult CreatePromotion()
         {
-            return View("~/Views/Administrator/Promotion/CreatePromotion.cshtml");
+            AdminModel AdminModel = (AdminModel)TempData["admin"];
+            return View("~/Views/Administrator/Promotion/CreatePromotion.cshtml", AdminModel);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using X_TEC.TEColones.Models.StudentModels;
 using X_TEC.TEColones.Persistence;
+using X_TEC.TEColones.Models.AdminModels;
 
 namespace X_TEC.TEColones.Controllers
 {
@@ -37,8 +38,15 @@ namespace X_TEC.TEColones.Controllers
         [HttpPost]
         public ActionResult LogIn()
         {
-            string message = "";
-            return LogIn(message);            
+            AdminModel AdminModel = new AdminModel
+            {
+                FirstName = "Randy Admin",
+                LastName = "Prueba",
+                Id = 2010141516,
+                
+            };
+            TempData["admin"] = AdminModel;
+            return RedirectToAction("Home", "AdminHome");            
         }
 
     }

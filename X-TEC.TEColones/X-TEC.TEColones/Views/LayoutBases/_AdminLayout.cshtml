@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model X_TEC.TEColones.Models.AdminModels.AdminModel
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -14,7 +15,7 @@
                 <div class="col-md-6"><img class="img-fluid d-block" src="~/Content/Recursos/TEColonesBanner.jpg"></div>
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-md-6"><a class="btn btn-link btn-lg w-100" href="#" id="nombreAdminID">Nombre del Administrador</a></div>
+                        <div class="col-md-6"><a class="btn btn-link btn-lg w-100" href="#" id="nombreAdminID"> @Model.FirstName   @Model.LastName </a></div>
                         <div class="col-md-6"><img class="img-fluid d-block rounded-circle" src="~/Content/Recursos/FotoTest.jpg" width="150" height="150" id="imagenPerfilLayout"></div>
                         <div class="col-md-6"></div>
                         <div class="col-md-6"><a class="btn btn-link" href="#">Cerrar sesion</a></div>
@@ -30,6 +31,9 @@
             </button>
             <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
                 <ul class="navbar-nav">
+                    @{ 
+                        TempData["admin"] = @Model;
+                    }
                     <li class="nav-item mx-2">@Html.ActionLink("Pagina Principal", "Home", "AdminHome")</li>
                     <li class="nav-item mx-2">@Html.ActionLink("Crear Usuario", "Index", "CreateUser")</li>
                     <li class="nav-item mx-2">@Html.ActionLink("Configuracion", "MaterialValueConfiguration", "Configuration")</li>

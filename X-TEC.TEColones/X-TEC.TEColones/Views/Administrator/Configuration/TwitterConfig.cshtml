@@ -1,6 +1,4 @@
-﻿@model X_TEC.TEColones.Models.AdminModels.ConfigurationModel
-
-
+﻿@model X_TEC.TEColones.Models.AdminModels.AdminModel
 @{
     ViewBag.Title = "TwitterConfiguration";
     Layout = "~/Views/LayoutBases/_AdminLayout.cshtml";
@@ -14,6 +12,9 @@
 </head>
 
 <body>
+    @{
+        TempData["admin"] = @Model;
+    }
     <div class="py-2">
         <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
@@ -49,7 +50,7 @@
         </div>
     }
 
-    </body>
+</body>
 
 
 </html>
