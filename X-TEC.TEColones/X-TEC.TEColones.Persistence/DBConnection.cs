@@ -14,7 +14,7 @@ namespace X_TEC.TEColones.Persistence
 {
     public class DBConnection
     {
-        private static readonly string connectionString = @"Data Source=projectce.database.windows.net;Initial Catalog = XTEColones; User ID = mustang; Password=randyCE09!;Connect Timeout = 30; Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private static readonly string connectionString = "Server=tcp:projectce.database.windows.net,1433;Initial Catalog=XTEColones;Persist Security Info=False;User ID=mustang;Password=randyCE09!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
 
         private static SqlConnection connection = new SqlConnection(connectionString);
 
@@ -31,19 +31,20 @@ namespace X_TEC.TEColones.Persistence
                 connection.Close();
                 connection.Open();
 
-                SqlCommand command = new SqlCommand("SELECT TOP 4 ValueTCS FROM Material", connection)
+                SqlCommand command = new SqlCommand("SELECT Type, ValueTCS FROM Material", connection)
                 {
                     CommandType = CommandType.Text
                 };
-
+            
                 SqlDataReader reader = command.ExecuteReader();
+                Config.ValuesTCS =  new List<float>();
+               
                 while (reader.Read())
                 {
-                    Config.PlasticValue = float.Parse(reader["ValueTCS"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
-                    Config.PaperValue = float.Parse(reader["ValueTCS"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
-                    Config.GlassValue = float.Parse(reader["ValueTCS"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
-                    Config.AluminumValue = float.Parse(reader["ValueTCS"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
+                    float value =  float.Parse(reader["ValueTCS"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
+                    Config.ValuesTCS.Add(value);
                 }
+                Config.SetValues();
             }
             catch (Exception ex)
             {
@@ -65,6 +66,7 @@ namespace X_TEC.TEColones.Persistence
             try
             {
                 connection.Close();
+                connection.Open();
 
                 SqlCommand command = new SqlCommand("SP_Insert_NewMaterialValues", connection)
                 {
@@ -76,7 +78,6 @@ namespace X_TEC.TEColones.Persistence
                 command.Parameters.AddWithValue("GlassNewValue", GlassNewValue);
                 command.Parameters.AddWithValue("AluminumNewValue", AluminumNewValue);
 
-                connection.Open();
                 command.ExecuteNonQuery();
 
             }
@@ -86,6 +87,7 @@ namespace X_TEC.TEColones.Persistence
             }
         }
 
+
         public static void GetBenefitsValue(ConfigurationModel Config)
         {
             try
@@ -93,18 +95,20 @@ namespace X_TEC.TEColones.Persistence
                 connection.Close();
                 connection.Open();
 
-                SqlCommand command = new SqlCommand("SELECT ExchangeRate FROM Benefit" , connection)
+                SqlCommand command = new SqlCommand("SELECT Type, ExchangeRate FROM Benefit" , connection)
                 {
                     CommandType = CommandType.Text
                 };
 
                 SqlDataReader reader = command.ExecuteReader();
+
+                List<float> values = new List<float>();
                 while (reader.Read())
                 {
-                    Config.DinningExchange = float.Parse(reader["ExchangeRate"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
-                    Config.StudyExchange = float.Parse(reader["ExchangeRate"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
-
+                    values.Add(float.Parse(reader["ExchangeRate"].ToString(), CultureInfo.InvariantCulture.NumberFormat));
                 }
+                Config.DinningExchange = values[0];
+                Config.StudyExchange = values[1];
             }
             catch (Exception ex)
             {
@@ -120,13 +124,13 @@ namespace X_TEC.TEColones.Persistence
             {
                 connection.Close();
 
-                SqlCommand command = new SqlCommand("SP_Insert_NewBenefits", connection)
+                SqlCommand command = new SqlCommand("SP_Insert_NewBenefitsValue", connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue("Comedor", NewDinningExchange);
-                command.Parameters.AddWithValue("Matricula", NewStudyExchange);
+                command.Parameters.AddWithValue("ExchangeRateComedor", NewDinningExchange);
+                command.Parameters.AddWithValue("ExchangeRateMatricula", NewStudyExchange);
                
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -149,7 +153,7 @@ namespace X_TEC.TEColones.Persistence
                 connection.Close();
                 connection.Open();
 
-                SqlCommand command = new SqlCommand("SP_Insert_NewTwitterData", connection)
+                SqlCommand command = new SqlCommand("SP_Get_TwitterData", connection)
                 {
                     CommandType = CommandType.Text
                 };
@@ -159,16 +163,9 @@ namespace X_TEC.TEColones.Persistence
                 while (reader.Read())
                 {
                     Config.CONSUMER_KEY = reader[0].ToString();
-                    //Console.WriteLine(Config.CONSUMER_KEY);
-
                     Config.CONSUMER_SECRET = reader[1].ToString();
-                    //Console.WriteLine(Config.CONSUMER_SECRET);
-
                     Config.ACCESS_TOKEN = reader[2].ToString();
-                    //Console.WriteLine(Config.ACCESS_TOKEN);
-
                     Config.ACCESS_TOKEN_SECRET = reader[3].ToString();
-                    //Console.WriteLine(Config.ACCESS_TOKEN_SECRET);
                 }
             }
             catch (Exception ex)

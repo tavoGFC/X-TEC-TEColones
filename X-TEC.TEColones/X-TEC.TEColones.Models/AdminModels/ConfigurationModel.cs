@@ -9,6 +9,8 @@ namespace X_TEC.TEColones.Models.AdminModels
     public class ConfigurationModel
     {
 
+        public List<float> ValuesTCS { get; set; }
+
         public float PlasticValue { get; set; }
 
         public float GlassValue { get; set; }
@@ -29,5 +31,14 @@ namespace X_TEC.TEColones.Models.AdminModels
 
         public string ACCESS_TOKEN_SECRET { get; set; }
 
+        
+
+        public void SetValues()
+        {
+            PlasticValue = ValuesTCS[0];
+            PaperValue = ValuesTCS[1];
+            GlassValue = ValuesTCS[2];
+            AluminumValue = ValuesTCS[3];
+        }
     }
 }

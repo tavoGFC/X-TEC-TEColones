@@ -18,7 +18,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult MaterialValueConfiguration()
         {
             ConfigurationModel Config = new ConfigurationModel();
-            //DBConnection.GetMaterialTCSValue(Config);
+            DBConnection.GetMaterialTCSValue(Config);
             return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", Config);
         }
 
@@ -29,7 +29,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult TCSValueConfiguration()
         {
             ConfigurationModel Config = new ConfigurationModel();
-            //DBConnection.GetBenefitsValue(Config);
+            DBConnection.GetBenefitsValue(Config);
             return View("~/Views/Administrator/Configuration/TEColonesConfig.cshtml", Config);
         }
 
@@ -39,8 +39,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
         /// <returns></returns>
         public ActionResult TwitterConfiguration()
         {
-            ConfigurationModel Config = new ConfigurationModel();
-            //DBConnection.GetTwitterData(Config);
+            ConfigurationModel Config = new ConfigurationModel();            
             return View("~/Views/Administrator/Configuration/TwitterConfig.cshtml", Config);
         }
         #endregion
@@ -73,9 +72,9 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult GetNewMaterialTCSValues()
         {
             float PlasticNewValue = float.Parse(Request["inputPlastic"].ToString());
-            float PaperNewValue = float.Parse(Request["inputPlastic"].ToString());
-            float GlassNewValue = float.Parse(Request["inputPlastic"].ToString());
-            float AluminumNewValue = float.Parse(Request["inputPlastic"].ToString());
+            float PaperNewValue = float.Parse(Request["inputPaper"].ToString());
+            float GlassNewValue = float.Parse(Request["inputGlass"].ToString());
+            float AluminumNewValue = float.Parse(Request["inputAluminum"].ToString());
 
             DBConnection.InsertNewMaterialTCSValue(PlasticNewValue, PaperNewValue, GlassNewValue, AluminumNewValue);
 
@@ -95,7 +94,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
             float NewStudyExchange = float.Parse(Request["inputTCSStudy"].ToString());
             float NewDinningExchange = float.Parse(Request["inputTCSDinning"].ToString());
 
-            DBConnection.InsertNewBenefitsValue(NewStudyExchange, NewDinningExchange);
+            DBConnection.InsertNewBenefitsValue(NewDinningExchange, NewStudyExchange);
 
             ConfigurationModel Config = new ConfigurationModel
             {
