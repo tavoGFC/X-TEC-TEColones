@@ -198,7 +198,7 @@ namespace X_TEC.TEColones.Persistence
         /// <param name="GlassNewValue"></param>
         /// <param name="PaperNewValue"></param>
         /// <param name="AluminumNewValue"></param>
-        public static void InsertMaterialTCSValue(float PlasticNewValue, float GlassNewValue, float PaperNewValue, float AluminumNewValue)
+        public static void InsertNewMaterialTCSValue(float PlasticNewValue, float GlassNewValue, float PaperNewValue, float AluminumNewValue)
         {
             try
             {
@@ -226,7 +226,6 @@ namespace X_TEC.TEColones.Persistence
 
         public static void GetBenefitsValue(ConfigurationModel Config)
         {
-            /*
             try
             {
                 connection.Close();
@@ -249,9 +248,34 @@ namespace X_TEC.TEColones.Persistence
             {
                 Console.WriteLine("Error Getting Data" + ex.Message);
             }
-            connection.Close();
-            */
+            connection.Close();  
         }
+        
+
+        public static void InsertNewBenefitsValue(float NewDinningExchange, float NewStudyExchange)
+        {
+            try
+            {
+                connection.Close();
+
+                SqlCommand command = new SqlCommand("SP_Insert_NewBenefits", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("Comedor", NewDinningExchange);
+                command.Parameters.AddWithValue("Matricula", NewStudyExchange);
+               
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Inserting Data" + ex.Message);
+            }
+        }
+
+
         /// <summary>
         /// Get the the two keys and two tokens of the twitter account from the database. 
         /// </summary>
@@ -263,7 +287,7 @@ namespace X_TEC.TEColones.Persistence
                 connection.Close();
                 connection.Open();
 
-                SqlCommand command = new SqlCommand("SP_Insert_TwitterData", connection)
+                SqlCommand command = new SqlCommand("SP_Insert_NewTwitterData", connection)
                 {
                     CommandType = CommandType.Text
                 };
@@ -293,13 +317,13 @@ namespace X_TEC.TEColones.Persistence
         }
 
         /// <summary>
-        /// Insert new two keys and two tokens of the twitter account into the database.
+        /// Updates the two keys and two tokens of the twitter account into the database.
         /// </summary>
         /// <param name="ConsumerKey"></param>
         /// <param name="ConsumerSecret"></param>
         /// <param name="AcessToken"></param>
         /// <param name="AccessTokenSecret"></param>
-        public static void InsertTwitterData(string ConsumerKey, string ConsumerSecret, string AcessToken, string AccessTokenSecret)
+        public static void InsertNewTwitterData(string ConsumerKey, string ConsumerSecret, string AcessToken, string AccessTokenSecret)
         {
             try
             {

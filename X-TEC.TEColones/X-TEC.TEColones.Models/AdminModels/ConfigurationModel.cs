@@ -17,9 +17,9 @@ namespace X_TEC.TEColones.Models.AdminModels
 
         public float AluminumValue { get; set; }
 
-        public float DinningExchange { get; set; }
-
         public float StudyExchange { get; set; }
+
+        public float DinningExchange { get; set; }
 
         public string CONSUMER_KEY { get; set; }
 

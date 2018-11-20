@@ -28,21 +28,28 @@
         </ul>
     </div>
 
-    <div class="py-2">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3 align="center">Consumer Key: <input type="text" name="inputConsumerKey" /> </h3>
-                    <h3 align="center">Consumer Secret: <input type="text" name="inputConsumerSecret" /></h3>
-                    <h3 align="center">Access Token: <input type="text" name="inputAccessToken" /></h3>
-                    <h3 align="center">Access Token Secret: <input type="text" name="inputAccessTokenSecret" /></h3>
-
+    @using (Html.BeginForm("GetNewTwitterCredentials", "Configuration", FormMethod.Post))
+    {
+        <div class="py-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 align="center">Consumer Key: <input type="text" id="inputConsumerKey" name="inputConsumerKey" /> </h3>
+                        <h3 align="center">Consumer Secret: <input type="text" id="inputConsumerSecret" name="inputConsumerSecret" /></h3>
+                        <h3 align="center">Access Token: <input type="text" id="inputAccessToken" name="inputAccessToken" /></h3>
+                        <h3 align="center">Access Token Secret: <input type="text" id="inputAccessTokenSecret" name="inputAccessTokenSecret" /></h3>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-30">Guardar</button>
+            &nbsp;
+            <button type="reset" class="btn btn-outline-secondary text-center justify-content-center align-items-center w-30">Cancelar</button>
+        </div>
+    }
 
-</body>
+    </body>
 
 
 </html>
