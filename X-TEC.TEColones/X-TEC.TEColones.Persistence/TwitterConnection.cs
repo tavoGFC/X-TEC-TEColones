@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 using Tweetinvi;
 using X_TEC.TEColones.Models.AdminModels;
 
@@ -14,8 +13,7 @@ namespace X_TEC.TEColones.Persistence
         public void SetCredentials()
         {
             //string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret
-            AdminModel AdminModel = (AdminModel)TempData["admin"];
-
+            //AdminModel AdminModel = (AdminModel)TempData["admin"];
 
         }
 

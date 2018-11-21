@@ -56,11 +56,11 @@
                 </tr>
                 <tr>
                     <td>Plastico</td>
-                    <td><input type="number" id="inputPlastic" name="inputPlastic" placeholder="@Model.ConfigurationModel.PlasticValue" /></td>
+                    <td><input type="number" id="inputPlastic" name="inputPlastic" placeholder="@Model.ConfigurationModel.PlasticValue" required oninvalid="this.setCustomValidity('Holi')" oninput="setCustomValidity('')"/></td>
                 </tr>
                 <tr>
                     <td>Papel</td>
-                    <td><input type="number" id="inputPaper" name="inputPaper" placeholder="@Model.ConfigurationModel.PaperValue" /></td>
+                    <td><input type="number" id="inputPaper" name="inputPaper" placeholder="@Model.ConfigurationModel.PaperValue" required/></td>
                 </tr>
                 <tr>
                     <td>Vidrio</td>
