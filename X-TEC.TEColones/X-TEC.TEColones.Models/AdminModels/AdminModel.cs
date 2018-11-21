@@ -11,13 +11,13 @@ namespace X_TEC.TEColones.Models.AdminModels
     {
         public AdminModel()
         {
-            ConfigurationModel = new ConfigurationModel();
-            PromotionModel = new PromotionModel();
+            ConfigurationModel = new ConfigurationViewModel();
+            PromotionModel = new PromotionViewModel();
         }
 
-        public ConfigurationModel ConfigurationModel { get; set; }
+        public ConfigurationViewModel ConfigurationModel { get; set; }
 
-        public PromotionModel PromotionModel  { get; set; }
+        public PromotionViewModel PromotionModel  { get; set; }
 
         public string Department { get; set; }
 

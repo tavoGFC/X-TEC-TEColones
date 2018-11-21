@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace X_TEC.TEColones.Models.AdminModels
 {
-    public class PromotionModel
+    public class PromotionViewModel
     {
         /* 
          * 

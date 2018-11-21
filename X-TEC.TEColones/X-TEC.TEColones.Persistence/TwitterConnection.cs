@@ -10,22 +10,13 @@ namespace X_TEC.TEColones.Persistence
 {
     class TwitterConnection
     {
-         /// <summary>
-         ///  Set the data for the account.
-         /// </summary>
-         /// <param name="consumerKey"></param>
-         /// <param name="consumerSecret"></param>
-         /// <param name="accessToken"></param>
-         /// <param name="accessTokenSecret"></param>
-        public void SetCredentials(string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret)
+         
+        public void SetCredentials()
         {
-            ConfigurationModel Config = new ConfigurationModel
-            {
-                CONSUMER_KEY = consumerKey,
-                CONSUMER_SECRET = consumerSecret,
-                ACCESS_TOKEN = accessToken,
-                ACCESS_TOKEN_SECRET = accessTokenSecret
-            };
+            //string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret
+            AdminModel AdminModel = (AdminModel)TempData["admin"];
+
+
         }
 
         /// <summary>

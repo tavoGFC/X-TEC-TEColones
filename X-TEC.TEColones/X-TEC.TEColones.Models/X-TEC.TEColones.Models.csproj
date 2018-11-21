@@ -54,9 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminModels\AdminModel.cs" />
-    <Compile Include="AdminModels\ConfigurationModel.cs" />
+    <Compile Include="AdminModels\ConfigurationViewModel.cs" />
     <Compile Include="AdminModels\CreateUser.cs" />
-    <Compile Include="AdminModels\PromotionModel.cs" />
+    <Compile Include="AdminModels\PromotionViewModel.cs" />
     <Compile Include="SCMModels\SCM.cs" />
     <Compile Include="StudentModels\AssignTCSViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

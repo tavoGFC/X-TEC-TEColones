@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace X_TEC.TEColones.Models.AdminModels
 {
-    public class ConfigurationModel
+    public class ConfigurationViewModel
     {
 
         public List<float> ValuesTCS { get; set; }

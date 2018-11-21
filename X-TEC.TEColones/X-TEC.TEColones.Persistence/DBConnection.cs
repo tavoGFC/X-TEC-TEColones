@@ -21,10 +21,10 @@ namespace X_TEC.TEColones.Persistence
         #region Configuration
 
         /// <summary>
-        /// Get the value in TEColones of the Materials
+        /// Get the value in TEColones of the Materials.
         /// </summary>
         /// <param name="Config"></param>
-        public static void GetMaterialTCSValue(ConfigurationModel Config)
+        public static void GetMaterialTCSValue(ConfigurationViewModel Config)
         {
             try
             {
@@ -87,8 +87,11 @@ namespace X_TEC.TEColones.Persistence
             }
         }
 
-
-        public static void GetBenefitsValue(ConfigurationModel Config)
+        /// <summary>
+        /// Get the benefits value in colones in each account.
+        /// </summary>
+        /// <param name="Config"></param>
+        public static void GetBenefitsValue(ConfigurationViewModel Config)
         {
             try
             {
@@ -116,9 +119,9 @@ namespace X_TEC.TEColones.Persistence
             }
             connection.Close();  
         }
-        
+
         /// <summary>
-        /// 
+        /// Edit benefits in colones in each account globally.  
         /// </summary>
         /// <param name="NewDinningExchange"></param>
         /// <param name="NewStudyExchange"></param>
@@ -150,7 +153,7 @@ namespace X_TEC.TEColones.Persistence
         /// Get the the two keys and two tokens of the twitter account from the database. 
         /// </summary>
         /// <param name="Config"></param>
-        public static void GetTwitterData(ConfigurationModel Config)
+        public static void GetTwitterData(ConfigurationViewModel Config)
         {
             try
             {

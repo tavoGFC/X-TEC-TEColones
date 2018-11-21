@@ -18,7 +18,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult MaterialValueConfiguration()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
-            AdminModel.ConfigurationModel = new ConfigurationModel();
+            AdminModel.ConfigurationModel = new ConfigurationViewModel();
             DBConnection.GetMaterialTCSValue(AdminModel.ConfigurationModel);
             return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", AdminModel);
         }
@@ -30,7 +30,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult TCSValueConfiguration()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
-            AdminModel.ConfigurationModel = new ConfigurationModel();
+            AdminModel.ConfigurationModel = new ConfigurationViewModel();
             DBConnection.GetBenefitsValue(AdminModel.ConfigurationModel);
             return View("~/Views/Administrator/Configuration/TEColonesConfig.cshtml", AdminModel);
         }
@@ -42,7 +42,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult TwitterConfiguration()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
-            //ConfigurationModel Config = new ConfigurationModel();            
+            //ConfigurationViewModel Config = new ConfigurationViewModel();            
             return View("~/Views/Administrator/Configuration/TwitterConfig.cshtml", AdminModel);
         }
         #endregion
@@ -63,7 +63,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
 
             DBConnection.InsertNewMaterialTCSValue(PlasticNewValue, PaperNewValue, GlassNewValue, AluminumNewValue);
 
-            AdminModel.ConfigurationModel = new ConfigurationModel
+            AdminModel.ConfigurationModel = new ConfigurationViewModel
             {
                 PlasticValue = PlasticNewValue,
                 PaperValue = PaperNewValue,
@@ -73,6 +73,10 @@ namespace X_TEC.TEColones.Controllers.Administrator
             return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", AdminModel);
         }
 
+        /// <summary>
+        /// Sends the new benefits values of the TCS from the input table and send them to the database.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult GetNewBenefitsValues()
         {
@@ -82,7 +86,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
 
             DBConnection.InsertNewBenefitsValue(NewDinningExchange, NewStudyExchange);
 
-            AdminModel.ConfigurationModel = new ConfigurationModel
+            AdminModel.ConfigurationModel = new ConfigurationViewModel
             {
                 StudyExchange = NewStudyExchange,
                 DinningExchange = NewDinningExchange
@@ -90,6 +94,10 @@ namespace X_TEC.TEColones.Controllers.Administrator
             return View("~/Views/Administrator/Configuration/TEColonesConfig.cshtml", AdminModel);
         }
 
+        /// <summary>
+        /// Sends the new Twitter data credentials of the input spaces and send them to the database.
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult GetNewTwitterCredentials()
         {
@@ -101,7 +109,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
 
             DBConnection.InsertNewTwitterData(NewCONSUMER_KEY, NewCONSUMER_SECRET, NewACCESS_TOKEN, NewACCESS_TOKEN_SECRET);
 
-            AdminModel.ConfigurationModel = new ConfigurationModel()
+            AdminModel.ConfigurationModel = new ConfigurationViewModel()
             {
                 CONSUMER_KEY = NewCONSUMER_KEY,
                 CONSUMER_SECRET = NewCONSUMER_SECRET,
