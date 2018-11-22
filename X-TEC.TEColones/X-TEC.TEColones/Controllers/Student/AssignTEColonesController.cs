@@ -41,6 +41,7 @@ namespace X_TEC.TEColones.Controllers.Student
                 {
                     user.TCS -= tcsToAssign;
                     CreateJson(user.Id, "Comedor", colones);
+                    return PartialView("~/Views/Student/AssignTEColones/AssignTEColones.cshtml", user);
                 }
             }
             ViewBag.Error = "No cuenta con suficientes TEColones";
@@ -60,6 +61,7 @@ namespace X_TEC.TEColones.Controllers.Student
                 {
                     user.TCS -= tcsToAssign;
                     CreateJson(user.Id, "Matricula", colones);
+                    return PartialView("~/Views/Student/AssignTEColones/AssignTEColones.cshtml", user);
                 }
             }
             ViewBag.Error = "No cuenta con suficientes TEColones";

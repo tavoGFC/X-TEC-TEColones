@@ -46,7 +46,7 @@ namespace X_TEC.TEColones.Controllers.StorageCenterManager
                     {
                         //if (DBConnection.VerifyPromotion()){} --> APLICAR PROMOCION
 
-                        //DBConnection.InsertRegister(carnet, scm.Id, item.Key, item.Value);
+                        DBConnection.InsertRegister(carnet, scm.Id, item.Key, item.Value);
                         messageToSend += String.Format("{0} kg del material {1}. ", item.Value, item.Key);
                     }
                 }
