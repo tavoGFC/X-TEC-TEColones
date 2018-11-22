@@ -19,7 +19,7 @@ namespace X_TEC.TEColones.Persistence
                 WebConfigurationManager.OpenWebConfiguration("/X-TEC.TEColones");
         public static ConnectionStringSettings connString = rootWebConfig.ConnectionStrings.ConnectionStrings["DBXTEColones"];
                
-        private static SqlConnection connection = new SqlConnection(connString.ConnectionString);
+        private static SqlConnection Connection = new SqlConnection(connString.ConnectionString);
 
         #region Student
 
@@ -32,10 +32,10 @@ namespace X_TEC.TEColones.Persistence
         {
             try
             {           
-                connection.Close();
-                connection.Open();
+                Connection.Close();
+                Connection.Open();
 
-                SqlCommand command = new SqlCommand("SP_Insert_Student", connection)
+                SqlCommand command = new SqlCommand("SP_Insert_Student", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };                
@@ -83,10 +83,10 @@ namespace X_TEC.TEColones.Persistence
             int result = 0;
             try
             {
-                connection.Close();
-                connection.Open();
+                Connection.Close();
+                Connection.Open();
 
-                SqlCommand command = new SqlCommand("SP_Exist_User", connection)
+                SqlCommand command = new SqlCommand("SP_Exist_User", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -114,10 +114,10 @@ namespace X_TEC.TEColones.Persistence
         {
             try
             {
-                connection.Close();
-                connection.Open();
+                Connection.Close();
+                Connection.Open();
 
-                SqlCommand command = new SqlCommand("SP_Share_TCS", connection)
+                SqlCommand command = new SqlCommand("SP_Share_TCS", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -151,10 +151,10 @@ namespace X_TEC.TEColones.Persistence
             string name = string.Empty;
             try
             {
-                connection.Close();
-                connection.Open();
+                Connection.Close();
+                Connection.Open();
 
-                SqlCommand command = new SqlCommand("SELECT CONCAT(U.FirstName + ' ' , U.LastName) FROM [User] U WHERE U.Id = @idUser", connection)
+                SqlCommand command = new SqlCommand("SELECT CONCAT(U.FirstName + ' ' , U.LastName) FROM [User] U WHERE U.Id = @idUser", Connection)
                 {
                     CommandType = CommandType.Text
                 };
@@ -180,10 +180,10 @@ namespace X_TEC.TEColones.Persistence
         {
             try
             {
-                connection.Close();
-                connection.Open();
+                Connection.Close();
+                Connection.Open();
 
-                SqlCommand command = new SqlCommand("SELECT B.Type, B.ExchangeRate FROM Benefit B", connection)
+                SqlCommand command = new SqlCommand("SELECT B.Type, B.ExchangeRate FROM Benefit B", Connection)
                 {
                     CommandType = CommandType.Text
                 };
@@ -213,10 +213,10 @@ namespace X_TEC.TEColones.Persistence
         {
             try
             {
-                connection.Close();
-                connection.Open();
+                Connection.Close();
+                Connection.Open();
 
-                SqlCommand command = new SqlCommand("SELECT M.Type, M.ValueTCS FROM Material M", connection)
+                SqlCommand command = new SqlCommand("SELECT M.Type, M.ValueTCS FROM Material M", Connection)
                 {
                     CommandType = CommandType.Text
                 };
@@ -251,10 +251,10 @@ namespace X_TEC.TEColones.Persistence
         {
             try
             {
-                connection.Close();
-                connection.Open();
+                Connection.Close();
+                Connection.Open();
 
-                SqlCommand command = new SqlCommand("SP_Insert_Log_Assign", connection)
+                SqlCommand command = new SqlCommand("SP_Insert_Log_Assign", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -284,9 +284,104 @@ namespace X_TEC.TEColones.Persistence
 
 
         #region  StoregeCenterManager
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <param name="idSCM"></param>
+        /// <param name="material"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public static bool InsertRegister(string idUser, int idSCM, string material, string amount)
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_Insert_Log_Register", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("IdUser", idUser);
+                command.Parameters.AddWithValue("IdSCM", idSCM);
+                command.Parameters.AddWithValue("Material", material);
+                command.Parameters.AddWithValue("Amount", amount);
+
+                var returnParameter = command.Parameters.Add("@ReturnVal", SqlDbType.Int);
+                returnParameter.Direction = ParameterDirection.ReturnValue;
+                command.ExecuteNonQuery();
+                var result = returnParameter.Value;
+                if (result.Equals(1))
+                {
+                    return true;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error InsertRegister " + ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="scm"></param>
+        public static void GetMaterial(SCM scm)
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT M.Type, M.ValueTCS FROM Material M", Connection)
+                {
+                    CommandType = CommandType.Text
+                };
+                SqlDataReader reader = command.ExecuteReader();
+                scm.Materials = new List<string>();
+                while (reader.Read())
+                {
+                    scm.Materials.Add(reader["Type"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error GetMaterial " + ex.Message);
+            }
+        }
+
+        public static string GetEmailUser(string id)
+        {
+            string email = string.Empty;
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_Get_Email", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("IdUser", id);
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    email = reader[0].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error GetNameUser " + ex.Message);
+            }
+            return email;
+        }
 
         #endregion
+
 
         #region LogIn
         /// <summary>
@@ -299,10 +394,10 @@ namespace X_TEC.TEColones.Persistence
             StudentModel student = new StudentModel();
             try
             {
-                connection.Close();
-                connection.Open();
+                Connection.Close();
+                Connection.Open();
 
-                SqlCommand command = new SqlCommand("SP_Verify_Get_Student", connection)
+                SqlCommand command = new SqlCommand("SP_Verify_Get_Student", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -352,10 +447,10 @@ namespace X_TEC.TEColones.Persistence
             Tuple<int, bool> user;
             try
             {
-                connection.Close();
-                connection.Open();
+                Connection.Close();
+                Connection.Open();
 
-                SqlCommand command = new SqlCommand("SP_Verify_Admin_SCM", connection)
+                SqlCommand command = new SqlCommand("SP_Verify_Admin_SCM", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -395,10 +490,10 @@ namespace X_TEC.TEColones.Persistence
             SCM scm = new SCM();
             try
             {
-                connection.Close();
-                connection.Open();
+                Connection.Close();
+                Connection.Open();
 
-                SqlCommand command = new SqlCommand("SP_Get_AdminSCM", connection)
+                SqlCommand command = new SqlCommand("SP_Get_AdminSCM", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };

@@ -17,12 +17,11 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1 class="">Registrar Material</h1>
-                    @ViewBag.Message
                 </div>
             </div>
         </div>
     </div>
-   
+
     @{
         TempData["student"] = @Model;
     }
@@ -32,50 +31,50 @@
         <div class="py-4">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3">
-                        <h5 class="">Carton y Papel</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <h5 class="">Plastico</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <h5 class="">Tetrapack</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <h5 class="">Vidrio</h5>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="input-group">
-                            <input type="number" class="form-control" name="InputPyC">
-                            <t>kg</t>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="input-group">
-                            <input type="number" class="form-control" name="InputPlastico">
-                            <t>kg</t>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
+                    @{
+                        foreach (var materialName in Model.Materials)
+                        {
+                            <div class="col-md-3">
+                                <h5 class=""> @materialName</h5>
+                            </div>
+                        }
+                    }                    
 
-                        <div class="input-group">
-                            <input type="number" class="form-control" name="InputTetrapack">
-                            <t>kg</t>
-                        </div>
+                    @{
+                        foreach (var materialName in Model.Materials)
+                        {
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <input type="number" min="0"  step="0.01" class="form-control" name="@materialName">
+                                    <t>kg</t>
+                                </div>
+                            </div>
+                        }
+                    }
 
-                    </div>
-                    <div class="col-md-3">
+                    @{
+                        foreach (var materialName in Model.Materials)
+                        {
+                            Dictionary<string, string> images = new Dictionary<string, string>
+                                    {
+                                        {"Carton y Papel", "https://image.flaticon.com/icons/svg/642/642994.svg"},
+                                        {"Plastico", "https://image.flaticon.com/icons/svg/100/100563.svg"},
+                                        {"Vidrio", "https://image.flaticon.com/icons/svg/85/85843.svg"},
+                                        {"Aluminio", "https://image.flaticon.com/icons/svg/1103/1103278.svg"}
 
-                        <div class="input-group">
-                            <input type="number" class="form-control" name="InputVidrio">
-                            <t>kg</t>
-                        </div>
+                                    };
 
-                    </div>
-                    <div class="col-md-3"><img class="img-fluid d-block" src="~/Content/Recursos/iconoPapel.png" width="50" height="50"></div>
-                    <div class="col-md-3"><img class="img-fluid d-block" src="~/Content/Recursos/iconoPlastico.png" width="50" height="50"></div>
-                    <div class="col-md-3"><img class="img-fluid d-block" src="~/Content/Recursos/iconoTetrapack.png" width="50" height="50"></div>
-                    <div class="col-md-3"><img class="img-fluid d-block" src="~/Content/Recursos/iconoVidrio.png" width="50" height="50"></div>
+                            if (images.ContainsKey(materialName))
+                            {
+                                <div class="col-md-3"><img class="img-fluid d-block" src="@images[materialName]" width="50" height="50" /> </div>
+
+                            }
+                            else
+                            {
+                                <div class="col-md-3"><img class="img-fluid d-block" src="https://image.flaticon.com/icons/svg/702/702626.svg" width="50" height="50" /> </div>
+                            }
+                        }
+                    }
                 </div>
             </div>
             <div class="container">
@@ -95,14 +94,47 @@
                     </div>
                     <div class="col-md-4"></div>
                     <div class="col-md-4"></div>
-                    <div class="col-md-4"><input type="submit" class="btn btn-primary" value="Ingresar" /></div>
+                    <div class="col-md-4"><input data-toggle="modal" data-target="#messageDialog" type="submit" class="btn btn-primary" value="Ingresar" /></div>
 
                     <div class="col-md-4"></div>
                 </div>
             </div>
         </div>
     }
+    
     <!--</form> -->
+    <!-- Message -->
+    @if (ViewBag.Message != null)
+    {
+        <div class="modal" id="messageDialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="needs-validation" novalidate>
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center" style="font-weight:bold">Registrar Material</h5>
+                        </div>
+                        <div class="modal-body">
+                            <p> @ViewBag.Message </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary rounded-0" data-dismiss="modal">Aceptar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js">
+    </script>
+    <script type="text/javascript">
+        $('#messageDialog').modal('show');
+    </script>
+
 
 </body>
 
