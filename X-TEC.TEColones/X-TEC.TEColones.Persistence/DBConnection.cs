@@ -327,7 +327,7 @@ namespace X_TEC.TEColones.Persistence
         }
 
         /// <summary>
-        /// 
+        /// Get materials 
         /// </summary>
         /// <param name="scm"></param>
         public static void GetMaterial(SCM scm)
@@ -354,6 +354,11 @@ namespace X_TEC.TEColones.Persistence
             }
         }
 
+        /// <summary>
+        /// Get email student
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static string GetEmailUser(string id)
         {
             string email = string.Empty;
