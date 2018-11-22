@@ -21,7 +21,7 @@ namespace X_TEC.TEColones.Persistence
         #region Configuration
 
         /// <summary>
-        /// Get the value in TEColones of the Materials.
+        /// Get the value in TEColones of the Materials from the database.
         /// </summary>
         /// <param name="Config"></param>
         public static void GetMaterialTCSValue(ConfigurationViewModel Config)
@@ -55,7 +55,7 @@ namespace X_TEC.TEColones.Persistence
         }
 
         /// <summary>
-        /// Edit the TCS values of the materials globally.  
+        /// Edit the TCS values of the materials globally on the database.  
         /// </summary>
         /// <param name="PlasticNewValue"></param>
         /// <param name="GlassNewValue"></param>
@@ -88,7 +88,7 @@ namespace X_TEC.TEColones.Persistence
         }
 
         /// <summary>
-        /// Get the benefits value in colones in each account.
+        /// Get the benefits value in colones in each account from the database.
         /// </summary>
         /// <param name="Config"></param>
         public static void GetBenefitsValue(ConfigurationViewModel Config)
@@ -121,7 +121,7 @@ namespace X_TEC.TEColones.Persistence
         }
 
         /// <summary>
-        /// Edit benefits in colones in each account globally.  
+        /// Edit benefits in colones in each account globally from the database.  
         /// </summary>
         /// <param name="NewDinningExchange"></param>
         /// <param name="NewStudyExchange"></param>
@@ -153,7 +153,7 @@ namespace X_TEC.TEColones.Persistence
         /// Get the the two keys and two tokens of the twitter account from the database. 
         /// </summary>
         /// <param name="Config"></param>
-        public static void GetTwitterData(ConfigurationViewModel Config)
+        public static void GetTwitterData()
         {
             try
             {
@@ -169,10 +169,10 @@ namespace X_TEC.TEColones.Persistence
 
                 while (reader.Read())
                 {
-                    Config.CONSUMER_KEY = reader[0].ToString();
-                    Config.CONSUMER_SECRET = reader[1].ToString();
-                    Config.ACCESS_TOKEN = reader[2].ToString();
-                    Config.ACCESS_TOKEN_SECRET = reader[3].ToString();
+                    TwitterConnection.CONSUMER_KEY = reader[0].ToString();
+                    TwitterConnection.CONSUMER_SECRET = reader[1].ToString();
+                    TwitterConnection.ACCESS_TOKEN = reader[2].ToString();
+                    TwitterConnection.ACCESS_TOKEN_SECRET = reader[3].ToString();
                 }
             }
             catch (Exception ex)
@@ -212,7 +212,41 @@ namespace X_TEC.TEColones.Persistence
             {
                 Console.WriteLine("Error Inserting Data" + ex.Message);
             }
-        }        
+        }
+        #endregion
+
+        #region Promotion
+
+        /// <summary>
+        /// Get the types (names) of the Materials of the database.
+        /// </summary>
+        /// <param name="Config"></param>
+        public static void GetMaterialType(PromotionViewModel Promo)
+        {
+            try
+            {
+                connection.Close();
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT Type, ValueTCS FROM Material", connection)
+                {
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string types = reader["ValueTCS"].ToString();
+                    Promo.ListMaterials.Add(types);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Getting Data" + ex.Message);
+            }
+            connection.Close();
+        }
         #endregion
     }
 

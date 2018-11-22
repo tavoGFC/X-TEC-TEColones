@@ -42,12 +42,11 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult TwitterConfiguration()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
-            //ConfigurationViewModel Config = new ConfigurationViewModel();            
             return View("~/Views/Administrator/Configuration/TwitterConfig.cshtml", AdminModel);
         }
         #endregion
 
-        #region Get&SendInformationDatabase
+        #region Get&SendMaterialsTCSValuesToDatabase
         /// <summary>
         /// Sends the new TCS values of the material from the input table and send them to the database.
         /// </summary>
@@ -56,6 +55,39 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult GetNewMaterialTCSValues()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
+            IDictionary<string, string> dict = new Dictionary<string, string>
+            {
+                {"Plastics", Request["inputPlastic"].ToString()},
+                {"Paper", Request["inputPaper"].ToString()},
+                {"Glass", Request["inputGlass"].ToString()},
+                {"Aluminum", Request["inputAluminum"].ToString()}
+            };
+
+            foreach (KeyValuePair<string, string> item in dict)
+            {
+                if (!string.IsNullOrWhiteSpace(item.Value))
+                {
+
+                    DBConnection.InsertNewMaterialTCSValue(float.Parse(item.Value), float.Parse(item.Value), float.Parse(item.Value), float.Parse(item.Value));
+
+                    AdminModel.ConfigurationModel = new ConfigurationViewModel
+                    {
+                        PlasticValue = float.Parse(item.Value),
+                        PaperValue = float.Parse(item.Value),
+                        GlassValue = float.Parse(item.Value),
+                        AluminumValue = float.Parse(item.Value)
+                    };
+
+                    DBConnection.GetTwitterData();
+                    TwitterConnection.Publish("La tasa de cambio del platisco por kg es: " + float.Parse(item.Value) + " TEColones");
+                    TwitterConnection.Publish("La tasa de cambio del papel y carton por kg es: " + float.Parse(item.Value) + " TEColones");
+                    TwitterConnection.Publish("La tasa de cambio del kg de vidro es: " + float.Parse(item.Value) + " TEColones");
+                    TwitterConnection.Publish("La tasa de cambio del kg de aluminio es: " + float.Parse(item.Value) + " TEColones");
+
+                    return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", AdminModel);
+                }
+            }
+
             float PlasticNewValue = float.Parse(Request["inputPlastic"].ToString());
             float PaperNewValue = float.Parse(Request["inputPaper"].ToString());
             float GlassNewValue = float.Parse(Request["inputGlass"].ToString());
@@ -70,8 +102,18 @@ namespace X_TEC.TEColones.Controllers.Administrator
                 GlassValue = GlassNewValue,
                 AluminumValue = AluminumNewValue
             };
-            return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", AdminModel);
+
+            DBConnection.GetTwitterData();
+            TwitterConnection.Publish("La tasa de cambio del platisco por kg es: " + PlasticNewValue + " TEColones");
+            TwitterConnection.Publish("La tasa de cambio del papel y carton por kg es: " + PaperNewValue + " TEColones");
+            TwitterConnection.Publish("La tasa de cambio del kg de vidro es: " + GlassNewValue + " TEColones");
+            TwitterConnection.Publish("La tasa de cambio del kg de aluminio es: " + AluminumNewValue + " TEColones");
+
+            return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", AdminModel);           
         }
+        #endregion
+
+        #region Get&SendBenefitsTCSValuesToDatabase
 
         /// <summary>
         /// Sends the new benefits values of the TCS from the input table and send them to the database.
@@ -86,6 +128,11 @@ namespace X_TEC.TEColones.Controllers.Administrator
 
             DBConnection.InsertNewBenefitsValue(NewDinningExchange, NewStudyExchange);
 
+            DBConnection.GetTwitterData();
+            TwitterConnection.Publish("La tasa de cambio de TEColones en el Comedor Intitucional es: " + NewDinningExchange + "colones");
+            TwitterConnection.Publish("La tasa de cambio de TEColones en los Derechos de Estudio (Matricula) es: " + NewStudyExchange + "colones");
+
+
             AdminModel.ConfigurationModel = new ConfigurationViewModel
             {
                 StudyExchange = NewStudyExchange,
@@ -93,6 +140,9 @@ namespace X_TEC.TEColones.Controllers.Administrator
             };
             return View("~/Views/Administrator/Configuration/TEColonesConfig.cshtml", AdminModel);
         }
+        #endregion
+
+        #region Get&SendTwitterCredentialsToDatabase
 
         /// <summary>
         /// Sends the new Twitter data credentials of the input spaces and send them to the database.
@@ -102,6 +152,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult GetNewTwitterCredentials()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
+
             string NewCONSUMER_KEY = Request["inputConsumerKey"].ToString();
             string NewCONSUMER_SECRET = Request["inputConsumerSecret"].ToString();
             string NewACCESS_TOKEN = Request["inputAccessToken"].ToString();
@@ -109,13 +160,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
 
             DBConnection.InsertNewTwitterData(NewCONSUMER_KEY, NewCONSUMER_SECRET, NewACCESS_TOKEN, NewACCESS_TOKEN_SECRET);
 
-            AdminModel.ConfigurationModel = new ConfigurationViewModel()
-            {
-                CONSUMER_KEY = NewCONSUMER_KEY,
-                CONSUMER_SECRET = NewCONSUMER_SECRET,
-                ACCESS_TOKEN = NewACCESS_TOKEN,
-                ACCESS_TOKEN_SECRET = NewACCESS_TOKEN_SECRET
-            };
+            TwitterConnection.SetCredentials(NewCONSUMER_KEY, NewCONSUMER_SECRET, NewACCESS_TOKEN, NewACCESS_TOKEN_SECRET);
 
             return View("~/Views/Administrator/Configuration/TwitterConfig.cshtml", AdminModel);
         }

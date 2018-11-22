@@ -7,24 +7,48 @@ using X_TEC.TEColones.Models.AdminModels;
 
 namespace X_TEC.TEColones.Persistence
 {
-    class TwitterConnection
+    public class TwitterConnection
     {
-         
-        public void SetCredentials()
-        {
-            //string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret
-            //AdminModel AdminModel = (AdminModel)TempData["admin"];
 
+        public static string CONSUMER_KEY { get; set; }
+        public static string CONSUMER_SECRET { get; set; }
+        public static string ACCESS_TOKEN { get; set; }
+        public static string ACCESS_TOKEN_SECRET { get; set; }
+
+        /// <summary>
+        /// Set new credentials (two keys and two tokens) for the account of the publications.
+        /// </summary>
+        /// <param name="consumerKey"></param>
+        /// <param name="consumerSecret"></param>
+        /// <param name="accessToken"></param>
+        /// <param name="accessTokenSecret"></param>
+        public static void SetCredentials()
+        {
+            DBConnection.GetTwitterData();
+        }
+        
+        /// <summary>
+         /// Set new credentials (two keys and two tokens) for the account of the publications.
+         /// </summary>
+         /// <param name="consumerKey"></param>
+         /// <param name="consumerSecret"></param>
+         /// <param name="accessToken"></param>
+         /// <param name="accessTokenSecret"></param>
+        public static void SetCredentials(string consumerKey, string consumerSecret, string accessToken, string accessTokenSecret)
+        {
+            CONSUMER_KEY = consumerKey;
+            CONSUMER_SECRET = consumerSecret;
+            ACCESS_TOKEN = accessToken;
+            ACCESS_TOKEN_SECRET = accessTokenSecret;
         }
 
         /// <summary>
         /// Make a publication on the Twitter account with a given mesaage.
         /// </summary>
         /// <param name="mensaje"></param>
-        public void Publish(string mensaje)
+        public static void Publish(string mensaje)
         {
-            //Auth.SetUserCredentials(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
-            Auth.SetUserCredentials("8gYBbQjhYO9JyRbbR3blQnTEd", "oTFi5zD5YzBk9awJNaKIWwJ4VF3QSSo06mKTCmjmKKa0s0V7KM", "1062419932820987904-KCxTUQbcQfPFJRLxun56YgnFAKO7H6", "VkHF7piK0ntXXprmlZixySgN1a8STpoUMfEDHA9iTsuD8");
+            Auth.SetUserCredentials(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
             var user = User.GetAuthenticatedUser();
             var tweet = Tweet.PublishTweet(mensaje);
         }

@@ -36,10 +36,10 @@
     <div class="py-2">
         <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
-                <a class="nav-link active" href="#">@Html.ActionLink("Tasa de Conversion Material-TEColones", "MaterialValueConfiguration", "Configuration")</a>
+                <a class="nav-link active" href="#">@Html.ActionLink("Tasa de Conversion Material-TEColones ", "MaterialValueConfiguration", "Configuration")</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">@Html.ActionLink(" Tasa de Conversion TEColones - Colones", "TCSValueConfiguration", "Configuration")</a>
+                <a class="nav-link" href="#">@Html.ActionLink(" Tasa de Conversion TEColones - Colones ", "TCSValueConfiguration", "Configuration")</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">@Html.ActionLink(" Cuenta Twitter", "TwitterConfiguration", "Configuration")</a>
@@ -56,11 +56,11 @@
                 </tr>
                 <tr>
                     <td>Plastico</td>
-                    <td><input type="number" id="inputPlastic" name="inputPlastic" placeholder="@Model.ConfigurationModel.PlasticValue" required oninvalid="this.setCustomValidity('Holi')" oninput="setCustomValidity('')"/></td>
+                    <td><input type="number" id="inputPlastic" name="inputPlastic" placeholder="@Model.ConfigurationModel.PlasticValue" /></td>
                 </tr>
                 <tr>
                     <td>Papel</td>
-                    <td><input type="number" id="inputPaper" name="inputPaper" placeholder="@Model.ConfigurationModel.PaperValue" required/></td>
+                    <td><input type="number" id="inputPaper" name="inputPaper" placeholder="@Model.ConfigurationModel.PaperValue" /></td>
                 </tr>
                 <tr>
                     <td>Vidrio</td>
@@ -68,7 +68,7 @@
                 </tr>
                 <tr>
                     <td>Aluminio</td>
-                    <td><input type="number" id="inputAluminum" name="inputAluminum" placeholder="@Model.ConfigurationModel.AluminumValue" /></td>
+                    <td><input type="number" id="inputAluminum" name="inputAluminum" placeholder="@Model.ConfigurationModel.AluminumValue"  /></td>
                 </tr>
             </table>
         </div>

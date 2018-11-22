@@ -23,16 +23,9 @@ namespace X_TEC.TEColones.Models.AdminModels
 
         public float DinningExchange { get; set; }
 
-        public string CONSUMER_KEY { get; set; }
-
-        public string CONSUMER_SECRET { get; set; }
-
-        public string ACCESS_TOKEN { get; set; }
-
-        public string ACCESS_TOKEN_SECRET { get; set; }
-
-        
-
+        /// <summary>
+        /// Give the values of each material. 
+        /// </summary>
         public void SetValues()
         {
             PlasticValue = ValuesTCS[0];
