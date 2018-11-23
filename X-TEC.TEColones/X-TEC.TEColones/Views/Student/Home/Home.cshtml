@@ -1,14 +1,112 @@
 ﻿@model X_TEC.TEColones.Models.StudentModels.StudentModel
 @{
-    ViewBag.Title = "Home";
+    ViewBag.Title = "Inicio";
     Layout = "~/Views/LayoutBases/_StudentLayout.cshtml";
 }
 
+<!DOCTYPE html>
 
-<head>
-    <title>Inicio | TEColones</title>
-</head>
-<h3>@ViewBag.Message</h3>
-<h2>Vista Principal Estudiante Prueba</h2>
+<html>
 
 
+
+<body>
+    <h3>@ViewBag.Message</h3>
+    <h2>Bienvenido a TEColones una iniciativa de X-TEC</h2>
+
+    @{
+        TempData["student"] = @Model;
+    }
+
+    <div class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-7">
+                            <label for="TEColones" style="">TEColones Disponibles:</label>
+                        </div>
+                        <div class="col-md-4">
+                            <p id="TEColones"> <img src="~/Content/Recursos/iconTCS.png" width="32" height="32" /> @Model.TCS </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="container">
+                        <p style="font-weight:bold">Tasa de Conversion</p>
+                        <div class="row">
+                            <div class="col-md-4">Beneficio</div>
+                            <div class="col-md-4">Valor en TEColones</div>
+                            <div class="col-md-4">Valor en Colones</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="list-group">
+                                    @{
+                                        foreach (var benefit in Model.AssignTCS.Benefits)
+                                        {
+
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                @benefit.Type
+                                                <span style="font-weight:bold; font-size:15px" class="badge badge-info badge-pill text-center">
+                                                    <img src="~/Content/Recursos/iconTCS.png" width="15" height="15" />  1
+                                                </span>
+                                                <span style="font-weight:bold; font-size:15px" class="badge badge-primary badge-pill text-center">
+                                                    ₡ @benefit.ExchangeRate
+                                                </span>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="col-md-12" style="">
+                            <div class="container">
+                                <p  style="font-weight:bold">TEColones por Tipo de Material</p>
+                                <div class="row">
+                                    <div class="col-md-4">Material</div>
+                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4">TEColones por kg</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" style="">
+
+                                        <ul class="list-group">
+                                            @{
+                                                foreach (var material in Model.HomeVM.Materials)
+                                                {
+                                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        @material.Type
+                                                        <span style="font-weight:bold; font-size:15px" class="badge badge-primary badge-pill text-center">
+                                                            @material.ValueTCS
+                                                        </span>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

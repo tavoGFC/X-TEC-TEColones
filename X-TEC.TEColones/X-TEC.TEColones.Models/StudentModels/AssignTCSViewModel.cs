@@ -13,18 +13,36 @@ namespace X_TEC.TEColones.Models.StudentModels
         public AssignTCSViewModel()
         {
             TCS = 0.0f;
-            ExrDinningRoom = 0.0f;
-            ExrEnrollment = 0.0f;
+            Benefits = new List<Benefit>();
         }
 
         public float TCS { get; set; }
+              
+        public List<Benefit> Benefits { get; set; }
 
-        //ExchangeRate:Exr
-        public float ExrDinningRoom { get; set; }
+        public float ExRDinningRoom { get; set; }
 
-        //ExchangeRate:Exr
-        public float ExrEnrollment { get; set; }
+        public float ExREnrollment { get; set; }
+        
+        
+        public void SetExchanRate()
+        {
+            ExRDinningRoom = Benefits.Find(x => x.Type.Contains("Comedor") || x.Type.Contains("Soda")).ExchangeRate;
+            ExREnrollment = Benefits.Find(x => x.Type.Contains("Derecho") || x.Type.Contains("Matricula")).ExchangeRate;
+        }
+    }
+
+    
+       
+    public class Benefit
+    {
+
+        public string Type { get; set; }
+
+        public float ExchangeRate { get; set; }
 
 
     }
+
+
 }

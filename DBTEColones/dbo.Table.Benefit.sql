@@ -1,6 +1,0 @@
-﻿CREATE TABLE [dbo].[Benefit]
-(
-	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
-	[Type] VARCHAR(50) NOT NULL, 
-	[ExchangeRate] FLOAT NOT NULL
-)
