@@ -7,6 +7,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
     <title>Crear Promociones de un Combo de Materiales</title>
 </head>
 
@@ -18,14 +35,48 @@
         <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
                 <h5><a class="nav-link" href="#">@Html.ActionLink("Promocion Individual ", "CreateSinglePromotion", "Promotion")</a></h5>
-</li>
+            </li>
             <li class="nav-item">
                 <h5><a class="nav-link active" href="#">@Html.ActionLink(" Promocion en Combo", "CreateComboPromotion", "Promotion")</a></h5>
             </li>
         </ul>
     </div>
 
-    <!--</form> -->
-</body>
+    @using (Html.BeginForm("NewComboPromotion", "Promotion", FormMethod.Post))
+    {
+        <div class="py-3">
+            <table align="center">
+                <tr>
+                    <th>Material</th>
+                    <th>Cantidad kg</th>
+                    <th>Seleccionar</th>
+                </tr>
+
+                @foreach (var item in Model.PromotionModel.ListMaterials)
+                {
+                <tr>
+                    <td>
+                        @item
+                    </td>
+
+                    <td>
+                        <input type="number" id="inputOne" name="inputOne" required />
+                    </td>
+                    <td>
+                        <input type="checkbox" id="inputCheckbox" name="inputCheckbox" required />
+                    </td>
+
+                </tr>
+
+
+                }
+
+
+
+            </table>
+        </div>
+    }
+        <!--</form> -->
+    </body>
 
 </html>

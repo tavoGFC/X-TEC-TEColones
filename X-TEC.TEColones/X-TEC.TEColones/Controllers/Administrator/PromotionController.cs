@@ -46,9 +46,6 @@ namespace X_TEC.TEColones.Controllers.Administrator
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
             AdminModel.PromotionModel = new PromotionViewModel();
-
-            //string TypeMaterial = Request[""]
-
             return View("~/Views/Administrator/Promotion/CreateSinglePromotion.cshtml",AdminModel); 
         }
         #endregion
@@ -56,7 +53,9 @@ namespace X_TEC.TEColones.Controllers.Administrator
         #region NewComboPromotionMethods
         public ActionResult NewComboPromotion()
         {
-            return View("~/Views/Administrator/Promotion/CreateSinglePromotion.cshtml");
+            AdminModel AdminModel = (AdminModel)TempData["admin"];
+            AdminModel.PromotionModel = new PromotionViewModel();
+            return View("~/Views/Administrator/Promotion/CreateComboPromotion.cshtml", AdminModel);
         }
 
         #endregion
