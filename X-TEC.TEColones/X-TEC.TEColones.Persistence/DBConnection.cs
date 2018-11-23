@@ -606,12 +606,13 @@ namespace X_TEC.TEColones.Persistence
                 };
 
                 SqlDataReader reader = command.ExecuteReader();
-                Config.ValuesTCS = new List<float>();
+                Config.Materials = new Dictionary<string, float>();
 
                 while (reader.Read())
                 {
+                    string name = reader["Type"].ToString();
                     float value = float.Parse(reader["ValueTCS"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
-                    Config.ValuesTCS.Add(value);
+                    Config.Materials.Add(name, value);
                 }
                 Config.SetValues();
             }
@@ -630,7 +631,7 @@ namespace X_TEC.TEColones.Persistence
         /// <param name="GlassNewValue"></param>
         /// <param name="PaperNewValue"></param>
         /// <param name="AluminumNewValue"></param>
-        public static void InsertNewMaterialTCSValue(float PlasticNewValue, float GlassNewValue, float PaperNewValue, float AluminumNewValue)
+        public static void InsertNewMaterialTCSValue(string typeMaterial, float newValue)
         {
             try
             {
@@ -642,10 +643,8 @@ namespace X_TEC.TEColones.Persistence
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue("PlasticNewValue", PlasticNewValue);
-                command.Parameters.AddWithValue("PaperNewValue", PaperNewValue);
-                command.Parameters.AddWithValue("GlassNewValue", GlassNewValue);
-                command.Parameters.AddWithValue("AluminumNewValue", AluminumNewValue);
+                command.Parameters.AddWithValue("Type", typeMaterial);
+                command.Parameters.AddWithValue("NewValue", newValue);
 
                 command.ExecuteNonQuery();
 
@@ -694,7 +693,7 @@ namespace X_TEC.TEColones.Persistence
         /// </summary>
         /// <param name="NewDinningExchange"></param>
         /// <param name="NewStudyExchange"></param>
-        public static void InsertNewBenefitsValue(float NewDinningExchange, float NewStudyExchange)
+        public static void InsertNewBenefitsValue(float newExchange, string typeExchange)
         {
             try
             {
@@ -705,8 +704,8 @@ namespace X_TEC.TEColones.Persistence
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue("ExchangeRateComedor", NewDinningExchange);
-                command.Parameters.AddWithValue("ExchangeRateMatricula", NewStudyExchange);
+                command.Parameters.AddWithValue("@Type", typeExchange);
+                command.Parameters.AddWithValue("@ExchangeRate", newExchange);
 
                 Connection.Open();
                 command.ExecuteNonQuery();
