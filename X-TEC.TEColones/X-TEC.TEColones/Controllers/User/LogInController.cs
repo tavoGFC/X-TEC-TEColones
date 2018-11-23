@@ -7,6 +7,7 @@ using X_TEC.TEColones.Models.StudentModels;
 using X_TEC.TEColones.Models.AdminModels;
 using X_TEC.TEColones.Models.SCMModels;
 using X_TEC.TEColones.Persistence;
+using X_TEC.TEColones.Models.AdminModels;
 
 namespace X_TEC.TEColones.Controllers
 {
@@ -38,14 +39,8 @@ namespace X_TEC.TEColones.Controllers
         /// <returns></returns>
         [HttpPost]
         public ActionResult LogIn()
-        {      
-            string user = Request["IdUser"].ToString();
-            string password = Request["PasswordUser"].ToString();
-
-            int typeUser = DBConnection.ExistUser(user);
-            string message = string.Empty;
-            
-            switch (typeUser)
+        {
+            AdminModel AdminModel = new AdminModel
             {
                 case 1:
                     StudentModel student = DBConnection.VerifyStudent(user, password);
@@ -99,9 +94,13 @@ namespace X_TEC.TEColones.Controllers
                     break;
             }
             return LogIn(message);            
+                FirstName = "Randy Admin",
+                LastName = "Prueba",
+                Id = 2010141516,
+                
+            };
+            TempData["admin"] = AdminModel;
+            return RedirectToAction("Home", "AdminHome");            
         }
-
-        
-
     }
 }

@@ -33,6 +33,8 @@ namespace X_TEC.TEColones.Controllers.Student
             //    byte[] imgByte = br.ReadBytes((Int32)stream.Length);
             //    student.ImageByte = imgByte;
             //}
+        {
+           
             
 
             //if (DBConnection.InsertStudent(student))

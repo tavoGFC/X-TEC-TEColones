@@ -228,6 +228,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Recursos\iconoTEColones.png" />
+    <Content Include="Content\Recursos\.jpg" />
     <Content Include="Content\Recursos\iconoPapel.png" />
     <Content Include="Content\Recursos\iconoPlastico.png" />
     <Content Include="Content\Recursos\iconoTetrapack.png" />
@@ -281,13 +283,20 @@
     <Content Include="Views\Student\Dashboard\Dashboard.cshtml" />
     <Content Include="Views\Student\Home\Home.cshtml" />
     <Content Include="Views\Student\ShareTEColones\ShareTEColones.cshtml" />
-    <Content Include="Views\Administrator\Configuration\Configuration.cshtml" />
+    <Content Include="Views\Administrator\Configuration\MaterialConfig.cshtml" />
     <Content Include="Views\Administrator\CreateUser\CreateUser.cshtml" />
-    <Content Include="Views\Administrator\Promotion\CreatePromotion.cshtml" />
+    <Content Include="Views\Administrator\Promotion\CreateSinglePromotion.cshtml" />
     <Content Include="Views\Administrator\Report\Report.cshtml" />
-    <Content Include="Views\Administrator\Promotion\ViewPromotion.cshtml" />
+    <Content Include="Views\Administrator\Promotion\ViewSinglePromotion.cshtml" />
     <Content Include="Views\StorageCenterManager\SCMHome\SCMHome.cshtml" />
     <Content Include="Views\Student\CreateAccount\CreateAccount.cshtml" />
+    <Content Include="Views\Administrator\Configuration\TwitterConfig.cshtml" />
+    <Content Include="Views\Administrator\Configuration\TEColonesConfig.cshtml" />
+    <Content Include="Views\Administrator\Promotion\CreateComboPromotion.cshtml" />
+    <Content Include="Views\Administrator\Promotion\ViewComboPromotion.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\CreatePromotionView\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\DATIC\" />

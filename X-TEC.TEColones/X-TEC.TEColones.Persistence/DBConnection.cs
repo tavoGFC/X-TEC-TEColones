@@ -10,11 +10,14 @@ using System.Globalization;
 using System.Web.Configuration;
 using X_TEC.TEColones.Models.StudentModels;
 using X_TEC.TEColones.Models.SCMModels;
+using X_TEC.TEColones.Models.AdminModels;
+using System.Globalization;
 
 namespace X_TEC.TEColones.Persistence
 {
     public class DBConnection
     {
+
         public static Configuration rootWebConfig =
                 WebConfigurationManager.OpenWebConfiguration("/X-TEC.TEColones");
         public static ConnectionStringSettings connString = rootWebConfig.ConnectionStrings.ConnectionStrings["DBXTEColones"];
@@ -59,28 +62,121 @@ namespace X_TEC.TEColones.Persistence
                 command.ExecuteNonQuery();
                 var result = returnParameter.Value;
                 if (result.Equals(1))
+
+        private static readonly string connectionString = "Server=tcp:projectce.database.windows.net,1433;Initial Catalog=XTEColones;Persist Security Info=False;User ID=mustang;Password=randyCE09!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
+        private static SqlConnection connection = new SqlConnection(connectionString);
+
+        #region Configuration
+
+        /// <summary>
+        /// Get the value in TEColones of the Materials from the database.
+        /// </summary>
+        /// <param name="Config"></param>
+        public static void GetMaterialTCSValue(ConfigurationViewModel Config)
+        {
+            try
+            {
+                connection.Close();
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT Type, ValueTCS FROM Material", connection)
                 {
-                    return true;
+                    CommandType = CommandType.Text
+                };
+            
+                SqlDataReader reader = command.ExecuteReader();
+                Config.ValuesTCS =  new List<float>();
+               
+                while (reader.Read())
+                {
+                    float value =  float.Parse(reader["ValueTCS"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
+                    Config.ValuesTCS.Add(value);
                 }
+                Config.SetValues();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Getting Data" + ex.Message);
+            }
+            connection.Close();
+
+        }
+
+        /// <summary>
+        /// Edit the TCS values of the materials globally on the database.  
+        /// </summary>
+        /// <param name="PlasticNewValue"></param>
+        /// <param name="GlassNewValue"></param>
+        /// <param name="PaperNewValue"></param>
+        /// <param name="AluminumNewValue"></param>
+        public static void InsertNewMaterialTCSValue(float PlasticNewValue, float GlassNewValue, float PaperNewValue, float AluminumNewValue)
+        {
+            try
+            {
+                connection.Close();
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_Insert_NewMaterialValues", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("PlasticNewValue", PlasticNewValue);
+                command.Parameters.AddWithValue("PaperNewValue", PaperNewValue);
+                command.Parameters.AddWithValue("GlassNewValue", GlassNewValue);
+                command.Parameters.AddWithValue("AluminumNewValue", AluminumNewValue);
+
+                command.ExecuteNonQuery();
 
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error SP_Insert_User " + ex.Message);
+                Console.WriteLine("Error SP_Insert_NewMaterialValues " + ex.Message);
             }
-            return false;
-
         }
 
+        /// <summary>
+        /// Get the benefits value in colones in each account from the database.
+        /// </summary>
+        /// <param name="Config"></param>
+        public static void GetBenefitsValue(ConfigurationViewModel Config)
+        {
+            try
+            {
+                connection.Close();
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT Type, ExchangeRate FROM Benefit" , connection)
+
+                {
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                List<float> values = new List<float>();
+                while (reader.Read())
+                {
+                    values.Add(float.Parse(reader["ExchangeRate"].ToString(), CultureInfo.InvariantCulture.NumberFormat));
+                }
+                Config.DinningExchange = values[0];
+                Config.StudyExchange = values[1];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Getting Data" + ex.Message);
+            }
+            connection.Close();  
+        }
 
         /// <summary>
-        /// 
+        /// Edit benefits in colones in each account globally from the database.  
         /// </summary>
-        /// <param name="identification"></param>
-        /// <returns></returns>
-        public static int ExistUser(string identification)
+        /// <param name="NewDinningExchange"></param>
+        /// <param name="NewStudyExchange"></param>
+        public static void InsertNewBenefitsValue(float NewDinningExchange, float NewStudyExchange)
         {
-            int result = 0;
             try
             {
                 Connection.Close();
@@ -92,21 +188,60 @@ namespace X_TEC.TEColones.Persistence
                 };
                 command.Parameters.AddWithValue("Identification", identification);                                
                 var reader = command.ExecuteReader();
-                while (reader.Read())
+ 
+              SqlCommand command = new SqlCommand("SP_Insert_NewBenefitsValue", connection)
                 {
-                    result = (int)reader[0];
-                }
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("ExchangeRateComedor", NewDinningExchange);
+                command.Parameters.AddWithValue("ExchangeRateMatricula", NewStudyExchange);
+               
+                connection.Open();
+                command.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error Exist_Usr " + ex.Message);
+                Console.WriteLine("Error Inserting Data" + ex.Message);
             }
-            return result;
         }
 
 
         /// <summary>
-        /// 
+        /// Get the the two keys and two tokens of the twitter account from the database. 
+        /// </summary>
+        /// <param name="Config"></param>
+        public static void GetTwitterData()
+        {
+            try
+            {
+                connection.Close();
+                connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_Get_TwitterData", connection)
+                {
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    TwitterConnection.CONSUMER_KEY = reader[0].ToString();
+                    TwitterConnection.CONSUMER_SECRET = reader[1].ToString();
+                    TwitterConnection.ACCESS_TOKEN = reader[2].ToString();
+                    TwitterConnection.ACCESS_TOKEN_SECRET = reader[3].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Inserting Data" + ex.Message);
+            }
+            connection.Close();
+        }
+
+        /// <summary>
+        /// Updates the two keys and two tokens of the twitter account into the database.
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
@@ -395,8 +530,13 @@ namespace X_TEC.TEColones.Persistence
         /// <param name="identification"></param>
         /// <returns></returns>
         public static StudentModel VerifyStudent(string identification, string password)
+
+        /// <param name="ConsumerKey"></param>
+        /// <param name="ConsumerSecret"></param>
+        /// <param name="AcessToken"></param>
+        /// <param name="AccessTokenSecret"></param>
+        public static void InsertNewTwitterData(string ConsumerKey, string ConsumerSecret, string AcessToken, string AccessTokenSecret)
         {
-            StudentModel student = new StudentModel();
             try
             {
                 Connection.Close();
@@ -436,10 +576,28 @@ namespace X_TEC.TEColones.Persistence
             catch (Exception ex)
             {
                 Console.WriteLine("Error VerifyStudent " + ex.Message);
-            }
-            return student;
-        }
 
+                SqlCommand command = new SqlCommand("SP_Insert_TwitterData", connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("CONSUMER_KEY", ConsumerKey);
+                command.Parameters.AddWithValue("CONSUMER_SECRET", ConsumerSecret);
+                command.Parameters.AddWithValue("ACCESS_TOKEN", AcessToken);
+                command.Parameters.AddWithValue("ACCESS_TOKEN_SECRET", AccessTokenSecret);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Inserting Data" + ex.Message);
+            }
+        }
+        #endregion
+
+        #region Promotion
 
         /// <summary>
         /// 
@@ -536,8 +694,38 @@ namespace X_TEC.TEColones.Persistence
         
 
         #endregion
+        /// Get the types (names) of the Materials of the database.
+        /// </summary>
+        /// <param name="Config"></param>
+        public static void GetMaterialType(PromotionViewModel Promo)
+        {
+            try
+            {
+                connection.Close();
+                connection.Open();
 
 
+                SqlCommand command = new SqlCommand("SELECT Type, ValueTCS FROM Material", connection)
+                {
+                    CommandType = CommandType.Text
+                };
 
+    }
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string types = reader["ValueTCS"].ToString();
+                    Promo.ListMaterials.Add(types);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Getting Data" + ex.Message);
+            }
+            connection.Close();
+        }
+        #endregion
     }
 }
