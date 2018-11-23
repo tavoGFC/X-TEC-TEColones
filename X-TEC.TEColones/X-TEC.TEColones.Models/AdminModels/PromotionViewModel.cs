@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 
 namespace X_TEC.TEColones.Models.AdminModels
 {
@@ -10,7 +11,7 @@ namespace X_TEC.TEColones.Models.AdminModels
     {
         public string Materials { get; set; }
 
-        public List<string> ListMaterials { get; set; }
+        public List<ListItem> ListCountries { get; set; }
 
         public List<string> ComboMaterials { get; set; }
 

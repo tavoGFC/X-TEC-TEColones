@@ -34,7 +34,7 @@
 
                         <h5 align="center">
                             Categoria:
-                            @Html.DropDownListFor(m => m.PromotionModel, m.PromotionModel.ListMaterials, htmlAttributes: new { @class = "form-control", id = "materials" })
+                            @Html.DropDownListFor(m => m.PromotionModel, Model.PromotionModel.ListMaterials, htmlAttributes: new { @class = "form-control", id = "materials" })
                             <input type="text" id="inputConsumerKey" name="inputConsumerKey" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" />
                             <!--</form> poner las opciones que lee de la base de datos -->
 
