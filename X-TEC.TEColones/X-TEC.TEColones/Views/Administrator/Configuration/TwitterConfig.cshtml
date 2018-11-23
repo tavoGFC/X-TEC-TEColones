@@ -1,0 +1,57 @@
+﻿@model X_TEC.TEColones.Models.AdminModels.AdminModel
+@{
+    ViewBag.Title = "TwitterConfiguration";
+    Layout = "~/Views/LayoutBases/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Configuracion de la Cuenta de Twitter de X-TEC</title>
+</head>
+
+<body>
+    @{
+        TempData["admin"] = @Model;
+    }
+    <div class="py-2">
+        <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link" href="#">@Html.ActionLink("Tasa de Conversion Material-TEColones", "MaterialValueConfiguration", "Configuration")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">@Html.ActionLink("Tasa de Conversion TEColones - Colones", "TCSValueConfiguration", "Configuration")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">@Html.ActionLink("Cuenta Twitter", "TwitterConfiguration", "Configuration")</a>
+            </li>
+        </ul>
+    </div>
+
+    @using (Html.BeginForm("GetNewTwitterCredentials", "Configuration", FormMethod.Post))
+    {
+        <div class="py-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 align="center">Consumer Key: <input type="text" id="inputConsumerKey" name="inputConsumerKey" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')"/> </h5>
+                        <h5 align="center">Consumer Secret: <input type="text" id="inputConsumerSecret" name="inputConsumerSecret" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')"/></h5>
+                        <h5 align="center">Access Token: <input type="text" id="inputAccessToken" name="inputAccessToken" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')"/></h5>
+                        <h5 align="center">Access Token Secret: <input type="text" id="inputAccessTokenSecret" name="inputAccessTokenSecret" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')"/></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-30">Guardar</button>
+            &nbsp;
+            <button type="reset" class="btn btn-outline-secondary text-center justify-content-center align-items-center w-30">Cancelar</button>
+        </div>
+    }
+
+</body>
+
+
+</html>
+

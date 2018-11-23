@@ -20,8 +20,8 @@
                 <div class="col-md-6"><img class="img-fluid d-block" src="~/Content/Recursos/TEColonesBanner.jpg"></div>
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-md-6"><a class="btn btn-link btn-lg w-100" href="#" >@Model.FirstName  @Model.LastName</a></div>  <!--LINK NOMBRE ESTUDIANTE-->
-                        <div class="col-md-6"><img class="img-fluid d-block rounded-circle" src="@Model.Photo" width="70" height="70" id="imagenPerfilLayout"></div>  <!-- FOTO PERFIL -->
+                        <div class="col-md-6"><a class="btn btn-link btn-lg w-100" href="#" > @Model.FirstName  @Model.LastName </a></div>  <!--LINK NOMBRE ESTUDIANTE-->
+                        <div class="col-md-6"><img class="img-fluid d-block rounded-circle" src="@Model.Photo" width="90" height="90" id="imagenPerfilLayout"></div>  <!-- FOTO PERFIL -->
                         <div class="col-md-6"></div>
                         <div class="col-md-6"><a class="btn btn-link" href="~/LogIn/LogIn">Cerrar Sesion</a></div>  <!--LINK CERRAR SESION-->
                     </div>
@@ -37,10 +37,10 @@
             <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
                 <ul class="navbar-nav">
                     @{ 
-                        TempData["mydata"] = @Model;
+                        TempData["student"] = @Model;
                     }
 
-                    <li class="nav-item mx-2"> @Html.ActionLink("Inicio", "Home", "Home", Model, null) </li>
+                    <li class="nav-item mx-2"> @Html.ActionLink("Inicio", "Home", "Home") </li>
                     <li class="nav-item mx-2"> @Html.ActionLink("Dashboard", "Index", "Dashboard")</li>
                     <li class="nav-item mx-2"> @Html.ActionLink("Asignar TEColones", "Index", "AssignTEColones")</li>
                     <li class="nav-item mx-2"> @Html.ActionLink("Compartir TEColones", "Index", "ShareTEColones")</li>

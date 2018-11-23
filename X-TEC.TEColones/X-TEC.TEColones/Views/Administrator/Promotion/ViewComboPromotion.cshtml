@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "ViewComboPromotion";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear Promociones de un Material Individual</title>
+</head>
+
+<body>
+    @{
+        TempData["admin"] = @Model;
+    }
+    <div class="py-2">
+        <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link" href="#">@Html.ActionLink("Ver Promociones Individuales ", "ViewSinglePromotion", "Promotion")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">@Html.ActionLink(" Ver Promociones en Combo", "ViewComboPromotion", "Promotion")</a>
+            </li>
+        </ul>
+    </div>
+
+    <!--</form> -->
+</body>
+
+</html>

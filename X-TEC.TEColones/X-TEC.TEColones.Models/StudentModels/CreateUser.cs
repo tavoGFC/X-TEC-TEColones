@@ -15,9 +15,10 @@ namespace X_TEC.TEColones.Models.StudentModels
         {
             Description = " ";
             Photo = " ";
+            ImageByte = new byte[] { };
         }
 
-        public int Id { get; set; }
+        
 
         /// <summary>
         /// Get or Set FirstName User
@@ -48,6 +49,8 @@ namespace X_TEC.TEColones.Models.StudentModels
         [DisplayName("Numero de Carnet:")]
         [Required(ErrorMessage = "Campo Requerido")]
         public string Identification { get; set; }
+
+        public int Id { get; set; }
 
         /// <summary>
         /// Get or Set University User
@@ -119,7 +122,7 @@ namespace X_TEC.TEColones.Models.StudentModels
         //[FileExtensions(Extensions = "jpg,jpeg,png")]
         public HttpPostedFileBase PhotoFile { get; set; }
 
-
-
+        public byte[] ImageByte { get; set; }
+                          
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using X_TEC.TEColones.Models.AdminModels;
 
 namespace X_TEC.TEColones.Controllers.Administrator
 {
@@ -12,7 +13,8 @@ namespace X_TEC.TEColones.Controllers.Administrator
         // GET: AdminHome
         public ActionResult Home()
         {
-            return View("~/Views/Administrator/AdminHome/AdminHome.cshtml");
+            AdminModel AdminModel = (AdminModel)TempData["admin"];
+            return View("~/Views/Administrator/AdminHome/AdminHome.cshtml", AdminModel);
         }
     }
 }

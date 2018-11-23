@@ -7,7 +7,7 @@ using System.Web;
 
 namespace X_TEC.TEColones.Models.AdminModels
 {
-    public class CreateUser
+    public class NewAdminSCM
     {
         /// <summary>
         /// Get or Set User Type

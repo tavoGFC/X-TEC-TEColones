@@ -9,6 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="~/Content/Recursos/theme.css" type="text/css">
+    <title>@ViewBag.Title | X-TEC TEColones</title>
 </head>
 
 <body>
@@ -18,10 +19,10 @@
                 <div class="col-md-6"><img class="img-fluid d-block" src="~/Content/Recursos/TEColonesBanner.jpg"></div>
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-md-6"><a class="btn btn-link btn-lg w-100" href="#" id="nombrEstudianteID">@Model.FirstName</a></div>
-                        <div class="col-md-6"><img class="img-fluid d-block rounded-circle" src="~/Content/Recursos/FotoTest.jpg" width="150" height="150" id="imagenPerfilLayout"></div>
+                        <div class="col-md-6"><a class="btn btn-link btn-lg w-100" href="#" id="nombrEstudianteID"> @Model.FirstName  @Model.LastName </a></div>
+                        <div class="col-md-6"><img class="img-fluid d-block rounded-circle" src="@Model.Photo" width="90" height="90" id="imagenPerfilLayout"></div>
                         <div class="col-md-6"></div>
-                        <div class="col-md-6"><a class="btn btn-link" href="#">Cerrar sesion</a></div>
+                        <div class="col-md-6"><a class="btn btn-link" href="~/LogIn/LogIn">Cerrar Sesion</a></div>
                     </div>
                 </div>
             </div>
@@ -34,6 +35,9 @@
             </button>
             <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
                 <ul class="navbar-nav">
+                    @{
+                        TempData["scm"] = @Model;
+                    }
                     <li class="nav-item mx-2">@Html.ActionLink("Pagina Principal", "Home", "SCMHome")</li>
                 </ul>
             </div>
