@@ -1,4 +1,5 @@
-﻿
+﻿@model X_TEC.TEColones.Models.AdminModels.AdminChang
+
 @{
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/LayoutBases/_AdminLayout.cshtml";
@@ -25,7 +26,7 @@
         // Draw the COLUMN chart for TONELADASxMES when Charts is loaded.
         google.charts.setOnLoadCallback(drawToneladasMesChart);
 
-        // Draw the pie chart for the Anthony's pizza when Charts is loaded.
+        
         google.charts.setOnLoadCallback(drawMaterialesSedeChart);
 
 
@@ -35,7 +36,7 @@
         google.charts.setOnLoadCallback(drawDineroBeneficiosChart);
 
 
-        google.charts.setOnLoadCallback(drawTable);
+   
 
         // Callback that draws the COLUMN chart for EL DIAGRAMA.
         function drawToneladasMesChart() {
@@ -56,12 +57,20 @@
             ]);
 
             var options = {
-                chart: {
-                    title: 'Toneladas por Mes',
-                    subtitle: 'subtitulo',
-                    width: 500,
-                    height: 300
-                }
+                title: 'Toneladas por Mes',
+                chartArea: { width: '100%', height: '100%' },
+                legend: { position: 'none' },
+
+                hAxis: {
+                    title: 'Meses',
+                },
+                vAxis: {
+                    title: 'Toneladas',
+                },
+
+                backgroundColor: '#f1f8e9'
+
+
             };
 
             var chart = new google.charts.Bar(document.getElementById('chart_ToneladasMes'));
@@ -69,11 +78,11 @@
             chart.draw(data, google.charts.Bar.convertOptions(options));
         }
 
-        // Callback that draws the pie chart for Anthony's pizza.
+        // Callback that draws the chart .
         function drawMaterialesSedeChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Sedes', 'Toneladas'],
-                ['Campus Central', 1000],
+                ['Campus Central', 112],
                 ['Sede Santa Clara', 1170],
                 ['Recintos San Jose', 660],
                 ['CA Barrio Amon', 1030],
@@ -85,12 +94,19 @@
             ]);
 
             var options = {
-                chart: {
-                    title: 'Toneladas por Sede',
-                    subtitle: 'subtitulo',
-                    width: 500,
-                    height: 300
-                }
+                title: 'Toneladas por Sede',
+                chartArea: { width: '100%', height: '100%' },
+                legend: { position: 'none' },
+                
+                hAxis : {
+                    title: 'Sedes',
+                },
+                vAxis: {
+                    title: 'Toneladas',
+                },
+
+                backgroundColor: '#f1f8e9'
+
             };
 
             var chart = new google.charts.Bar(document.getElementById('chart_ToneladasSede'));
@@ -165,28 +181,6 @@
             chart.draw(data, options);
         }
 
-        function drawTable() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Nombre');
-            data.addColumn('string', 'Carnet');
-            data.addColumn('number', 'Cantidad de material (kg)');
-            data.addRows([
-                ["Ricardo", "2014040801", 8000],
-                ["Andres", "201523515", 7000],
-                ["Randy", "2014067801", 6000],
-                ["Martin", "2060040806", 5000],
-                ["Gustavo", "2014668078", 4000],
-                ["Alonso", "20140637", 3000],
-                ["Luciano", "20146237", 2000],
-                ["Nelson", "201456233", 1000],
-                ["Pepe", "20145236", 900],
-                ["Monchito", "20145126", 500]
-            ]);
-
-            var table = new google.visualization.Table(document.getElementById('table_div'));
-
-            table.draw(data, { showRowNumber: true, width: '100%', height: '100%' });
-        }
 
         //-------------------------------VELOCIMETRO--------------------------------------------
         google.charts.load('current', { 'packages': ['gauge'] });
@@ -195,14 +189,14 @@
 
             var data = google.visualization.arrayToDataTable([
                 ['Label', 'Value'],
-                ['Toneladas', 0.5]
+                ['', 1.7]
             ]);
 
             var options = {
-                width: 400, height: 200,
-                greenFrom: 1.5, greenTo: 2,
-                yellowFrom: 1, yellowTo: 1.5,
-                max: 2
+                width: 500, height: 300,
+                greenFrom: 15, greenTo: 20,
+                yellowFrom: 10, yellowTo: 15,
+                max: 20
             };
 
             var chart = new google.visualization.Gauge(document.getElementById('chart_gauge'));
@@ -219,15 +213,76 @@
 
     <table class="columns" align="center">
         <tr>
-            <td><div id="chart_gauge" style="border: 2px solid #ccc; width: 400px; height: 300px;"></div></td>
-            <td><div id="chart_ToneladasMes" style="border: 2px solid #ccc; width: 400px; height: 300px;"></div></td>
-            <td><div id="chart_ToneladasSede" style="border: 2px solid #ccc; width: 500px; height: 300px;"></div></td>
+            <td><h3>Toneladas Anuales</h3><div id="chart_gauge" style="width: 350px; height: 350px;"></div></td>
+            <td><div id="chart_ToneladasMes" style="width: 350px; height: 350px;"></div></td>
+            <td><div id="chart_ToneladasSede" style="width: 350px; height: 350px;"></div></td>
         </tr>
 
         <tr>
-            <td><div id="chart_UsuariosIntercambiando" style="border: 2px solid #ccc; width: 400px; height: 300px;"></div></td>
-            <td><div id="chart_DineroBeneficios" style="border: 2px solid #ccc; width: 400px; height: 300px;"></div></td>
-            <td> <label>TOP 10 DE ESTUDIANTES</label> <div id="table_div" style="border: 2px solid #ccc; width: 400px; height: 300px;"></div></td>
+            <td><div id="chart_UsuariosIntercambiando" style="width: 350px; height: 350px;"></div></td>
+            <td><div id="chart_DineroBeneficios" style="width: 350px; height: 350px;"></div></td>
+            <td align="center">
+                <h3>Top 10 de Estudiantes</h3>
+                <table border="1">
+                    <tr>
+                        <th>Puesto</th>
+                        <th>Estudiante</th>
+                        <th>Cantidad (kg)</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Panchito</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Monchito</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Anita</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Juanito</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Pepe</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Tereza</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Manuela</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Lamar</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Bob</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Elena</td>
+                        <td>100</td>
+                    </tr>
+
+
+                </table>
+            </td>
         </tr>
     </table>
 

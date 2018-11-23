@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using X_TEC.TEColones.Models.StudentModels;
+
+namespace X_TEC.TEColones.Models.AdminModels
+{
+    public class DashboardModel
+    {
+        public float TonladasAnuales { get; set; }
+
+        public List<float> ToneladasXmes { get; set; }
+
+        public List<float> ToneladasXsede { get; set; }
+
+        public List<float> DineroXbeneficio { get; set; }
+
+        public List<int> UsuariosXmes { get; set; }
+
+        public List<StudentModel> Top10 { get; set; }
+
+
+    }
+}
