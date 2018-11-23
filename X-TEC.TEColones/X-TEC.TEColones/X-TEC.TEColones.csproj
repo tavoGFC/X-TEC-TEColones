@@ -296,8 +296,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\DATIC\" />
-    <Folder Include="Views\CreatePromotionView\" />
-    <Folder Include="Views\View\" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

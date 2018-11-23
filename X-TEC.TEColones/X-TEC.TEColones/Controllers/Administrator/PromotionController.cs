@@ -22,6 +22,8 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult CreateComboPromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
+            AdminModel.PromotionModel = new PromotionViewModel();
+            DBConnection.GetMaterialType(AdminModel.PromotionModel);
             return View("~/Views/Administrator/Promotion/CreateComboPromotion.cshtml", AdminModel);
         }
 
