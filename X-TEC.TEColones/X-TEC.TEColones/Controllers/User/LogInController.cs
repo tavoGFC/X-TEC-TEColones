@@ -40,7 +40,13 @@ namespace X_TEC.TEColones.Controllers
         [HttpPost]
         public ActionResult LogIn()
         {
-            AdminModel AdminModel = new AdminModel
+            string user = Request["IdUser"].ToString();
+            string password = Request["PasswordUser"].ToString();
+
+            int typeUser = DBConnection.ExistUser(user);
+            string message = string.Empty;
+
+            switch (typeUser)
             {
                 case 1:
                     StudentModel student = DBConnection.VerifyStudent(user, password);
@@ -73,7 +79,7 @@ namespace X_TEC.TEColones.Controllers
                         //scm
                         else
                         {
-                            SCM scm = DBConnection.GetSCM(user_Id.Item1);                           
+                            SCM scm = DBConnection.GetSCM(user_Id.Item1);
                             if (scm.PhotoBytes.Count() == 0)
                             {
                                 scm.Photo = scm.DefaultPhoto();
@@ -93,14 +99,10 @@ namespace X_TEC.TEColones.Controllers
                     message = "El numero de usuario que ingresaste no coincide con ninguna cuenta. Regístrate para crear una cuenta.";
                     break;
             }
-            return LogIn(message);            
-                FirstName = "Randy Admin",
-                LastName = "Prueba",
-                Id = 2010141516,
-                
-            };
-            TempData["admin"] = AdminModel;
-            return RedirectToAction("Home", "AdminHome");            
+            return LogIn(message);
         }
+
+
+
     }
 }
