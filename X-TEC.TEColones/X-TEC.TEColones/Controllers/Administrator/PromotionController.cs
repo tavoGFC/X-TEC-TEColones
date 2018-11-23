@@ -45,6 +45,10 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult NewSinglePromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
+            AdminModel.PromotionModel = new PromotionViewModel();
+
+            //string TypeMaterial = Request[""]
+
             return View("~/Views/Administrator/Promotion/CreateSinglePromotion.cshtml",AdminModel); 
         }
         #endregion

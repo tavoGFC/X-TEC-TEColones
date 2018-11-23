@@ -9,7 +9,7 @@ namespace X_TEC.TEColones.Models.AdminModels
 {
     public class PromotionViewModel
     {
-        public string Materials { get; set; }
+        public string Material { get; set; }
 
         public List<string> ListMaterials { get; set; }
 
