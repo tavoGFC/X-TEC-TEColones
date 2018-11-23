@@ -45,7 +45,7 @@
     @using (Html.BeginForm("NewComboPromotion", "Promotion", FormMethod.Post))
     {
         <div class="py-3">
-            <table align="center">
+            <table align="left">
                 <tr>
                     <th>Material</th>
                     <th>Cantidad kg</th>
@@ -54,29 +54,44 @@
 
                 @foreach (var item in Model.PromotionModel.ListMaterials)
                 {
-                <tr>
-                    <td>
-                        @item
-                    </td>
+                    <tr>
+                        <td>
+                            @item
+                        </td>
 
-                    <td>
-                        <input type="number" id="inputOne" name="inputOne" required />
-                    </td>
-                    <td>
-                        <input type="checkbox" id="inputCheckbox" name="inputCheckbox" required />
-                    </td>
-
-                </tr>
+                        <td>
+                            <input type="number" id="@item" name="inputOne" required />
+                        </td>
+                        <td>
+                            <input type="checkbox" id="inputCheckbox+@item" name="inputCheckbox" required />
+                        </td>
+                    </tr>
 
 
                 }
-
-
-
             </table>
         </div>
+
+        <h5 align="right">
+            Beneficio (TEColones):
+            <input type="text" id="inputAccessToken" name="inputAccessToken" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" />
+        </h5>
+
+        <h5 align="right">
+            <label for="meeting_time">Fecha de vigencia: </label> <input type="datetime-local" name="meeting_time"><br>
+        </h5>
+
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-30">Guardar</button>
+            &nbsp;
+            <button type="reset" class="btn btn-danger text-center justify-content-center align-items-center w-30">Cancelar</button>
+        </div>
+        <br>
+        <br>
     }
-        <!--</form> -->
-    </body>
+    <br>
+    <br>
+    <!--</form> -->
+</body>
 
 </html>
