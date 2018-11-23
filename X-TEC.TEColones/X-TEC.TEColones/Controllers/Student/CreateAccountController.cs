@@ -21,11 +21,7 @@ namespace X_TEC.TEColones.Controllers.Student
         [HttpPost]
         public ActionResult SignUp(CreateUser student)
         {
-
-            if (DBConnection.InsertStudent(student))
-            {
-                return View("~/Views/Student/Home/Home.cshtml", student);
-            }
+           
             
             return CreateAccount("Existe un usuario con el mismo carnet, verifique por favor", student); //PartialView("~/Views/Student/CreateAccount/CreateAccount.cshtml", student);
         }

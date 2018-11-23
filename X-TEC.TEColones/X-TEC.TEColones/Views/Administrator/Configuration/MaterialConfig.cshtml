@@ -1,0 +1,84 @@
+﻿@model X_TEC.TEColones.Models.AdminModels.AdminModel
+
+
+@{
+    ViewBag.Title = "Configuracion";
+    Layout = "~/Views/LayoutBases/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+    <title>Configuraciones</title>
+</head>
+
+<body>
+    @{
+        TempData["admin"] = @Model;
+    }
+    <div class="py-2">
+        <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">@Html.ActionLink("Tasa de Conversion Material-TEColones ", "MaterialValueConfiguration", "Configuration")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">@Html.ActionLink(" Tasa de Conversion TEColones - Colones ", "TCSValueConfiguration", "Configuration")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">@Html.ActionLink(" Cuenta Twitter", "TwitterConfiguration", "Configuration")</a>
+            </li>
+        </ul>
+    </div>
+    @using (Html.BeginForm("GetNewMaterialTCSValues", "Configuration", FormMethod.Post))
+    {
+        <div class="py-3">
+            <table align="center">
+                <tr>
+                    <th>Categoria</th>
+                    <th>TEColones por kg</th>
+                </tr>
+                <tr>
+                    <td>Plastico</td>
+                    <td><input type="number" id="inputPlastic" name="inputPlastic" placeholder="@Model.ConfigurationModel.PlasticValue" /></td>
+                </tr>
+                <tr>
+                    <td>Papel</td>
+                    <td><input type="number" id="inputPaper" name="inputPaper" placeholder="@Model.ConfigurationModel.PaperValue" /></td>
+                </tr>
+                <tr>
+                    <td>Vidrio</td>
+                    <td><input type="number" id="inputGlass" name="inputGlass" placeholder="@Model.ConfigurationModel.GlassValue" /></td>
+                </tr>
+                <tr>
+                    <td>Aluminio</td>
+                    <td><input type="number" id="inputAluminum" name="inputAluminum" placeholder="@Model.ConfigurationModel.AluminumValue"  /></td>
+                </tr>
+            </table>
+        </div>
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-30">Guardar</button>
+            &nbsp;
+            <button type="reset" class="btn btn-outline-secondary text-center justify-content-center align-items-center w-30">Cancelar</button>
+        </div>
+    }
+    <!--</form> -->
+</body>
+
+</html>

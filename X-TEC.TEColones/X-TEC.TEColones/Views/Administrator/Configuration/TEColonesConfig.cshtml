@@ -1,0 +1,63 @@
+﻿@model X_TEC.TEColones.Models.AdminModels.AdminModel
+
+@{
+    ViewBag.Title = "TEColonesConfiguration";
+    Layout = "~/Views/LayoutBases/_AdminLayout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tasa de Conversion TEColones-Colones</title>
+</head>
+
+<body>
+    @{ 
+        TempData["admin"] = @Model;
+    }
+    <div class="py-2">
+        <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link" href="#">@Html.ActionLink("Tasa de Conversion Material-TEColones", "MaterialValueConfiguration", "Configuration")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="#">@Html.ActionLink("Tasa de Conversion TEColones - Colones", "TCSValueConfiguration", "Configuration")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">@Html.ActionLink("Cuenta Twitter", "TwitterConfiguration", "Configuration")</a>
+            </li>
+        </ul>
+    </div>
+    @using (Html.BeginForm("GetNewBenefitsValues", "Configuration", FormMethod.Post))
+    {
+        <div class="py-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 align="center">Tasa de Cambio</h4>
+                        <h5 align="center">(Matrícula)</h5>
+                        <p class="" align="center" style="font-size:25px;">
+                            <img src="~/Content/Recursos/iconoTEColones.png" width="55" height="55" align="middle"> 1 = c
+                            <input type="number" id="inputTCSStudy" name="inputTCSStudy" placeholder="@Model.ConfigurationModel.DinningExchange" width="50" height="50" step=".01" required /> 
+                        </p>
+                        <h4 align="center">Tasa de Cambio</h4>
+                        <h5 align="center">(Comedor)</h5>
+                        <p class="" align="center" style="font-size:25px;">
+                            <img src="~/Content/Recursos/iconoTEColones.png" width="55" height="55" align="middle"> 1 = c
+                            <input type="number" id="inputTCSDinning" name="inputTCSDinning" placeholder="@Model.ConfigurationModel.StudyExchange" maxlength="2" size="2" step=".01" required/> 
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-30">Guardar</button>
+            &nbsp;
+            <button type="reset" class="btn btn-outline-secondary text-center justify-content-center align-items-center w-30">Cancelar</button>
+        </div>
+    }
+</body>
+
+
+</html>

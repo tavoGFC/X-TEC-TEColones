@@ -1,0 +1,64 @@
+﻿@model X_TEC.TEColones.Models.AdminModels.AdminModel
+@{
+    ViewBag.Title = "Crear Promocion";
+    Layout = "~/Views/LayoutBases/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear Promociones de un Material Individual</title>
+</head>
+
+<body>
+    @{
+        TempData["admin"] = @Model;
+    }
+    <div class="py-2">
+        <ul class="nav nav-tabs justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">@Html.ActionLink("Promocion Individual ", "CreateSinglePromotion", "Promotion")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">@Html.ActionLink(" Promocion en Combo", "CreateComboPromotion", "Promotion")</a>
+            </li>
+        </ul>
+    </div>
+
+    @using (Html.BeginForm("NewSinglePromotion", "Promotion", FormMethod.Post))
+    {
+        <div class="py-2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <h5 align="center">
+                            Categoria:
+                            @Html.DropDownListFor(m => m.PromotionModel, Model.PromotionModel.ListMaterials, htmlAttributes: new { @class = "form-control", id = "materials" })
+                            <input type="text" id="inputConsumerKey" name="inputConsumerKey" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" />
+                            <!--</form> poner las opciones que lee de la base de datos -->
+
+                        </h5>
+                        
+                        
+                        <h5 align="center">Cantidad (kg): <input type="text" id="inputConsumerSecret" name="inputConsumerSecret" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" /></h5>
+                        <h5 align="center">Beneficio (TEColones): <input type="text" id="inputAccessToken" name="inputAccessToken" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" /></h5>
+
+                        <!--</form> calendario con la hora va aca -->
+
+                        <h5 align="center">Guardar y Activar: <input type="radio" name="publicar" id="publicar" value="publicar" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" /><br> </h5>
+                        <h5 align="center">Guardar y Almacenar: <input type="radio" name="publicar" id="publicar" value="publicar" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" /><br> </h5>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-30">Guardar</button>
+        </div>
+
+    }
+    <!--</form> -->
+</body>
+
+</html>
