@@ -7,9 +7,36 @@
 <html>
 <head>
     <title>Pagina Princiapl</title>
-</head>
 
-<body onload="draw(0);">
-    <h1>Pagina Principal para los Usuarios Admins</h1>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', { 'packages': ['gauge'] });
+        google.charts.setOnLoadCallback(drawGauge);
+        function drawGauge() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['Toneladas Anuales', 1.7]
+            ]);
+
+            var options = {
+                width: 500, height: 300,
+                greenFrom: 15, greenTo: 20,
+                yellowFrom: 10, yellowTo: 15,
+                max: 20
+            };
+
+            var chart = new google.visualization.Gauge(document.getElementById('chart_gauge'));
+
+            chart.draw(data, options);
+        }
+    </script>
+</head >
+
+
+<body>
+
+    <div id="chart_gauge" style="width: 350px; height: 350px; margin:0 auto;"></div>
+
 </body>
-</html>
+</html >

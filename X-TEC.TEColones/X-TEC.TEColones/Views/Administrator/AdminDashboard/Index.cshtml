@@ -1,8 +1,290 @@
-﻿@model X_TEC.TEColones.Models.AdminModels.AdminModel
 @{
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/LayoutBases/_AdminLayout.cshtml";
 }
 
-<h2>Index Dashboard para Admin</h2>
 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+
+        // Load Charts and the corechart package.
+        //google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.load('current', { 'packages': ['bar'] });
+        google.charts.load('current', { 'packages': ['corechart', 'line'] });
+        google.charts.load('current', { 'packages': ['table'] });
+
+
+
+
+        // Draw the COLUMN chart for TONELADASxMES when Charts is loaded.
+        google.charts.setOnLoadCallback(drawToneladasMesChart);
+
+        
+        google.charts.setOnLoadCallback(drawMaterialesSedeChart);
+
+
+        google.charts.setOnLoadCallback(drawUsuariosIntercambiandoMesChart);
+
+
+        google.charts.setOnLoadCallback(drawDineroBeneficiosChart);
+
+
+   
+
+        // Callback that draws the COLUMN chart for EL DIAGRAMA.
+        function drawToneladasMesChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Meses', 'Toneladas'],
+                ['Ene', 1000],
+                ['Feb', 1170],
+                ['Mar', 660],
+                ['Abr', 1030],
+                ['May', 1030],
+                ['Jun', 1030],
+                ['Jul', 1030],
+                ['Ago', 1030],
+                ['Sep', 1030],
+                ['Oct', 1030],
+                ['Nov', 1030],
+                ['Dic', 1030]
+            ]);
+
+            var options = {
+                title: 'Toneladas por Mes',
+                chartArea: { width: '100%', height: '100%' },
+                legend: { position: 'none' },
+
+                hAxis: {
+                    title: 'Meses',
+                },
+                vAxis: {
+                    title: 'Toneladas',
+                },
+
+                backgroundColor: '#f1f8e9'
+
+
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('chart_ToneladasMes'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+
+        // Callback that draws the chart .
+        function drawMaterialesSedeChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Sedes', 'Toneladas'],
+                ['Campus Central', 112],
+                ['Sede Santa Clara', 1170],
+                ['Recintos San Jose', 660],
+                ['CA Barrio Amon', 1030],
+                ['CTT Zapote', 1030],
+                ['CTTEC San Carlos', 1030],
+                ['Sede Interuniversitaria', 1030],
+                ['Centro Academico Limon', 1030],
+                ['Centro Academico Alajuela', 1030]
+            ]);
+
+            var options = {
+                title: 'Toneladas por Sede',
+                chartArea: { width: '100%', height: '100%' },
+                legend: { position: 'none' },
+                
+                hAxis : {
+                    title: 'Sedes',
+                },
+                vAxis: {
+                    title: 'Toneladas',
+                },
+
+                backgroundColor: '#f1f8e9'
+
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('chart_ToneladasSede'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+
+        function drawUsuariosIntercambiandoMesChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Meses', 'Cant Personas'],
+                ['Ene', 3],
+                ['Feb', 4],
+                ['Mar', 5],
+                ['Abr', 16],
+                ['May', 22],
+                ['Jun', 39],
+                ['Jul', 15],
+                ['Ago', 66],
+                ['Sep', 96],
+                ['Oct', 2],
+                ['Nov', 50],
+                ['Dic', 38]
+            ]);
+
+            var options = {
+                title: 'Personas Obteniendo TEColones por Mes',
+                pointsVisible: true,
+                hAxis: {
+                    title: 'Meses'
+                },
+                vAxis: {
+                    title: 'Cantidad de Personas'
+                },
+                backgroundColor: '#f1f8e9'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_UsuariosIntercambiando'));
+            chart.draw(data, options);
+        }
+
+
+        function drawDineroBeneficiosChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Meses', 'Cant Dinero'],
+                ['Ene', 100],
+                ['Feb', 300],
+                ['Mar', 1500],
+                ['Abr', 8000],
+                ['May', 10000],
+                ['Jun', 10005],
+                ['Jul', 1100],
+                ['Ago', 500],
+                ['Sep', 900],
+                ['Oct', 2000],
+                ['Nov', 900],
+                ['Dic', 5000]
+            ]);
+
+            var options = {
+                title: 'Cantidad de Dinero Otorgado en Beneficios',
+                pointsVisible: true,
+                hAxis: {
+                    title: 'Meses'
+                },
+                vAxis: {
+                    title: 'Cantidad de Dinero'
+                },
+                backgroundColor: '#f1f8e9'
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_DineroBeneficios'));
+            chart.draw(data, options);
+        }
+
+
+        //-------------------------------VELOCIMETRO--------------------------------------------
+        google.charts.load('current', { 'packages': ['gauge'] });
+        google.charts.setOnLoadCallback(drawGauge);
+        function drawGauge() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Label', 'Value'],
+                ['', 1.7]
+            ]);
+
+            var options = {
+                width: 500, height: 300,
+                greenFrom: 15, greenTo: 20,
+                yellowFrom: 10, yellowTo: 15,
+                max: 20
+            };
+
+            var chart = new google.visualization.Gauge(document.getElementById('chart_gauge'));
+
+            chart.draw(data, options);
+        }
+            //---------------------------------------------------------------------------------------
+    </script>
+    <title>Index</title>
+</head>
+
+
+<body>
+
+    <table class="columns" align="center">
+        <tr>
+            <td><h3>Toneladas Anuales</h3><div id="chart_gauge" style="width: 350px; height: 350px;"></div></td>
+            <td><div id="chart_ToneladasMes" style="width: 350px; height: 350px;"></div></td>
+            <td><div id="chart_ToneladasSede" style="width: 350px; height: 350px;"></div></td>
+        </tr>
+
+        <tr>
+            <td><div id="chart_UsuariosIntercambiando" style="width: 350px; height: 350px;"></div></td>
+            <td><div id="chart_DineroBeneficios" style="width: 350px; height: 350px;"></div></td>
+            <td align="center">
+                <h3>Top 10 de Estudiantes</h3>
+                <table border="1">
+                    <tr>
+                        <th>Puesto</th>
+                        <th>Estudiante</th>
+                        <th>Cantidad (kg)</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Panchito</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Monchito</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Anita</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Juanito</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Pepe</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Tereza</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Manuela</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Lamar</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Bob</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Elena</td>
+                        <td>100</td>
+                    </tr>
+
+
+                </table>
+            </td>
+        </tr>
+    </table>
+
+
+
+</body>
+</html>

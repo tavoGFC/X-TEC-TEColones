@@ -12,8 +12,20 @@ namespace X_TEC.TEColones.Controllers.Administrator
         // GET: Dashboard
         public ActionResult Index()
         {
+             /*
+            //AdminChang adminChang = new Admin(); //aqui iria el tempdata[admin]
+
+            //adminChang.Email = "holi@wawa.com";
+            adminChang.Department = "Dep de pendejadas";
+            adminChang.FirstName = "miNombre";
+            adminChang.LastName = "miApellido";
+            adminChang.Id = 12345;
+            
+            return View("~/Views/Administrator/AdminDashboard/Index.cshtml", adminChang);
+
             AdminModel AdminModel = (AdminModel)TempData["admin"];
-            return View("~/Views/Administrator/AdminDashboard/Index.cshtml", AdminModel);
+            */
+            return View("~/Views/Administrator/AdminDashboard/Index.cshtml"); //, AdminModel);
         }
     }
 }
