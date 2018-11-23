@@ -11,7 +11,7 @@ namespace X_TEC.TEColones.Models.AdminModels
     {
         public string Materials { get; set; }
 
-        public List<ListItem> ListCountries { get; set; }
+        public List<string> ListMaterials { get; set; }
 
         public List<string> ComboMaterials { get; set; }
 

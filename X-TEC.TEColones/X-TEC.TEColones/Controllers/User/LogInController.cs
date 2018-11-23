@@ -74,6 +74,13 @@ namespace X_TEC.TEColones.Controllers
                         if (user_Id.Item2)
                         {
                             //falta agregar lo del admin
+                            AdminModel adminModel = new AdminModel()
+                            {
+                                FirstName = "Genesis",
+                                LastName = "Adam",
+                                
+                            };
+                            TempData["admin"] = adminModel;
                             return RedirectToAction("Home", "AdminHome");
                         }
                         //scm

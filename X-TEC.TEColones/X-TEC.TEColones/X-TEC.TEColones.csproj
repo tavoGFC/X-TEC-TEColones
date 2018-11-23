@@ -229,7 +229,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Recursos\iconoTEColones.png" />
-    <Content Include="Content\Recursos\.jpg" />
     <Content Include="Content\Recursos\iconoPapel.png" />
     <Content Include="Content\Recursos\iconoPlastico.png" />
     <Content Include="Content\Recursos\iconoTetrapack.png" />
@@ -296,12 +295,11 @@
     <Content Include="Views\Administrator\Promotion\ViewComboPromotion.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\CreatePromotionView\" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Content\DATIC\" />
+    <Folder Include="Views\CreatePromotionView\" />
     <Folder Include="Views\View\" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

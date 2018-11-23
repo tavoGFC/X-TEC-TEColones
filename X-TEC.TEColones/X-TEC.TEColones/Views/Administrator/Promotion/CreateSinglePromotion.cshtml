@@ -34,13 +34,13 @@
 
                         <h5 align="center">
                             Categoria:
-                            @Html.DropDownListFor(m => m.PromotionModel, Model.PromotionModel.ListMaterials, htmlAttributes: new { @class = "form-control", id = "materials" })
+                            @Html.DropDownList("nombre", new SelectList(Model.PromotionModel.ListMaterials))
                             <input type="text" id="inputConsumerKey" name="inputConsumerKey" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" />
                             <!--</form> poner las opciones que lee de la base de datos -->
 
                         </h5>
-                        
-                        
+
+
                         <h5 align="center">Cantidad (kg): <input type="text" id="inputConsumerSecret" name="inputConsumerSecret" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" /></h5>
                         <h5 align="center">Beneficio (TEColones): <input type="text" id="inputAccessToken" name="inputAccessToken" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" /></h5>
 
@@ -49,6 +49,8 @@
                         <h5 align="center">Guardar y Activar: <input type="radio" name="publicar" id="publicar" value="publicar" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" /><br> </h5>
                         <h5 align="center">Guardar y Almacenar: <input type="radio" name="publicar" id="publicar" value="publicar" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" /><br> </h5>
 
+                        <label for="meeting_time">Fecha de vigencia</label>
+                        <input type="datetime-local" name="meeting_time" >
                     </div>
                 </div>
             </div>

@@ -51,7 +51,8 @@ namespace X_TEC.TEColones.Controllers.StorageCenterManager
                     }
                 }
 
-                //TwitterConnection.Publish(messageToTwitter); --> PUBLICAR MENSAJE A TWITTER
+                TwitterConnection.SetCredentials();
+                TwitterConnection.Publish(messageToSend);
 
                 SendEmail(email, messageToSend);
 

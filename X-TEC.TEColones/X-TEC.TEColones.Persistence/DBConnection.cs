@@ -753,11 +753,10 @@ namespace X_TEC.TEColones.Persistence
                 };
 
                 SqlDataReader reader = command.ExecuteReader();
-
+                Promo.ListMaterials = new List<string>();
                 while (reader.Read())
                 {
-                    string types = reader["ValueTCS"].ToString();
-                    //Promo.ListMaterials.Add(types);
+                    Promo.ListMaterials.Add(reader["Type"].ToString());
                 }
             }
             catch (Exception ex)
