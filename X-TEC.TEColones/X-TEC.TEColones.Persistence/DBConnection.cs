@@ -533,9 +533,59 @@ namespace X_TEC.TEColones.Persistence
             }
             return scm;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static AdminModel GetAdmin(int id)
+        {
+            AdminModel admin = new AdminModel();
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_Get_AdminSCM", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("Identification", id);
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    //not return data
+                    if (reader[0].ToString().Equals("0"))
+                    {
+                        admin.Id = 0;
+                        return admin;
+                    }
+                    else
+                    {
+                        admin.Id = id;
+                        admin.FirstName = reader["FirstName"].ToString();
+                        admin.LastName = reader["LastName"].ToString();
+                        admin.University = reader["University"].ToString();
+                        admin.Headquarter = reader["University"].ToString();
+                        admin.Email = reader["University"].ToString();
+                        admin.PhotoBytes = (byte[])reader["Photo"];
+                        admin.Department = reader["Department"].ToString();
+                        admin.PhoneNumber = reader["PhoneNumber"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error GetAdmin " + ex.Message);
+            }
+            return admin;
+        }
+
         #endregion
 
-        
+
 
         #region Configuration
 

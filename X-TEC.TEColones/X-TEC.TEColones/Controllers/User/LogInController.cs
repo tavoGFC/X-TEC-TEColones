@@ -7,7 +7,7 @@ using X_TEC.TEColones.Models.StudentModels;
 using X_TEC.TEColones.Models.AdminModels;
 using X_TEC.TEColones.Models.SCMModels;
 using X_TEC.TEColones.Persistence;
-using X_TEC.TEColones.Models.AdminModels;
+using System.Web.Security;
 
 namespace X_TEC.TEColones.Controllers
 {
@@ -19,6 +19,8 @@ namespace X_TEC.TEColones.Controllers
         /// <returns></returns>
         public ActionResult LogIn(string message)
         {
+            FormsAuthentication.SignOut();
+            TempData.Clear();
             ViewBag.Message = message;
             return View();
         }
@@ -73,13 +75,16 @@ namespace X_TEC.TEColones.Controllers
                         //admin
                         if (user_Id.Item2)
                         {
-                            //falta agregar lo del admin
-                            AdminModel adminModel = new AdminModel()
+                            AdminModel adminModel = DBConnection.GetAdmin(user_Id.Item1);
+                            if (adminModel.PhotoBytes.Count() == 0)
                             {
-                                FirstName = "Genesis",
-                                LastName = "Adam",
-                                
-                            };
+                                adminModel.Photo = adminModel.DefaultPhoto();
+                            }
+                            else
+                            {
+                                adminModel.RenderImage();
+                            }
+                            
                             TempData["admin"] = adminModel;
                             return RedirectToAction("Home", "AdminHome");
                         }
@@ -109,7 +114,7 @@ namespace X_TEC.TEColones.Controllers
             return LogIn(message);
         }
 
-
-
     }
+
+
 }
