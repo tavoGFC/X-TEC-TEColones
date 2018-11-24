@@ -29,7 +29,17 @@ namespace X_TEC.TEColones.Controllers
         /// <returns></returns>
         public ActionResult ForgotPassword()
         {
-            ViewBag.Message = "Pagina para mostrar el recuperar password";
+            
+            return View();
+        }
+
+        /// <summary>
+        /// Return Page LogInNewPassword
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult LogInNewPassword()
+        {
+
             return View();
         }
 
