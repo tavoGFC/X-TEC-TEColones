@@ -11,6 +11,7 @@ using System.Web.Configuration;
 using X_TEC.TEColones.Models.StudentModels;
 using X_TEC.TEColones.Models.SCMModels;
 using X_TEC.TEColones.Models.AdminModels;
+using Tweetinvi.Core.Events;
 
 namespace X_TEC.TEColones.Persistence
 {
@@ -283,7 +284,6 @@ namespace X_TEC.TEColones.Persistence
         }
         #endregion
 
-
         #region  StoregeCenterManager
 
         /// <summary>
@@ -387,7 +387,6 @@ namespace X_TEC.TEColones.Persistence
         }
 
         #endregion
-
 
         #region LogIn
         /// <summary>
@@ -534,8 +533,6 @@ namespace X_TEC.TEColones.Persistence
             return scm;
         }
         #endregion
-
-        
 
         #region Configuration
 
@@ -765,8 +762,89 @@ namespace X_TEC.TEColones.Persistence
             }
             Connection.Close();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="AdminModeId"></param>
+        /// <param name="dict"></param>
+        /// <param name="AmountTCS"></param>
+        /// <param name="DatetimeEnd"></param>
+        /// <param name="ActiveValue"></param>
+        public static void InsertNewComboPromotion(int AdminModeId, Dictionary<string, int> dict, float ValueTCS, string FinishDate, int ActiveValue)
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_InsertNewComboPromotion", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("AdminModeId", AdminModeId);
+                command.Parameters.AddWithValue("ValueTCS", ValueTCS);
+                command.Parameters.AddWithValue("FinishDate", FinishDate);
+                command.Parameters.AddWithValue("ActiveValue", ActiveValue);
+                command.Parameters.AddWithValue("SingleProm", 0);
+
+                command.ExecuteNonQuery();
+
+                SqlCommand commandId = new SqlCommand("SELECT TOP 1 ID, ValueTCS FROM Promotion ORDER BY ID DESC", Connection)
+                {
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader reader = commandId.ExecuteReader();
+
+                int IdPromo = int.Parse(reader[0].ToString());
+
+                //string IdPromo = string.Empty;
+
+                // var reader = command.ExecuteReader();
+                // if (reader.Read())
+                // {
+                //     IdPromo = reader[0].ToString();
+                //  }
+
+                foreach (var item in dict)
+                {
+                    InsertNewComboPromotion_Aux(IdPromo, item.Key, item.Value);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error InsertNewComboPromotion " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IdPromo"></param>
+        /// <param name="Material"></param>
+        /// <param name="AmountKg"></param>
+        public static void InsertNewComboPromotion_Aux(int IdPromo, string Material, int AmountKg) 
+        {
+            try
+            {
+                SqlCommand command = new SqlCommand("SP_InsertPromoMateKAmount", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("IdPromotion", IdPromo);
+                command.Parameters.AddWithValue("IdMaterial", Material);
+                command.Parameters.AddWithValue("AmountMaterial", AmountKg);
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error InsertNewComboPromotion " + ex.Message);
+            }
+        }
         #endregion
-
-
     }
 }

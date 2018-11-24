@@ -36,6 +36,9 @@
             <li class="nav-item">
                 <h5><a class="nav-link" href="#">@Html.ActionLink("Promocion Individual ", "CreateSinglePromotion", "Promotion")</a></h5>
             </li>
+            &nbsp;
+            &nbsp;
+            &nbsp;
             <li class="nav-item">
                 <h5><a class="nav-link active" href="#">@Html.ActionLink(" Promocion en Combo", "CreateComboPromotion", "Promotion")</a></h5>
             </li>
@@ -44,7 +47,8 @@
 
     @using (Html.BeginForm("NewComboPromotion", "Promotion", FormMethod.Post))
     {
-        <div class="py-3">
+        @ViewBag.Msj
+        <div class="py-2">
             <table align="left">
                 <tr>
                     <th>Material</th>
@@ -58,29 +62,38 @@
                         <td>
                             @item
                         </td>
+                    
+                        <td>
+                            <input type="number" id="@item" name="@item" />
+                        </td>
 
                         <td>
-                            <input type="number" id="@item" name="inputOne" required />
-                        </td>
-                        <td>
-                            <input type="checkbox" id="inputCheckbox+@item" name="inputCheckbox" required />
+                            <input type="checkbox" id="checkbox @item" name="checkbox @item" value="true" />
                         </td>
                     </tr>
-
-
-                }
+                 }
             </table>
+
+            <h5 align="right">
+                Beneficio (TEColones):
+                <input type="text" id="inputValueTCS" name="inputValueTCS" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" />
+            </h5>
+
+            <h5 align="right">
+                Tiempo Limite: 
+                <input type="datetime-local" id="inputFinishDate" name="inputFinishDate"><br>
+            </h5>
+
+            <h5 align="center">
+                Guardar y Activar: 
+                <input type="radio" name="publish" id="publish" value="publish"/><br>
+            </h5>
+
+            <h5 align="center">
+                Guardar y Almacenar: 
+                <input type="radio" name="save" id="save" value="save"/><br> 
+            </h5>
         </div>
-
-        <h5 align="right">
-            Beneficio (TEColones):
-            <input type="text" id="inputAccessToken" name="inputAccessToken" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" />
-        </h5>
-
-        <h5 align="right">
-            <label for="meeting_time">Fecha de vigencia: </label> <input type="datetime-local" name="meeting_time"><br>
-        </h5>
-
         <div class="row justify-content-center">
             <button type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-30">Guardar</button>
             &nbsp;
@@ -88,7 +101,7 @@
         </div>
         <br>
         <br>
-    }
+     }
     <br>
     <br>
     <!--</form> -->

@@ -45,16 +45,86 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult NewSinglePromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
-            AdminModel.PromotionModel = new PromotionViewModel();
-            return View("~/Views/Administrator/Promotion/CreateSinglePromotion.cshtml",AdminModel); 
+
+
+            return View("~/Views/Administrator/Promotion/CreateSinglePromotion.cshtml", AdminModel);
         }
         #endregion
 
         #region NewComboPromotionMethods
+        /// <summary>
+        /// Gets the type and amount of kg of the materials that form up the combo promotion. 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult NewComboPromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
-            AdminModel.PromotionModel = new PromotionViewModel();
+
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+
+            // checks the value of the inputs: name, amount of kg, the checkbox
+            foreach (var item in AdminModel.PromotionModel.ListMaterials)
+            {
+                string materialType = item; // which type of material is, the name of the material
+                string amountKg = Request[item]; // the amount, float, of kg of the material
+                string checkBox = Request["checkbox " + item]; // the value of the checkbox
+
+
+                if (amountKg != " " && checkBox != null)
+                {
+                    int amountKgInt = int.Parse(amountKg); // converts the string type of amount to float for the sending it to the database
+                    dict.Add(materialType, amountKgInt);
+                }
+                else {
+                    continue;
+                }
+            }
+
+            // to be a combo at least must be two materials, else proceed to choose again. 
+            if (dict.Count < 2)
+            {
+                ViewBag.Msj = "Para crear una PromocionCombo minimo son dos materiales. Si desea solo un material, proceda a la seccion de Promo Individual.";
+            }
+
+            // checks and gets the value of the tcs and the datetime of it
+            float valueTCS = float.Parse(Request["inputValueTCS"]);
+            string finishDate = Request["inputFinishDate"];
+
+            // value of the active state of the promotion: 1=active, 0=notactive; by default is 0
+            int activeValue = 0;
+
+            // if the user wants the promotion to be active and publish now, else not
+            if(Request["publish"] != null && Request["save"] == null)
+            {
+                activeValue = 1;
+            }
+
+            // if the user let one option blank is shown a message
+            if (Request["publish"] == null && Request["save"] == null)
+            {
+                ViewBag.Msj = "Se debe seleccionar si desea Activar o Almacenar.";
+            }
+            
+            // if the user wants the promotion to be save and ketp for later
+            if (Request["publicar"] == null && Request["almacenar"] != null)
+            {
+                activeValue = 0;
+            }
+            
+            // send the information to the database
+            DBConnection.InsertNewComboPromotion(2015161719, dict, valueTCS, finishDate, activeValue);
+
+            // if the promotion is active, make it a tweet
+            if(activeValue == 1)
+            {
+                TwitterConnection.SetCredentials();
+                TwitterConnection.Publish("Hay una nueva Promocion en Combo. Consiste en: ");
+                foreach (var item in dict)
+                {
+                    TwitterConnection.Publish("Entregar " + item.Value + " kg " + " de " + item.Key);
+
+                }
+            }
             return View("~/Views/Administrator/Promotion/CreateComboPromotion.cshtml", AdminModel);
         }
 

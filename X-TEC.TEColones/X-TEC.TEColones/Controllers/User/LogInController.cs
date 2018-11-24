@@ -76,6 +76,7 @@ namespace X_TEC.TEColones.Controllers
                             //falta agregar lo del admin
                             AdminModel adminModel = new AdminModel()
                             {
+                                Id = user_Id.Item1,
                                 FirstName = "Genesis",
                                 LastName = "Adam",
                                 
