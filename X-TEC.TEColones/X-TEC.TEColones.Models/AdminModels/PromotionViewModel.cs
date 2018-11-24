@@ -23,5 +23,6 @@ namespace X_TEC.TEColones.Models.AdminModels
 
         public string FinalDate { get; set; }
 
+        public int LatestIdPromotion { get; set; }
     }
 }

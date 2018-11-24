@@ -764,21 +764,22 @@ namespace X_TEC.TEColones.Persistence
         }
 
         /// <summary>
-        /// 
+        /// Inserts a new single promotion into the database. 
         /// </summary>
         /// <param name="AdminModeId"></param>
-        /// <param name="dict"></param>
-        /// <param name="AmountTCS"></param>
-        /// <param name="DatetimeEnd"></param>
+        /// <param name="materialType"></param>
+        /// <param name="amountKg"></param>
+        /// <param name="ValueTCS"></param>
+        /// <param name="FinishDate"></param>
         /// <param name="ActiveValue"></param>
-        public static void InsertNewComboPromotion(int AdminModeId, Dictionary<string, int> dict, float ValueTCS, string FinishDate, int ActiveValue)
+        public static void InsertNewPromotion(int AdminModeId, float ValueTCS, string FinishDate, int ActiveValue, int SingleProm)
         {
             try
             {
                 Connection.Close();
                 Connection.Open();
 
-                SqlCommand command = new SqlCommand("SP_InsertNewComboPromotion", Connection)
+                SqlCommand command = new SqlCommand("SP_InsertNewPromotion", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -787,36 +788,49 @@ namespace X_TEC.TEColones.Persistence
                 command.Parameters.AddWithValue("ValueTCS", ValueTCS);
                 command.Parameters.AddWithValue("FinishDate", FinishDate);
                 command.Parameters.AddWithValue("ActiveValue", ActiveValue);
-                command.Parameters.AddWithValue("SingleProm", 0);
+                command.Parameters.AddWithValue("SingleProm", SingleProm);
 
                 command.ExecuteNonQuery();
-
-                SqlCommand commandId = new SqlCommand("SELECT TOP 1 ID, ValueTCS FROM Promotion ORDER BY ID DESC", Connection)
-                {
-                    CommandType = CommandType.Text
-                };
-
-                SqlDataReader reader = commandId.ExecuteReader();
-
-                int IdPromo = int.Parse(reader[0].ToString());
-
-                //string IdPromo = string.Empty;
-
-                // var reader = command.ExecuteReader();
-                // if (reader.Read())
-                // {
-                //     IdPromo = reader[0].ToString();
-                //  }
-
-                foreach (var item in dict)
-                {
-                    InsertNewComboPromotion_Aux(IdPromo, item.Key, item.Value);
-                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error InsertNewComboPromotion " + ex.Message);
             }
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Promo"></param>
+        public static void GetNewestIdPromotion(PromotionViewModel Promo)
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT TOP 1 Id, IdAdmin FROM Promotion ORDER BY Id DESC", Connection)
+                {
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                string IdPromoString = string.Empty;
+
+                while (reader.Read())
+                {
+                    IdPromoString = reader["Id"].ToString();
+                }
+
+                Promo.LatestIdPromotion = int.Parse(IdPromoString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Getting Data" + ex.Message);
+            }
+            Connection.Close();
         }
 
         /// <summary>
@@ -825,18 +839,21 @@ namespace X_TEC.TEColones.Persistence
         /// <param name="IdPromo"></param>
         /// <param name="Material"></param>
         /// <param name="AmountKg"></param>
-        public static void InsertNewComboPromotion_Aux(int IdPromo, string Material, int AmountKg) 
+        public static void InsertPromosMaterial(int IdPromo, string Material, int AmountKg) 
         {
             try
             {
-                SqlCommand command = new SqlCommand("SP_InsertPromoMateKAmount", Connection)
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_InsertNewPromotionsMaterials", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue("IdPromotion", IdPromo);
-                command.Parameters.AddWithValue("IdMaterial", Material);
-                command.Parameters.AddWithValue("AmountMaterial", AmountKg);
+                command.Parameters.AddWithValue("IdPromo", IdPromo);
+                command.Parameters.AddWithValue("Material", Material);
+                command.Parameters.AddWithValue("AmountKg", AmountKg);
 
                 command.ExecuteNonQuery();
             }
@@ -844,6 +861,7 @@ namespace X_TEC.TEColones.Persistence
             {
                 Console.WriteLine("Error InsertNewComboPromotion " + ex.Message);
             }
+            Connection.Close();
         }
         #endregion
     }

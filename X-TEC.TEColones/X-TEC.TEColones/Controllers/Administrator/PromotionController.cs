@@ -40,20 +40,69 @@ namespace X_TEC.TEColones.Controllers.Administrator
         }
         #endregion
 
-        #region NewSinglePromotionMethods
+        #region NewPromotionMethods
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult NewSinglePromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
 
+            // get the type of material
+            string materialType = Request["materialType"].ToString();
 
+            // get the amount of kg of the material
+            int amountKg = int.Parse(Request["inputAmountKg"].ToString());
+
+            // get the value of tcs of the promotion
+            float valueTCS = float.Parse(Request["inputValueTCS"].ToString());
+
+            // get the datetime of the promotion
+            string finishDate = Request["inputFinishDate"].ToString();
+
+            // value of the active state of the promotion: 1=active, 0=notactive; by default is 0
+            int activeValue = 0;
+
+            // if the user wants the promotion to be active and publish now, else not
+            if (Request["publish"] != null && Request["save"] == null)
+            {
+                activeValue = 1;
+            }
+
+            // if the user let one option blank is shown a message
+            if (Request["publish"] == null && Request["save"] == null)
+            {
+                ViewBag.Msj = "Se debe seleccionar si desea Activar o Almacenar.";
+            }
+
+            // if the user wants the promotion to be save and ketp for later
+            if (Request["publicar"] == null && Request["almacenar"] != null)
+            {
+                activeValue = 0;
+            }
+
+            // send the information to the database
+            DBConnection.InsertNewPromotion(AdminModel.Id, valueTCS, finishDate, activeValue, 1);
+            DBConnection.GetNewestIdPromotion(AdminModel.PromotionModel);
+            int IdPromotion = AdminModel.PromotionModel.LatestIdPromotion;
+            DBConnection.InsertPromosMaterial(IdPromotion, materialType, amountKg);
+
+            // if the promotion is active, make it a tweet
+            if (activeValue == 1)
+            {
+                TwitterConnection.SetCredentials();
+                TwitterConnection.Publish(
+                    "Hay una nueva promocion de: " + valueTCS + " TEColones. Consiste en entregar: " +
+                    amountKg + " kg de " + materialType +". La promocion es valida hasta: " + finishDate
+                );
+            }
             return View("~/Views/Administrator/Promotion/CreateSinglePromotion.cshtml", AdminModel);
         }
-        #endregion
-
-        #region NewComboPromotionMethods
+        
         /// <summary>
-        /// Gets the type and amount of kg of the materials that form up the combo promotion. 
+        /// 
         /// </summary>
         /// <returns></returns>
         public ActionResult NewComboPromotion()
@@ -68,7 +117,6 @@ namespace X_TEC.TEColones.Controllers.Administrator
                 string materialType = item; // which type of material is, the name of the material
                 string amountKg = Request[item]; // the amount, float, of kg of the material
                 string checkBox = Request["checkbox " + item]; // the value of the checkbox
-
 
                 if (amountKg != " " && checkBox != null)
                 {
@@ -88,7 +136,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
 
             // checks and gets the value of the tcs and the datetime of it
             float valueTCS = float.Parse(Request["inputValueTCS"]);
-            string finishDate = Request["inputFinishDate"];
+            string finishDate = Request["inputFinishDate"].ToString();
 
             // value of the active state of the promotion: 1=active, 0=notactive; by default is 0
             int activeValue = 0;
@@ -110,24 +158,31 @@ namespace X_TEC.TEColones.Controllers.Administrator
             {
                 activeValue = 0;
             }
-            
+
             // send the information to the database
-            DBConnection.InsertNewComboPromotion(2015161719, dict, valueTCS, finishDate, activeValue);
+            DBConnection.InsertNewPromotion(AdminModel.Id, valueTCS, finishDate, activeValue, 0);
+            DBConnection.GetNewestIdPromotion(AdminModel.PromotionModel);
+            int IdPromotion = AdminModel.PromotionModel.LatestIdPromotion;
+
+            foreach (var item in dict)
+            {
+                DBConnection.InsertPromosMaterial(IdPromotion, item.Key, item.Value);
+            }
 
             // if the promotion is active, make it a tweet
-            if(activeValue == 1)
+            if (activeValue == 1)
             {
                 TwitterConnection.SetCredentials();
-                TwitterConnection.Publish("Hay una nueva Promocion en Combo. Consiste en: ");
+                TwitterConnection.Publish("Hay una nueva Promocion en Combo de: " + valueTCS + " TEColones. Consiste en entregar: ");
                 foreach (var item in dict)
                 {
                     TwitterConnection.Publish("Entregar " + item.Value + " kg " + " de " + item.Key);
-
                 }
+                TwitterConnection.Publish("La promocion es valida hasta: " + finishDate);
             }
+            
             return View("~/Views/Administrator/Promotion/CreateComboPromotion.cshtml", AdminModel);
         }
-
         #endregion
     }
 }

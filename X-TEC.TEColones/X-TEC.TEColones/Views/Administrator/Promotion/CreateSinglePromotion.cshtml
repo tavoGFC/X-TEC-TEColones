@@ -37,12 +37,12 @@
 
                         <h5 align="center">
                             Categoria:
-                            @Html.DropDownList("tipoMaterial", new SelectList(Model.PromotionModel.ListMaterials))
+                            @Html.DropDownList("materialType", new SelectList(Model.PromotionModel.ListMaterials))
                         </h5>
 
                         <h5 align="center">
                             Cantidad (kg): 
-                            <input type="text" id="inputCantidadkg" name="inputCantidadkg" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" />
+                            <input type="text" id="inputAmountKg" name="inputAmountKg" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" />
                         </h5>
 
                         <h5 align="center">
@@ -52,17 +52,17 @@
 
                         <h5 align="center">
                             Fecha de vigencia: 
-                            <input type="datetime-local" name="meeting_time"><br>
+                            <input type="datetime-local" id="inputFinishDate" name="inputFinishDate"><br>
                         </h5>
 
                         <h5 align="center">
                         Guardar y Activar:
-                        <input type="radio" name="publish" id="publish" value="publish" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" /><br>
+                        <input type="radio" name="publish" id="publish" value="publish"/><br>
                         </h5>
 
                         <h5 align="center">
                             Guardar y Almacenar:
-                            <input type="radio" name="save" id="save" value="save" required oninvalid="this.setCustomValidity('Todos los campos son de caracter obligatorio.')" oninput="setCustomValidity('')" /><br>
+                            <input type="radio" name="save" id="save" value="save"/><br>
                         </h5>
                     </div>
                 </div>
