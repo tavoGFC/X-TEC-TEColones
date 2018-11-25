@@ -11,6 +11,11 @@ namespace X_TEC.TEColones.Controllers.Administrator
     public class PromotionController : Controller
     {
         #region MainViewTabsMethods
+
+        /// <summary>
+        /// Gets the page of creating new single promotions. 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateSinglePromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
@@ -19,6 +24,10 @@ namespace X_TEC.TEColones.Controllers.Administrator
             return View("~/Views/Administrator/Promotion/CreateSinglePromotion.cshtml", AdminModel);
         }
 
+        /// <summary>
+        /// Gets the page of creating new combo promotions. 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateComboPromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
@@ -27,15 +36,27 @@ namespace X_TEC.TEColones.Controllers.Administrator
             return View("~/Views/Administrator/Promotion/CreateComboPromotion.cshtml", AdminModel);
         }
 
+        /// <summary>
+        /// Gets the page of viewing all the single promotions created, retrieved from the database. 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ViewSinglePromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
+            AdminModel.PromotionModel = new PromotionViewModel();
+            DBConnection.GetPromotion(AdminModel.PromotionModel, "single");
             return View("~/Views/Administrator/Promotion/ViewSinglePromotion.cshtml", AdminModel);
         }
 
+        /// <summary>
+        /// Gets the page of viewing all the combo promotions created, retrieved from the database. 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ViewComboPromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
+            AdminModel.PromotionModel = new PromotionViewModel();
+            DBConnection.GetPromotion(AdminModel.PromotionModel, "combo");
             return View("~/Views/Administrator/Promotion/ViewComboPromotion.cshtml", AdminModel);
         }
         #endregion
@@ -43,7 +64,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
         #region NewPromotionMethods
 
         /// <summary>
-        /// 
+        /// Gets the information of a new single promotion and send it to the database. 
         /// </summary>
         /// <returns></returns>
         public ActionResult NewSinglePromotion()
@@ -100,9 +121,9 @@ namespace X_TEC.TEColones.Controllers.Administrator
             }
             return View("~/Views/Administrator/Promotion/CreateSinglePromotion.cshtml", AdminModel);
         }
-        
+
         /// <summary>
-        /// 
+        /// Gets the information of a new combo promotion and send it to the database. 
         /// </summary>
         /// <returns></returns>
         public ActionResult NewComboPromotion()
@@ -182,6 +203,21 @@ namespace X_TEC.TEColones.Controllers.Administrator
             }
             
             return View("~/Views/Administrator/Promotion/CreateComboPromotion.cshtml", AdminModel);
+        }
+        #endregion
+
+        #region EditMethods
+
+        public ActionResult EditSinglePromotion()
+        {
+            AdminModel AdminModel = (AdminModel)TempData["admin"];
+            return View("~/Views/Administrator/Promotion/ViewSinglePromotion.cshtml", AdminModel);
+        }
+
+        public ActionResult EditComboPromotion()
+        {
+            AdminModel AdminModel = (AdminModel)TempData["admin"];
+            return View("~/Views/Administrator/Promotion/ViewComboPromotion.cshtml", AdminModel);
         }
         #endregion
     }

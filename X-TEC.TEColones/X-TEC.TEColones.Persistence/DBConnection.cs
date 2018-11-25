@@ -800,7 +800,7 @@ namespace X_TEC.TEColones.Persistence
         }
 
         /// <summary>
-        /// 
+        /// Gets the id of the newest promotion inserted in the database.
         /// </summary>
         /// <param name="Promo"></param>
         public static void GetNewestIdPromotion(PromotionViewModel Promo)
@@ -834,7 +834,7 @@ namespace X_TEC.TEColones.Persistence
         }
 
         /// <summary>
-        /// 
+        /// Inserts the materials and the amount of kg of the materials in association to the promotion, into the database. 
         /// </summary>
         /// <param name="IdPromo"></param>
         /// <param name="Material"></param>
@@ -863,6 +863,110 @@ namespace X_TEC.TEColones.Persistence
             }
             Connection.Close();
         }
+       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Promo"></param>
+        /// <param name="TypePromo"></param>
+        public static void GetPromotion(PromotionViewModel Promo, string TypePromo)
+        {
+            // if combo promotion
+            if (TypePromo.Equals("single"))
+            {
+                try
+                {
+                    Connection.Close();
+                    Connection.Open();
+
+                    SqlCommand command = new SqlCommand("SP_Get_SinglePromotionData", Connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    Promo.SinglePromoData = new List<List<string>>();
+
+                    while (reader.Read())
+                    {
+                        List<string> listPromo = new List<string>();
+
+                        string id = reader["Id"].ToString();
+                        string type = reader["Type"].ToString();
+                        string valueTCS = reader["ValueTCS"].ToString();
+                        string finishDate = reader["FinishDate"].ToString();
+                        string active = reader["Active"].ToString();
+                        string amountMaterial = reader["AmountMaterial"].ToString();
+
+                        listPromo.Add(id);
+                        listPromo.Add(type);
+                        listPromo.Add(amountMaterial);
+                        listPromo.Add(valueTCS);
+                        listPromo.Add(finishDate);
+                        listPromo.Add(active);
+
+                        Promo.SinglePromoData.Add(listPromo);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error Getting Data" + ex.Message);
+                }
+                Connection.Close();
+            }
+            
+            // if combo promotion
+            if (TypePromo.Equals("combo"))
+            {
+                try
+                {
+                    Connection.Close();
+                    Connection.Open();
+
+                    SqlCommand command = new SqlCommand("SP_Get_ComboPromotionData", Connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    Promo.ComboPromoData = new List<List<string>>();
+
+                    while (reader.Read())
+                    {
+                        List<string> listPromo = new List<string>();
+
+                        string id = reader["Id"].ToString();
+                        string type = reader["Type"].ToString();
+                        string valueTCS = reader["ValueTCS"].ToString();
+                        string finishDate = reader["FinishDate"].ToString();
+                        string active = reader["Active"].ToString();
+                        string amountMaterial = reader["AmountMaterial"].ToString();
+
+                        listPromo.Add(id);
+                        listPromo.Add(type);
+                        listPromo.Add(amountMaterial);
+                        listPromo.Add(valueTCS);
+                        listPromo.Add(finishDate);
+                        listPromo.Add(active);
+
+                        Promo.ComboPromoData.Add(listPromo);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error Getting Data" + ex.Message);
+                }
+                Connection.Close();
+            }
+            else
+            {
+                Console.WriteLine("Error Getting Data");
+            }
+        }
+        
         #endregion
     }
 }

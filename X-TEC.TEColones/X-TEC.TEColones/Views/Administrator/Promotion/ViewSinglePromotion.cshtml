@@ -7,6 +7,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 25%;
+            font-size: 13px;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        :-ms-input-placeholder {
+            text-align: center;
+        }
+    </style>
+
     <title>Crear Promociones de un Material Individual</title>
 </head>
 
@@ -19,13 +42,52 @@
             <li class="nav-item">
                 <h5> <a class="nav-link active" href="#">@Html.ActionLink("Ver Promociones Individuales", "ViewSinglePromotion", "Promotion")</a> </h5>
             </li>
+            &nbsp;
+            &nbsp;
+            &nbsp;
             <li class="nav-item">
                 <h5>  <a class="nav-link" href="#">@Html.ActionLink(" Ver Promociones en Combo", "ViewComboPromotion", "Promotion")</a> </h5>
             </li>
         </ul>
     </div>
 
-    <!--</form> -->
+
+    @using (Html.BeginForm("EditSinglePromotion", "Promotion", FormMethod.Post))
+    {
+        <div class="py-2">
+            <table align="center">
+                <tr>
+                    <th>Id Promocion</th>
+                    <th>Categoria</th>
+                    <th>Cantidad (kg)</th>
+                    <th>Bonificacion (tcs)</th>
+                    <th>Tiempo Limite</th>
+                    <th>Estado</th>
+                </tr>
+
+                @foreach (var item in Model.PromotionModel.SinglePromoData)
+                {
+                    <tr>
+                        @foreach (var data in item)
+                        {
+                            <td>
+                                <input type="number" id="@data" name="@data" placeholder="@data" />
+                            </td>
+                        }
+                    </tr>
+                }
+            </table>
+        </div>
+        <div class="row justify-content-center">
+            <button type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-30">Guardar</button>
+            &nbsp;
+            <button type="reset" class="btn btn-danger text-center justify-content-center align-items-center w-30">Cancelar</button>
+        </div>
+        <br>
+        <br>
+    }
+    <br>
+    <br>
 </body>
 
 </html>

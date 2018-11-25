@@ -46,7 +46,7 @@
     </div>
 
     @using (Html.BeginForm("NewComboPromotion", "Promotion", FormMethod.Post))
-    {
+     {
         @ViewBag.Msj
         <div class="py-2">
             <table align="left">
@@ -57,7 +57,7 @@
                 </tr>
 
                 @foreach (var item in Model.PromotionModel.ListMaterials)
-                {
+                 {
                     <tr>
                         <td>
                             @item
