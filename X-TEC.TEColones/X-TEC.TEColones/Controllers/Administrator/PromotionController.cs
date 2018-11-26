@@ -45,6 +45,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
             AdminModel AdminModel = (AdminModel)TempData["admin"];
             AdminModel.PromotionModel = new PromotionViewModel();
             DBConnection.GetPromotion(AdminModel.PromotionModel, "single");
+            DBConnection.GetMaterialType(AdminModel.PromotionModel);
             return View("~/Views/Administrator/Promotion/ViewSinglePromotion.cshtml", AdminModel);
         }
 
@@ -221,20 +222,63 @@ namespace X_TEC.TEColones.Controllers.Administrator
 
             foreach(List<string> item in AdminModel.PromotionModel.SinglePromoData)
             {
-                List<string> actualItemItem = item;
-                int conti = 0;
-               
-                string inputValue = Request[actualItemItem[conti].ToString()].ToString();
+                //List<string> actualItemItem = item;
+                //int conti = 0;
 
+                //por cada fila en la tabla 
+                List<string> row = item;
+
+                //agrega el id a la subList(temporal)
                 List<string> subList = new List<string>
                 {
-                    inputValue
+                    row[0]
                 };
 
-                conti++;
-          
+                //borra el id, porque ese no se edita
+                row.Remove(row[0]);
+
+                //cada valor en la fila (menos el id)
+                foreach (string data in row)
+                {
+                    string id = "id-" + subList[0];
+
+                    //input
+                    string inputValueRow = Request[id + data].ToString();
+
+                    //si el input esta limpio inserta el original
+                    //sino inserta el nuevo
+                    if (!string.IsNullOrWhiteSpace(inputValueRow))
+                    {
+                        subList.Add(inputValueRow);
+                    }
+                    else
+                    {
+                        subList.Add(data);
+                    }
+                }
+                //string inputValue = Request[actualItemItem[conti].ToString()].ToString();
+
+                //List<string> subList = new List<string>
+                //{
+                //    inputValue
+                //};
+
+                //conti++;
+
+                //valores nuevos de todas la promociones
                 allNewPromoValues.Add(subList);
             }
+
+
+            //Actualiza valores en pantalla
+            AdminModel.PromotionModel.SinglePromoData = allNewPromoValues;
+
+            /*
+            //----------------------------------- INSERT INTO DB ---------------------------------------------
+            //DBConnection.UpdateAllSinglePromotion(allNewPromoValues);
+            //----------------------------------- INSERT INTO DB ---------------------------------------------
+            */
+
             return View("~/Views/Administrator/Promotion/ViewSinglePromotion.cshtml", AdminModel);
         }
 

@@ -67,14 +67,26 @@
 
                 @foreach (var item in Model.PromotionModel.SinglePromoData)
                 {
-                    <tr>
-                        @foreach (var data in item)
-                        {
-                            <td>
-                                <input id="@data" name="@data" placeholder="@data" />
-                            </td>
-                        }
-                    </tr>
+                <tr>
+                    <td>
+                        <input id="id-@item[0]@item[0]" name="id-@item[0]@item[0]" placeholder="@item[0]" disabled value="@item[0]"/>
+                    </td>
+                    <td>
+                        @Html.DropDownList("id-"+item[0]+item[1], new SelectList(Model.PromotionModel.ListMaterials), item[1])
+                    </td>
+                    <td>
+                        <input id="id-@item[0]@item[2]" name="id-@item[0]@item[2]" placeholder="@item[2]" />
+                    </td>
+                    <td>
+                        <input id="id-@item[0]@item[3]" name="id-@item[0]@item[3]" placeholder="@item[3]" />
+                    </td>
+                    <td>
+                        <input type="datetime-local" id="id-@item[0]@item[4]" name="id-@item[0]@item[4]" value="@item[4]"><br>
+                    </td>
+                    <td>
+                        @Html.DropDownList("id-" + item[0] + item[5], new SelectList(new List<string>() { "True", "False" }), item[5])
+                    </td>
+                </tr>
                 }
             </table>
         </div>
