@@ -206,11 +206,35 @@ namespace X_TEC.TEColones.Controllers.Administrator
         }
         #endregion
 
-        #region EditMethods
+        #region EditPromosMethods
 
+        /// <summary>
+        /// Reads and gets all the data of the view's input of the single promotions. 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult EditSinglePromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
+            DBConnection.GetPromotion(AdminModel.PromotionModel, "single");
+
+            List<List<string>> allNewPromoValues = new List<List<string>>();
+
+            foreach(List<string> item in AdminModel.PromotionModel.SinglePromoData)
+            {
+                List<string> actualItemItem = item;
+                int conti = 0;
+               
+                string inputValue = Request[actualItemItem[conti].ToString()].ToString();
+
+                List<string> subList = new List<string>
+                {
+                    inputValue
+                };
+
+                conti++;
+          
+                allNewPromoValues.Add(subList);
+            }
             return View("~/Views/Administrator/Promotion/ViewSinglePromotion.cshtml", AdminModel);
         }
 
