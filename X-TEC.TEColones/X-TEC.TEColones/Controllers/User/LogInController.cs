@@ -36,6 +36,37 @@ namespace X_TEC.TEColones.Controllers
         }
 
         /// <summary>
+        /// Get View Change Password
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ChangePassword()
+        {
+            Tuple<int, bool> user = (Tuple<int, bool>)TempData["user"];
+            ViewBag.User = user;
+            return View();
+        }
+        
+
+        /// <summary>
+        /// Action Update Password
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpdatePassword()
+        {
+            Tuple<int, bool> user = (Tuple<int, bool>)TempData["user"];
+            string password = Request["NewPasswordUser"].ToString();
+
+            if (DBConnection.UpdatePasswordAdminSCM(user.Item1, password))
+            {
+                return LogInAdminSCM(user.Item1, user.Item2);
+            }
+            ViewBag.Message = "Ha ocurrido un error, vuelva a interarlo por favor";
+            TempData["user"] = user;
+            return RedirectToAction("ChangePassword", "LogIn");
+        }
+
+        /// <summary>
         /// Get Page Home- Verify User in DB
         /// </summary>
         /// <returns></returns>
@@ -65,44 +96,18 @@ namespace X_TEC.TEColones.Controllers
                         TempData["student"] = student;
                         return RedirectToAction("Home", "Home");
                     }
-                    message = "Verifique los datos ingresados son incorrectos";
+                    message = "Verifique que los datos ingresados son incorrectos";
                     break;
 
                 case 2:
                     var user_Id = DBConnection.VerifyAdminSCM(user, password);
+                    if (user.Equals(password) && user_Id.Item1 != 0){
+                        TempData["user"] = user_Id;
+                        return RedirectToAction("ChangePassword", "LogIn");
+                    }
                     if (user_Id.Item1 != 0)
                     {
-                        //admin
-                        if (user_Id.Item2)
-                        {
-                            AdminModel adminModel = DBConnection.GetAdmin(user_Id.Item1);
-                            if (adminModel.PhotoBytes.Count() == 0)
-                            {
-                                adminModel.Photo = adminModel.DefaultPhoto();
-                            }
-                            else
-                            {
-                                adminModel.RenderImage();
-                            }
-                            
-                            TempData["admin"] = adminModel;
-                            return RedirectToAction("Home", "AdminHome");
-                        }
-                        //scm
-                        else
-                        {
-                            SCM scm = DBConnection.GetSCM(user_Id.Item1);
-                            if (scm.PhotoBytes.Count() == 0)
-                            {
-                                scm.Photo = scm.DefaultPhoto();
-                            }
-                            else
-                            {
-                                scm.RenderImage();
-                            }
-                            TempData["scm"] = scm;
-                            return RedirectToAction("Home", "SCMHome");
-                        }
+                        return LogInAdminSCM(user_Id.Item1, user_Id.Item2);
                     }
                     message = "Verifique los datos ingresados son incorrectos";
                     break;
@@ -112,6 +117,48 @@ namespace X_TEC.TEColones.Controllers
                     break;
             }
             return LogIn(message);
+        }
+
+
+        /// <summary>
+        /// Login for user admin or scm
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <param name="isAdmin"></param>
+        /// <returns></returns>
+        protected ActionResult LogInAdminSCM(int idUser, bool isAdmin)
+        {
+            //admin
+            if (isAdmin)
+            {
+                AdminModel adminModel = DBConnection.GetAdmin(idUser);
+                if (adminModel.PhotoBytes.Count() == 0)
+                {
+                    adminModel.Photo = adminModel.DefaultPhoto();
+                }
+                else
+                {
+                    adminModel.RenderImage();
+                }
+
+                TempData["admin"] = adminModel;
+                return RedirectToAction("Home", "AdminHome");
+            }
+            //scm
+            else
+            {
+                SCM scm = DBConnection.GetSCM(idUser);
+                if (scm.PhotoBytes.Count() == 0)
+                {
+                    scm.Photo = scm.DefaultPhoto();
+                }
+                else
+                {
+                    scm.RenderImage();
+                }
+                TempData["scm"] = scm;
+                return RedirectToAction("Home", "SCMHome");
+            }
         }
 
     }

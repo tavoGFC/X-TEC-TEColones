@@ -1,4 +1,4 @@
-﻿@model X_TEC.TEColones.Models.AdminModels.CreateUser
+﻿@model X_TEC.TEColones.Models.AdminModels.AdminModel
 
 @{
     ViewBag.Title = "Crear Usuario";
@@ -16,93 +16,148 @@
 
 </head>
 <body>
-    @ViewBag.Message
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
+    <h2 style="color:darkorange">@ViewBag.Message</h2>
 
 
-    @using (Html.BeginForm("CreateUser", "CreateUser", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
+    <div class="py-5">
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
 
-    <div class="form-horizontal" style="text-align:center">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        @{ 
+            TempData["admin"] = Model;
+        }
+
+        @using (Html.BeginForm("CreateUser", "CreateUser", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form id="c_form-h" class="">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewAdminSCMModel.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.NewAdminSCMModel.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NewAdminSCMModel.FirstName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewAdminSCMModel.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.NewAdminSCMModel.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NewAdminSCMModel.LastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewAdminSCMModel.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.NewAdminSCMModel.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NewAdminSCMModel.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewAdminSCMModel.Identification, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.NewAdminSCMModel.Identification, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NewAdminSCMModel.Identification, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewAdminSCMModel.Department, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.NewAdminSCMModel.Department, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NewAdminSCMModel.Department, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewAdminSCMModel.University, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.NewAdminSCMModel.University, new { htmlAttributes = new { @class = "form-control", placeholder = "X-Tecnologico de Costa Rica", disabled = "" } })
+                                    @Html.ValidationMessageFor(model => model.NewAdminSCMModel.University, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewAdminSCMModel.Headquarter, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.NewAdminSCMModel.Headquarter, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NewAdminSCMModel.Headquarter, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewAdminSCMModel.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.NewAdminSCMModel.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.NewAdminSCMModel.PhoneNumber, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4"> </div>
+                                <div class="col-md-4">
+                                    <div class="form-group row justify-content-center">
+                                        <div>
+                                            <input type="radio" id="admin" name="isAdmin" value="1"
+                                                   checked required>
+                                            <label for="admin">Administrador del Sistema</label>
+                                        </div>
+
+                                        <div>
+                                            <input type="radio" id="scm" name="isAdmin" value="0">
+                                            <label for="scm">Encargado Centro de Acopio</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>                                                        
+                            
+                            <div class="row">
+                                <div class="col-md-4"> </div>
+                                <div class="col-md-4">
+                                    <div class="form-group row justify-content-center">
+
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Crear usuario" class="btn btn-secondary" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Identification, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Identification, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Identification, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.University, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.University, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.University, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Headquarter, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Headquarter, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Headquarter, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <hr />
-        <label class="label-info">(*) Campos Opcionales</label>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear usuario" class="btn btn-default" />
-                <button id="btnCancelSignUp" onclick="location.href='@Url.Action("AdminHome", "AdminHome")'" type="button" class="btn-danger">Cancelar</button>
-            </div>
-
-        </div>
+        }
     </div>
-    }
+
+    
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js">
+    </script>
+
+    <script type="text/javascript">
+
+        function ShowPreview(input) {
+            if (input.files && input.files[0]) {
+                var ImageDir = new FileReader();
+                ImageDir.onload = function (e) {
+                    $('#impPrev').attr('src', e.target.result);
+                }
+                ImageDir.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
 
 
 </body>
-
-
-
-
-
-
-
 </html>

@@ -72,7 +72,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.University, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.University, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.University, new { htmlAttributes = new { @class = "form-control", placeholder = "XTEC", disabled = "" } })
                                     @Html.ValidationMessageFor(model => model.University, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Headquarter, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Headquarter, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.EditorFor(model => model.Headquarter, new { htmlAttributes = new { @class = "form-control"} })
                                     @Html.ValidationMessageFor(model => model.Headquarter, "", new { @class = "text-danger" })
                                 </div>
                             </div>

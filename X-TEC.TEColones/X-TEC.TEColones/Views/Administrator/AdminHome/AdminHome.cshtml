@@ -7,16 +7,17 @@
 <html>
 <head>
     <title>Pagina Princiapl</title>
-
+    
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+
         google.charts.load('current', { 'packages': ['gauge'] });
         google.charts.setOnLoadCallback(drawGauge);
         function drawGauge() {
 
             var data = google.visualization.arrayToDataTable([
                 ['Label', 'Value'],
-                ['Toneladas Anuales', 1.7]
+                ['', @Model.DashboardModel.ToneladasAnuales]
             ]);
 
             var options = {
@@ -31,12 +32,30 @@
             chart.draw(data, options);
         }
     </script>
-</head >
+</head>
 
 
 <body>
+   
+    
+    <div class="py-3 center-block" id="chart_primary">
+        <div class="row">
+            <div class="col-4"> </div>
+            <div class="col-4">
+                <label for="chart_gauge" class="label-primary" style="text-align:center; font-weight:900; font-size:35px">Toneladas Anuales</label>
+                <div id="chart_gauge" style="width: 350px; height: 350px; margin:0 auto;"></div>
+          
+            </div>
+            <div class="col-4"> </div>
+        </div>
+    </div>
+    <script type="text/javascript">
 
-    <div id="chart_gauge" style="width: 350px; height: 350px; margin:0 auto;"></div>
+        $(function () {
+            setInterval(function () { $('#chart_primary').load('/AdminHome/Home'); }, 1000);
+        });
+
+    </script>
 
 </body>
 </html >

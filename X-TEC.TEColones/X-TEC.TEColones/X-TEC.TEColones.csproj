@@ -274,7 +274,7 @@
     <Content Include="Views\LogIn\LogIn.cshtml" />
     <Content Include="Views\LayoutBases\_AdminLayout.cshtml" />
     <Content Include="Views\LayoutBases\_SCMLayout.cshtml" />
-    <Content Include="Views\Administrator\AdminDashboard\Index.cshtml">
+    <Content Include="Views\Administrator\AdminDashboard\Dashboard.cshtml">
       <BrowseToURL>~/Views/Administrator/AdminDashboard/Index.cshtml</BrowseToURL>
     </Content>
     <Content Include="Views\Administrator\AdminHome\AdminHome.cshtml" />
@@ -293,6 +293,7 @@
     <Content Include="Views\Administrator\Configuration\TEColonesConfig.cshtml" />
     <Content Include="Views\Administrator\Promotion\CreateComboPromotion.cshtml" />
     <Content Include="Views\Administrator\Promotion\ViewComboPromotion.cshtml" />
+    <Content Include="Views\LogIn\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\DATIC\" />

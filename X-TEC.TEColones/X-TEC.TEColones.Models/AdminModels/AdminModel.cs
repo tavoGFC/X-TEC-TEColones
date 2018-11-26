@@ -22,6 +22,8 @@ namespace X_TEC.TEColones.Models.AdminModels
 
         public DashboardModel DashboardModel { get; set; }
 
+        public NewAdminSCM NewAdminSCMModel { get; set; }
+
         public string Department { get; set; }
 
         public string PhoneNumber { get; set; }

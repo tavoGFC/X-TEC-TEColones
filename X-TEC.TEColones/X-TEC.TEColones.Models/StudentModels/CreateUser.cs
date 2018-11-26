@@ -16,6 +16,7 @@ namespace X_TEC.TEColones.Models.StudentModels
             Description = " ";
             Photo = " ";
             ImageByte = new byte[] { };
+            University = "X-Tecnologico de Costa Rica";
         }
 
         
@@ -40,7 +41,7 @@ namespace X_TEC.TEColones.Models.StudentModels
         [Required(ErrorMessage = "Campo Requerido")]
         [RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Formato de correo incorrecto")]
         [DisplayName("Correo Electronico:")]
-        [DataType(DataType.EmailAddress)]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Debe registrar un correo valido")]
         public string Email { get; set; }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace X_TEC.TEColones.Models.StudentModels
         [Required(ErrorMessage = "Campo Requerido")]
         [DisplayName("Contraseña:")]
         [StringLength(12, ErrorMessage = ":Contraseña debe ser menor o igual a 12 caracteres")]
-        [RegularExpression(@"^[\w\s]*$", ErrorMessage = "Caracteres especiales no permitidos")]
+        [RegularExpression(@"^[\w\s]*$", ErrorMessage = "Caracteres especiales no permitidos")]        
         public string Password { get; set; }
 
         /// <summary>
@@ -124,5 +125,18 @@ namespace X_TEC.TEColones.Models.StudentModels
 
         public byte[] ImageByte { get; set; }
                           
+        public bool IsEqualPasswordId()
+        {
+
+            if (Password.Equals(Id.ToString()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 }

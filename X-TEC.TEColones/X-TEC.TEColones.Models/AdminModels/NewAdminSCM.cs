@@ -9,12 +9,6 @@ namespace X_TEC.TEColones.Models.AdminModels
 {
     public class NewAdminSCM
     {
-        /// <summary>
-        /// Get or Set User Type
-        /// </summary>
-        [Required(ErrorMessage = "Campo Requerido")]
-        [DisplayName("Nombre:")]
-        private string userType { get; set; }
 
         /// <summary>
         /// Get or Set FirstName User
@@ -50,8 +44,8 @@ namespace X_TEC.TEColones.Models.AdminModels
         /// Get or Set University User
         /// </summary>
         [DisplayName("Universidad:")]
-        [Required(ErrorMessage = "Campo Requerido")]
         [DisplayFormat(NullDisplayText = "X-Tecnologico de Costa Rica")]
+        [DefaultValue("X-Tecnologico de Costa Rica")]
         public string University { get; set; }
 
         /// <summary>
@@ -60,6 +54,14 @@ namespace X_TEC.TEColones.Models.AdminModels
         [DisplayName("Sede:")]
         [Required(ErrorMessage = "Campo Requerido")]
         public string Headquarter { get; set; }
+
+        /// <summary>
+        /// Get or Set Department
+        /// </summary>
+        [DisplayName("Departamento:")]
+        [Required(ErrorMessage = "Campo Requerido")]
+        public string Department { get; set; }
+
 
         /// <summary>
         /// Get or Set Password User
@@ -72,15 +74,19 @@ namespace X_TEC.TEColones.Models.AdminModels
         public string Password { get; set; }
 
         /// <summary>
-        /// Get or Set Photo User
+        /// Get or Set PhoneNumber
         /// </summary>
-        //[DataType(DataType.ImageUrl)]
-        [DisplayName("Subir Foto(*):")]
-        //[FileExtensions(Extensions = "jpg,jpeg,png")]
-        public string Photo { get; set; }
+        [Required(ErrorMessage = "Campo Requerido")]
+        [DisplayName("Numero telefonico:")]
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
+       
 
 
-        //[FileExtensions(Extensions = "jpg,jpeg,png")]
-        public HttpPostedFileBase PhotoFile { get; set; }
+        public void SetValues()
+        {
+            University = "X-Tecnologico de Costa Rica";
+            Password = Identification;
+        }
     }
 }
