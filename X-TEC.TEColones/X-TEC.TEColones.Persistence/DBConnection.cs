@@ -11,6 +11,7 @@ using System.Web.Configuration;
 using X_TEC.TEColones.Models.StudentModels;
 using X_TEC.TEColones.Models.SCMModels;
 using X_TEC.TEColones.Models.AdminModels;
+using Tweetinvi.Core.Events;
 
 namespace X_TEC.TEColones.Persistence
 {
@@ -283,7 +284,6 @@ namespace X_TEC.TEColones.Persistence
         }
         #endregion
 
-
         #region  StoregeCenterManager
 
         /// <summary>
@@ -387,7 +387,6 @@ namespace X_TEC.TEColones.Persistence
         }
 
         #endregion
-
 
         #region LogIn
 
@@ -567,6 +566,10 @@ namespace X_TEC.TEColones.Persistence
             }
             return scm;
         }
+        
+        #endregion
+
+        #region Configuration
 
 
         /// <summary>
@@ -835,8 +838,211 @@ namespace X_TEC.TEColones.Persistence
             }
             Connection.Close();
         }
+
+        /// <summary>
+        /// Inserts a new single promotion into the database. 
+        /// </summary>
+        /// <param name="AdminModeId"></param>
+        /// <param name="materialType"></param>
+        /// <param name="amountKg"></param>
+        /// <param name="ValueTCS"></param>
+        /// <param name="FinishDate"></param>
+        /// <param name="ActiveValue"></param>
+        public static void InsertNewPromotion(int AdminModeId, float ValueTCS, string FinishDate, int ActiveValue, int SingleProm)
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_InsertNewPromotion", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("AdminModeId", AdminModeId);
+                command.Parameters.AddWithValue("ValueTCS", ValueTCS);
+                command.Parameters.AddWithValue("FinishDate", FinishDate);
+                command.Parameters.AddWithValue("ActiveValue", ActiveValue);
+                command.Parameters.AddWithValue("SingleProm", SingleProm);
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error InsertNewComboPromotion " + ex.Message);
+            }
+
+        }
+
+        /// <summary>
+        /// Gets the id of the newest promotion inserted in the database.
+        /// </summary>
+        /// <param name="Promo"></param>
+        public static void GetNewestIdPromotion(PromotionViewModel Promo)
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT TOP 1 Id, IdAdmin FROM Promotion ORDER BY Id DESC", Connection)
+                {
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                string IdPromoString = string.Empty;
+
+                while (reader.Read())
+                {
+                    IdPromoString = reader["Id"].ToString();
+                }
+
+                Promo.LatestIdPromotion = int.Parse(IdPromoString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Getting Data" + ex.Message);
+            }
+            Connection.Close();
+        }
+
+        /// <summary>
+        /// Inserts the materials and the amount of kg of the materials in association to the promotion, into the database. 
+        /// </summary>
+        /// <param name="IdPromo"></param>
+        /// <param name="Material"></param>
+        /// <param name="AmountKg"></param>
+        public static void InsertPromosMaterial(int IdPromo, string Material, int AmountKg) 
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_InsertNewPromotionsMaterials", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("IdPromo", IdPromo);
+                command.Parameters.AddWithValue("Material", Material);
+                command.Parameters.AddWithValue("AmountKg", AmountKg);
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error InsertNewComboPromotion " + ex.Message);
+            }
+            Connection.Close();
+        }
+       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Promo"></param>
+        /// <param name="TypePromo"></param>
+        public static void GetPromotion(PromotionViewModel Promo, string TypePromo)
+        {
+            // if combo promotion
+            if (TypePromo.Equals("single"))
+            {
+                try
+                {
+                    Connection.Close();
+                    Connection.Open();
+
+                    SqlCommand command = new SqlCommand("SP_Get_SinglePromotionData", Connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    Promo.SinglePromoData = new List<List<string>>();
+
+                    while (reader.Read())
+                    {
+                        List<string> listPromo = new List<string>();
+
+                        string id = reader["Id"].ToString();
+                        string type = reader["Type"].ToString();
+                        string valueTCS = reader["ValueTCS"].ToString();
+                        string finishDate = reader["FinishDate"].ToString();
+                        string active = reader["Active"].ToString();
+                        string amountMaterial = reader["AmountMaterial"].ToString();
+
+                        listPromo.Add(id);
+                        listPromo.Add(type);
+                        listPromo.Add(amountMaterial);
+                        listPromo.Add(valueTCS);
+                        listPromo.Add(finishDate);
+                        listPromo.Add(active);
+
+                        Promo.SinglePromoData.Add(listPromo);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error Getting Data" + ex.Message);
+                }
+                Connection.Close();
+            }
+            
+            // if combo promotion
+            if (TypePromo.Equals("combo"))
+            {
+                try
+                {
+                    Connection.Close();
+                    Connection.Open();
+
+                    SqlCommand command = new SqlCommand("SP_Get_ComboPromotionData", Connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    Promo.ComboPromoData = new List<List<string>>();
+
+                    while (reader.Read())
+                    {
+                        List<string> listPromo = new List<string>();
+
+                        string id = reader["Id"].ToString();
+                        string type = reader["Type"].ToString();
+                        string valueTCS = reader["ValueTCS"].ToString();
+                        string finishDate = reader["FinishDate"].ToString();
+                        string active = reader["Active"].ToString();
+                        string amountMaterial = reader["AmountMaterial"].ToString();
+
+                        listPromo.Add(id);
+                        listPromo.Add(type);
+                        listPromo.Add(amountMaterial);
+                        listPromo.Add(valueTCS);
+                        listPromo.Add(finishDate);
+                        listPromo.Add(active);
+
+                        Promo.ComboPromoData.Add(listPromo);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error Getting Data" + ex.Message);
+                }
+                Connection.Close();
+            }
+            else
+            {
+                Console.WriteLine("Error Getting Data");
+            }
+        }
+        
         #endregion
-
-
     }
 }
