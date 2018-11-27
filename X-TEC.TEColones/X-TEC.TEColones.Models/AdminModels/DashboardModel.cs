@@ -10,18 +10,19 @@ namespace X_TEC.TEColones.Models.AdminModels
 {
     public class DashboardModel
     {
-        public float TonladasAnuales { get; set; }
+        public float ToneladasAnuales { get; set; }
 
         public List<float> ToneladasXmes { get; set; }
 
         public List<float> ToneladasXsede { get; set; }
+
+        public string TxS { get; set; }
 
         public List<float> DineroXbeneficio { get; set; }
 
         public List<int> UsuariosXmes { get; set; }
 
         public List<StudentModel> Top10 { get; set; }
-
 
     }
 }
