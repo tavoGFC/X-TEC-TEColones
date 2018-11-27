@@ -392,14 +392,14 @@ namespace X_TEC.TEColones.Persistence
         #region LogIn
 
 
-        public static bool UpdatePasswordAdminSCM(int identification, string password)
+        public static bool UpdatePassword(int identification, string password)
         {
             try
             {
                 Connection.Close();
                 Connection.Open();
 
-                SqlCommand command = new SqlCommand("SP_UpdatePassword_AdminSCM", Connection)
+                SqlCommand command = new SqlCommand("SP_UpdatePassword_User", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -418,7 +418,7 @@ namespace X_TEC.TEColones.Persistence
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error UpdatePasswordAdminSCM " + ex.Message);
+                Console.WriteLine("Error UpdatePassword " + ex.Message);
             }
             return false;
         }

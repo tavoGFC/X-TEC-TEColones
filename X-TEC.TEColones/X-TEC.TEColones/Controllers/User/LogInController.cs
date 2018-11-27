@@ -57,7 +57,7 @@ namespace X_TEC.TEColones.Controllers
             Tuple<int, bool> user = (Tuple<int, bool>)TempData["user"];
             string password = Request["NewPasswordUser"].ToString();
 
-            if (DBConnection.UpdatePasswordAdminSCM(user.Item1, password))
+            if (DBConnection.UpdatePassword(user.Item1, password))
             {
                 return LogInAdminSCM(user.Item1, user.Item2);
             }
