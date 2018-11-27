@@ -390,6 +390,40 @@ namespace X_TEC.TEColones.Persistence
 
 
         #region LogIn
+
+
+        public static bool UpdatePassword(int identification, string password)
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_UpdatePassword_User", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("Identification", identification);
+                command.Parameters.AddWithValue("NewPassword", password);
+
+                var returnParameter = command.Parameters.Add("@ReturnVal", SqlDbType.Int);
+                returnParameter.Direction = ParameterDirection.ReturnValue;
+
+                command.ExecuteNonQuery();
+                var result = returnParameter.Value;
+                if (result.Equals(1))
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error UpdatePasswordAdminSCM " + ex.Message);
+            }
+            return false;
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -533,17 +567,53 @@ namespace X_TEC.TEColones.Persistence
             }
             return scm;
         }
-        #endregion
 
-        
-
-        #region Configuration
 
         /// <summary>
-        /// Get the value in TEColones of the Materials from the database.
+        /// 
         /// </summary>
-        /// <param name="Config"></param>
-        public static void GetMaterialTCSValue(ConfigurationViewModel Config)
+        /// <param name="identification"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static string VerifyEmail(string identification, string email )
+        {
+            string DBEmail = "0";
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_Verify_Email", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("Identification", identification);
+                command.Parameters.AddWithValue("EmailVerify", email);
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    DBEmail = reader[0].ToString();
+                    //incorrect email or identification if DBEmail == "0"
+                    return DBEmail;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error VerifyEmailStudent " + ex.Message);
+            }
+            return DBEmail;
+        }
+            #endregion
+
+
+
+            #region Configuration
+
+            /// <summary>
+            /// Get the value in TEColones of the Materials from the database.
+            /// </summary>
+            /// <param name="Config"></param>
+            public static void GetMaterialTCSValue(ConfigurationViewModel Config)
         {
             try
             {
