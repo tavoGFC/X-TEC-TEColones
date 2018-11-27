@@ -9,7 +9,7 @@ namespace X_TEC.TEColones.Models.AdminModels
     public class ConfigurationViewModel
     {
 
-        public List<float> ValuesTCS { get; set; }
+        public Dictionary<string, float> Materials { get; set; }
 
         public float PlasticValue { get; set; }
 
@@ -23,15 +23,16 @@ namespace X_TEC.TEColones.Models.AdminModels
 
         public float DinningExchange { get; set; }
 
+
         /// <summary>
         /// Give the values of each material. 
         /// </summary>
         public void SetValues()
         {
-            PlasticValue = ValuesTCS[0];
-            PaperValue = ValuesTCS[1];
-            GlassValue = ValuesTCS[2];
-            AluminumValue = ValuesTCS[3];
+            //PlasticValue = Materials[0];
+            //PaperValue = Materials[1];
+            //GlassValue = Materials[2];
+            //AluminumValue = Materials[3];
         }
     }
 }

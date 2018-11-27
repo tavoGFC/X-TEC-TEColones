@@ -404,7 +404,6 @@ namespace X_TEC.TEColones.Persistence
                 };
                 command.Parameters.AddWithValue("Identification", identification);
                 command.Parameters.AddWithValue("NewPassword", password);
-
                 var returnParameter = command.Parameters.Add("@ReturnVal", SqlDbType.Int);
                 returnParameter.Direction = ParameterDirection.ReturnValue;
 
@@ -417,7 +416,7 @@ namespace X_TEC.TEColones.Persistence
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error UpdatePasswordAdminSCM " + ex.Message);
+                Console.WriteLine("Error UpdatePassword " + ex.Message);
             }
             return false;
         }
@@ -566,8 +565,59 @@ namespace X_TEC.TEColones.Persistence
             }
             return scm;
         }
-        
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static AdminModel GetAdmin(int id)
+        {
+            AdminModel admin = new AdminModel();
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_Get_AdminSCM", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("Identification", id);
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    //not return data
+                    if (reader[0].ToString().Equals("0"))
+                    {
+                        admin.Id = 0;
+                        return admin;
+                    }
+                    else
+                    {
+                        admin.Id = id;
+                        admin.FirstName = reader["FirstName"].ToString();
+                        admin.LastName = reader["LastName"].ToString();
+                        admin.University = reader["University"].ToString();
+                        admin.Headquarter = reader["University"].ToString();
+                        admin.Email = reader["University"].ToString();
+                        admin.PhotoBytes = (byte[])reader["Photo"];
+                        admin.Department = reader["Department"].ToString();
+                        admin.PhoneNumber = reader["PhoneNumber"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error GetAdmin " + ex.Message);
+            }
+            return admin;
+        }
+
         #endregion
+
 
         #region Configuration
 
@@ -629,12 +679,13 @@ namespace X_TEC.TEColones.Persistence
                 };
 
                 SqlDataReader reader = command.ExecuteReader();
-                Config.ValuesTCS = new List<float>();
+                Config.Materials = new Dictionary<string, float>();
 
                 while (reader.Read())
                 {
+                    string name = reader["Type"].ToString();
                     float value = float.Parse(reader["ValueTCS"].ToString(), CultureInfo.InvariantCulture.NumberFormat);
-                    Config.ValuesTCS.Add(value);
+                    Config.Materials.Add(name, value);
                 }
                 Config.SetValues();
             }
@@ -653,7 +704,7 @@ namespace X_TEC.TEColones.Persistence
         /// <param name="GlassNewValue"></param>
         /// <param name="PaperNewValue"></param>
         /// <param name="AluminumNewValue"></param>
-        public static void InsertNewMaterialTCSValue(float PlasticNewValue, float GlassNewValue, float PaperNewValue, float AluminumNewValue)
+        public static void InsertNewMaterialTCSValue(string typeMaterial, float newValue)
         {
             try
             {
@@ -665,10 +716,8 @@ namespace X_TEC.TEColones.Persistence
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue("PlasticNewValue", PlasticNewValue);
-                command.Parameters.AddWithValue("PaperNewValue", PaperNewValue);
-                command.Parameters.AddWithValue("GlassNewValue", GlassNewValue);
-                command.Parameters.AddWithValue("AluminumNewValue", AluminumNewValue);
+                command.Parameters.AddWithValue("Type", typeMaterial);
+                command.Parameters.AddWithValue("NewValue", newValue);
 
                 command.ExecuteNonQuery();
 
@@ -717,7 +766,7 @@ namespace X_TEC.TEColones.Persistence
         /// </summary>
         /// <param name="NewDinningExchange"></param>
         /// <param name="NewStudyExchange"></param>
-        public static void InsertNewBenefitsValue(float NewDinningExchange, float NewStudyExchange)
+        public static void InsertNewBenefitsValue(float newExchange, string typeExchange)
         {
             try
             {
@@ -728,8 +777,8 @@ namespace X_TEC.TEColones.Persistence
                     CommandType = CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue("ExchangeRateComedor", NewDinningExchange);
-                command.Parameters.AddWithValue("ExchangeRateMatricula", NewStudyExchange);
+                command.Parameters.AddWithValue("@Type", typeExchange);
+                command.Parameters.AddWithValue("@ExchangeRate", newExchange);
 
                 Connection.Open();
                 command.ExecuteNonQuery();
@@ -807,7 +856,7 @@ namespace X_TEC.TEColones.Persistence
         }
         #endregion
 
-        #region Promotion
+      #region Promotion
 
         /// <summary>
         /// Get the types (names) of the Materials of the database.
@@ -1044,5 +1093,289 @@ namespace X_TEC.TEColones.Persistence
         }
         
         #endregion
+          
+          #region Create New User Admin or SCM
+         public static bool InsertAdminSCM(NewAdminSCM user, int isAdmin)
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+                 SqlCommand command = new SqlCommand("SP_Insert_AdminSCM", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("Identification", user.Identification);
+                command.Parameters.AddWithValue("Department", user.Department);
+                command.Parameters.AddWithValue("PhoneNumber", user.PhoneNumber);
+                command.Parameters.AddWithValue("Admin", isAdmin);
+                command.Parameters.AddWithValue("FirstName", user.FirstName);
+                command.Parameters.AddWithValue("LastName", user.LastName);
+                command.Parameters.AddWithValue("University", user.University);
+                command.Parameters.AddWithValue("Headquarter", user.Headquarter);
+                command.Parameters.AddWithValue("Email", user.Email);
+                command.Parameters.AddWithValue("Password", user.Password);
+                SqlParameter photo = new SqlParameter("PhotoData", SqlDbType.VarBinary)
+                {
+                    Value = new byte[] {0x0}
+                };
+                command.Parameters.Add(photo);
+                 var returnParameter = command.Parameters.Add("@ReturnVal", SqlDbType.Int);
+                returnParameter.Direction = ParameterDirection.ReturnValue;
+                command.ExecuteNonQuery();
+                var result = returnParameter.Value;
+                if (result.Equals(1))
+                {
+                    return true;
+                }
+             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error SP_Insert_AdminSCM " + ex.Message);
+            }
+            return false;
+         }
+         #endregion
+         #region Dashboard Admin
+         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dashboard"></param>
+        public static void GetTonsMonth(DashboardModel dashboard)
+        {
+            dashboard.ToneladasXmes = new List<float>();
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+                 SqlCommand command = new SqlCommand("SP_Get_TonsMonth", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                 var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Dictionary<string, float> valueTonsMonth = new Dictionary<string, float>
+                        {
+                            { reader["Mes"].ToString(), float.Parse(reader["Toneladas"].ToString()) }
+                        };
+                    while (reader.Read())
+                    {
+                        float valueTon = float.Parse(reader["Toneladas"].ToString());
+                        string month = reader["Mes"].ToString();
+                        valueTonsMonth.Add(month, valueTon);
+                    }
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        if (valueTonsMonth.ContainsKey(i.ToString()))
+                        {
+                            dashboard.ToneladasXmes.Add(valueTonsMonth[i.ToString()]);
+                        }
+                        else
+                        {
+                            dashboard.ToneladasXmes.Add(0.0f);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error GetTonsMonth " + ex.Message);
+            }            
+        }
+         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dashboard"></param>
+        public static void GetUsersMonth(DashboardModel dashboard)
+        {
+            dashboard.UsuariosXmes = new List<int>();
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+                 SqlCommand command = new SqlCommand("SP_Get_UsersMonth", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                 var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Dictionary<string, int> valueTonsMonth = new Dictionary<string, int>
+                        {
+                            { reader["Mes"].ToString(), int.Parse(reader["Cantidad_Usuarios"].ToString()) }
+                        };
+                    while (reader.Read())
+                    {
+                        int valueTon = int.Parse(reader["Cantidad_Usuarios"].ToString());
+                        string month = reader["Mes"].ToString();
+                        valueTonsMonth.Add(month, valueTon);
+                    }
+                    for (int i = 1; i <= 12; i++)
+                    {
+                        if (valueTonsMonth.ContainsKey(i.ToString()))
+                        {
+                            dashboard.UsuariosXmes.Add(valueTonsMonth[i.ToString()]);
+                        }
+                        else
+                        {
+                            dashboard.UsuariosXmes.Add(0);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error GetUsersMonth " + ex.Message);
+            }
+        }
+         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dashboard"></param>
+        public static void GetMoneyMonth(DashboardModel dashboard)
+        {
+            dashboard.DineroXbeneficio = new List<float>();
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+                 SqlCommand command = new SqlCommand("SP_Get_MoneyMonth", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                 var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    Dictionary<string, float> valueTonsMonth = new Dictionary<string, float>
+                        {
+                            { reader["Mes"].ToString(), float.Parse(reader["Dinero"].ToString()) }
+                        };
+                    while (reader.Read())
+                    {
+                        float valueTon = float.Parse(reader["Dinero"].ToString());
+                        string month = reader["Mes"].ToString();
+                        valueTonsMonth.Add(month, valueTon);
+                    }
+                    for (int i = 1; i <= 12; i++)
+                    {   
+                        if (valueTonsMonth.ContainsKey(i.ToString()))
+                        {
+                            dashboard.DineroXbeneficio.Add(valueTonsMonth[i.ToString()]);
+                        }
+                        else
+                        {
+                            dashboard.DineroXbeneficio.Add(0);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error GetMoneyMonth " + ex.Message);
+            }
+        }
+         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dashboard"></param>
+        public static void GetTonsPeriod(DashboardModel dashboard)
+        {
+            dashboard.ToneladasAnuales = 0.0f;
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+                 SqlCommand command = new SqlCommand("SP_Get_TonsPeriod", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                 var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    dashboard.ToneladasAnuales = float.Parse(reader["Toneladas"].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error GetTonsPeriod " + ex.Message);
+            }
+        }
+         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dashboard"></param>
+        public static void GetTopStudents(DashboardModel dashboard)
+        {
+            dashboard.Top10 = new List<StudentModel>();
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+                 SqlCommand command = new SqlCommand("SP_Get_TopStudents", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                 var reader = command.ExecuteReader();
+                
+                while (reader.Read())
+                {
+                    string firstName = reader[0].ToString();
+                    string lastName = reader[1].ToString();
+                    int id = int.Parse(reader[2].ToString());
+                    float kg = float.Parse(reader[3].ToString());
+                    StudentModel student = new StudentModel()
+                    {
+                       FirstName = firstName,
+                       LastName = lastName,
+                       Id = id,
+                       KgRecicled = kg
+                    };
+                    
+                    dashboard.Top10.Add(student);
+                }
+                while (dashboard.Top10.Count <= 10)
+                {
+                    dashboard.Top10.Add(new StudentModel() { FirstName = " ", LastName = " ", Id = 0, KgRecicled = 0});
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error GetTopStudents " + ex.Message);
+            }
+        }
+         public static void GetTonsCampuses(DashboardModel dashboard)
+        {
+            dashboard.TxS = "[";
+            string start = "{";
+            string end = "},";
+             try
+            {
+                Connection.Close();
+                Connection.Open();
+                
+                SqlCommand command = new SqlCommand("SP_Get_TonsCampuses", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                 var reader = command.ExecuteReader();
+                 //"[ {'Sede':'CA','Tons':16} , {'Sede':'SJ','Tons':12}, {'Sede':'SC','Tons':345}]";
+                while (reader.Read())
+                {                    
+                    string Tons = reader[0].ToString();
+                    string Campus = reader[1].ToString();
+                    string item = String.Format("'Sede':'{0}','Tons':{1}", Campus, Tons);
+                    dashboard.TxS += start + item + end;
+                }
+                dashboard.TxS += "]";
+             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error GetTopStudents " + ex.Message);
+            }
+        }
+        #endregion
+        
     }
 }

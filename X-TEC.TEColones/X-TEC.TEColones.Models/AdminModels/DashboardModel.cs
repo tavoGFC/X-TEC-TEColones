@@ -13,8 +13,8 @@ namespace X_TEC.TEColones.Models.AdminModels
         public float ToneladasAnuales { get; set; }
 
         public List<float> ToneladasXmes { get; set; }
-
-        public List<float> ToneladasXsede { get; set; }
+       
+        public string TxS { get; set; }
 
         public string TxS { get; set; }
 
@@ -25,4 +25,5 @@ namespace X_TEC.TEColones.Models.AdminModels
         public List<StudentModel> Top10 { get; set; }
 
     }
+    
 }

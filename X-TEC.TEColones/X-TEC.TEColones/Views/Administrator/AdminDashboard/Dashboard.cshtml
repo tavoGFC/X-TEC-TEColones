@@ -12,32 +12,21 @@
 
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
 
+        
         // Load Charts and the corechart package.
         //google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.load('current', { 'packages': ['bar'] });
         google.charts.load('current', { 'packages': ['corechart', 'line'] });
         google.charts.load('current', { 'packages': ['table'] });
-
-
-
-
         // Draw the COLUMN chart for TONELADASxMES when Charts is loaded.
         google.charts.setOnLoadCallback(drawToneladasMesChart);
-
-
-        google.charts.setOnLoadCallback(drawMaterialesSedeChart);
-
-
         google.charts.setOnLoadCallback(drawUsuariosIntercambiandoMesChart);
-
-
         google.charts.setOnLoadCallback(drawDineroBeneficiosChart);
-
-
-
-
+        google.charts.setOnLoadCallback(drawMaterialesSedeChart);
         // Callback that draws the COLUMN chart for EL DIAGRAMA.
         function drawToneladasMesChart() {
             var data = google.visualization.arrayToDataTable([
@@ -55,71 +44,54 @@
                 ['Nov', @Model.DashboardModel.ToneladasXmes[10] ],
                 ['Dic', @Model.DashboardModel.ToneladasXmes[11] ]
             ]);
-
             var options = {
                 title: 'Toneladas por Mes',
                 chartArea: { width: '100%', height: '100%' },
                 legend: { position: 'none' },
-
                 hAxis: {
                     title: 'Meses',
                 },
                 vAxis: {
                     title: 'Toneladas',
                 },
-
                 backgroundColor: '#f1f8e9'
-
-
             };
-
             var chart = new google.charts.Bar(document.getElementById('chart_ToneladasMes'));
-
             chart.draw(data, google.charts.Bar.convertOptions(options));
         }
+
 
         // Callback that draws the chart .
         function drawMaterialesSedeChart() {
 
-            var pares = @Html.Raw(Json.Encode(Model.DashboardModel.TxS));
+            var jsonDataset = @Html.Raw(Model.DashboardModel.TxS);
+            var statesArray = [["Sede", "Toneladas"]];
+            $.each(jsonDataset, function () {
+                var stateitem = [this.Sede, this.Tons];
+                statesArray.push(stateitem);
+            });
 
-         
 
-            var data = google.visualization.arrayToDataTable([
-                ['Sedes', 'Toneladas'],
-                ['Campus Central', 112],
-                ['Sede Santa Clara', "1170"],
-                ['Recintos San Jose', 660],
-                ['CA Barrio Amon', 1030],
-                ['CTT Zapote', 1030],
-                ['CTTEC San Carlos', 1030],
-                ['Sede Interuniversitaria', 1030],
-                ['Centro Academico Limon', 1030],
-                ['Centro Academico Alajuela', 1030]
-            ]); 
+            var tableData = new google.visualization.arrayToDataTable(statesArray);
+            
+            
 
 
             var options = {
                 title: 'Toneladas por Sede',
                 chartArea: { width: '100%', height: '100%' },
                 legend: { position: 'none' },
-
                 hAxis : {
                     title: 'Sedes',
                 },
                 vAxis: {
                     title: 'Toneladas',
                 },
-
                 backgroundColor: '#f1f8e9'
-
             };
-
             var chart = new google.charts.Bar(document.getElementById('chart_ToneladasSede'));
-
-            chart.draw(data, google.charts.Bar.convertOptions(options));
+            chart.draw(tableData, google.charts.Bar.convertOptions(options));
         }
-
         // Callback that draws the chart .
         function drawUsuariosIntercambiandoMesChart() {
             var data = google.visualization.arrayToDataTable([
@@ -137,7 +109,6 @@
                 ['Nov', @Model.DashboardModel.UsuariosXmes[10] ],
                 ['Dic', @Model.DashboardModel.UsuariosXmes[11] ]
             ]);
-
             var options = {
                 title: 'Personas Obteniendo TEColones por Mes',
                 pointsVisible: true,
@@ -149,11 +120,9 @@
                 },
                 backgroundColor: '#f1f8e9'
             };
-
             var chart = new google.visualization.LineChart(document.getElementById('chart_UsuariosIntercambiando'));
             chart.draw(data, options);
         }
-
         // Callback that draws the chart .
         function drawDineroBeneficiosChart() {
             var data = google.visualization.arrayToDataTable([
@@ -171,7 +140,6 @@
                 ['Nov', @Model.DashboardModel.DineroXbeneficio[10] ],
                 ['Dic', @Model.DashboardModel.DineroXbeneficio[11] ]
             ]);
-
             var options = {
                 title: 'Cantidad de Dinero Otorgado en Beneficios',
                 pointsVisible: true,
@@ -183,31 +151,24 @@
                 },
                 backgroundColor: '#f1f8e9'
             };
-
             var chart = new google.visualization.LineChart(document.getElementById('chart_DineroBeneficios'));
             chart.draw(data, options);
         }
-
-
         //-------------------------------VELOCIMETRO--------------------------------------------
         google.charts.load('current', { 'packages': ['gauge'] });
         google.charts.setOnLoadCallback(drawGauge);
         function drawGauge() {
-
             var data = google.visualization.arrayToDataTable([
                 ['Label', 'Value'],
                 ['', @Model.DashboardModel.ToneladasAnuales]
             ]);
-
             var options = {
                 width: 500, height: 300,
                 greenFrom: 15, greenTo: 20,
                 yellowFrom: 10, yellowTo: 15,
                 max: 20
             };
-
             var chart = new google.visualization.Gauge(document.getElementById('chart_gauge'));
-
             chart.draw(data, options);
         }
             //---------------------------------------------------------------------------------------
@@ -241,61 +202,61 @@
                         <td>1</td>
                         <td>@Model.DashboardModel.Top10[0].FirstName @Model.DashboardModel.Top10[0].LastName</td>
                         <td>@Model.DashboardModel.Top10[0].Id</td>
-                        <td>@Model.DashboardModel.Top10[0].kgRecicled</td>
+                        <td>@Model.DashboardModel.Top10[0].KgRecicled</td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>@Model.DashboardModel.Top10[1].FirstName @Model.DashboardModel.Top10[1].LastName</td>
                         <td>@Model.DashboardModel.Top10[1].Id</td>
-                        <td>@Model.DashboardModel.Top10[1].kgRecicled</td>
+                        <td>@Model.DashboardModel.Top10[1].KgRecicled</td>
                     </tr>
                     <tr>
                         <td>3</td>
                         <td>@Model.DashboardModel.Top10[2].FirstName @Model.DashboardModel.Top10[2].LastName</td>
                         <td>@Model.DashboardModel.Top10[2].Id</td>
-                        <td>@Model.DashboardModel.Top10[2].kgRecicled</td>
+                        <td>@Model.DashboardModel.Top10[2].KgRecicled</td>
                     </tr>
                     <tr>
                         <td>4</td>
                         <td>@Model.DashboardModel.Top10[3].FirstName @Model.DashboardModel.Top10[3].LastName</td>
                         <td>@Model.DashboardModel.Top10[3].Id</td>
-                        <td>@Model.DashboardModel.Top10[3].kgRecicled</td>
+                        <td>@Model.DashboardModel.Top10[3].KgRecicled</td>
                     </tr>
                     <tr>
                         <td>5</td>
                         <td>@Model.DashboardModel.Top10[4].FirstName @Model.DashboardModel.Top10[4].LastName</td>
                         <td>@Model.DashboardModel.Top10[4].Id</td>
-                        <td>@Model.DashboardModel.Top10[4].kgRecicled</td>
+                        <td>@Model.DashboardModel.Top10[4].KgRecicled</td>
                     </tr>
                     <tr>
                         <td>6</td>
                         <td>@Model.DashboardModel.Top10[5].FirstName @Model.DashboardModel.Top10[5].LastName</td>
                         <td>@Model.DashboardModel.Top10[5].Id</td>
-                        <td>@Model.DashboardModel.Top10[5].kgRecicled</td>
+                        <td>@Model.DashboardModel.Top10[5].KgRecicled</td>
                     </tr>
                     <tr>
                         <td>7</td>
                         <td>@Model.DashboardModel.Top10[6].FirstName @Model.DashboardModel.Top10[6].LastName</td>
                         <td>@Model.DashboardModel.Top10[6].Id</td>
-                        <td>@Model.DashboardModel.Top10[6].kgRecicled</td>
+                        <td>@Model.DashboardModel.Top10[6].KgRecicled</td>
                     </tr>
                     <tr>
                         <td>8</td>
                         <td>@Model.DashboardModel.Top10[7].FirstName @Model.DashboardModel.Top10[7].LastName</td>
                         <td>@Model.DashboardModel.Top10[7].Id</td>
-                        <td>@Model.DashboardModel.Top10[7].kgRecicled</td>
+                        <td>@Model.DashboardModel.Top10[7].KgRecicled</td>
                     </tr>
                     <tr>
                         <td>9</td>
                         <td>@Model.DashboardModel.Top10[8].FirstName @Model.DashboardModel.Top10[8].LastName</td>
                         <td>@Model.DashboardModel.Top10[8].Id</td>
-                        <td>@Model.DashboardModel.Top10[8].kgRecicled</td>
+                        <td>@Model.DashboardModel.Top10[8].KgRecicled</td>
                     </tr>
                     <tr>
                         <td>10</td>
                         <td>@Model.DashboardModel.Top10[9].FirstName @Model.DashboardModel.Top10[9].LastName</td>
                         <td>@Model.DashboardModel.Top10[9].Id</td>
-                        <td>@Model.DashboardModel.Top10[9].kgRecicled</td>
+                        <td>@Model.DashboardModel.Top10[9].KgRecicled</td>
                     </tr>
 
 

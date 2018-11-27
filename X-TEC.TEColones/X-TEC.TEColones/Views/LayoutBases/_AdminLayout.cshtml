@@ -16,9 +16,9 @@
                 <div class="col-md-6">
                     <div class="row">
                         <div class="col-md-6"><a class="btn btn-link btn-lg w-100" href="#" id="nombreAdminID"> @Model.FirstName   @Model.LastName </a></div>
-                        <div class="col-md-6"><img class="img-fluid d-block rounded-circle" src="~/Content/Recursos/FotoTest.jpg" width="150" height="150" id="imagenPerfilLayout"></div>
+                        <div class="col-md-6"><img class="img-fluid d-block rounded-circle" src="@Model.Photo"  width="90" height="90" id="imagenPerfilLayout"></div>
                         <div class="col-md-6"></div>
-                        <div class="col-md-6"><a class="btn btn-link" href="#">Cerrar sesion</a></div>
+                        <div class="col-md-6"><a class="btn btn-link" href="@Url.Action("LogIn", "LogIn")">Cerrar sesion</a></div>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     <li class="nav-item mx-2">@Html.ActionLink("Crear Promocion", "CreateSinglePromotion", "Promotion")</li>
                     <li class="nav-item mx-2">@Html.ActionLink("Ver Promociones", "ViewSinglePromotion", "Promotion")</li>
                     <li class="nav-item mx-2">@Html.ActionLink("Reportes", "Index", "Report")</li>
-                    <li class="nav-item mx-2">@Html.ActionLink("Dashboard", "Index", "AdminDashboard")</li>
+                    <li class="nav-item mx-2">@Html.ActionLink("Dashboard", "Dashboard", "AdminDashboard")</li>
                 </ul>
             </div>
         </div>

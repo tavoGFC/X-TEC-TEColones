@@ -23,7 +23,7 @@
                         <div class="col-md-6"><a class="btn btn-link btn-lg w-100" href="#" > @Model.FirstName  @Model.LastName </a></div>  <!--LINK NOMBRE ESTUDIANTE-->
                         <div class="col-md-6"><img class="img-fluid d-block rounded-circle" src="@Model.Photo" width="90" height="90" id="imagenPerfilLayout"></div>  <!-- FOTO PERFIL -->
                         <div class="col-md-6"></div>
-                        <div class="col-md-6"><a class="btn btn-link" href="~/LogIn/LogIn">Cerrar Sesion</a></div>  <!--LINK CERRAR SESION-->
+                        <div class="col-md-6"><a class="btn btn-link" href="@Url.Action("LogIn", "LogIn")"> Cerrar Sesion</a></div>  <!--LINK CERRAR SESION-->
                     </div>
                 </div>
             </div>

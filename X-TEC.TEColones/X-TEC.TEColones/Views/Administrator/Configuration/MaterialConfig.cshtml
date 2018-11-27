@@ -36,13 +36,19 @@
     <div class="py-2">
         <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
-                <a class="nav-link active" href="#">@Html.ActionLink("Tasa de Conversion Material-TEColones ", "MaterialValueConfiguration", "Configuration")</a>
+                <h5><a class="nav-link active" href="#">@Html.ActionLink("Tasa de Conversion Material-TEColones ", "MaterialValueConfiguration", "Configuration")</a></h5>
             </li>
+          &nbsp;
+          &nbsp;
+          &nbsp;
             <li class="nav-item">
-                <a class="nav-link" href="#">@Html.ActionLink(" Tasa de Conversion TEColones - Colones ", "TCSValueConfiguration", "Configuration")</a>
+                <h5><a class="nav-link" href="#">@Html.ActionLink(" Tasa de Conversion TEColones - Colones ", "TCSValueConfiguration", "Configuration")</a></h5>
             </li>
+          &nbsp;
+          &nbsp;
+          &nbsp;
             <li class="nav-item">
-                <a class="nav-link" href="#">@Html.ActionLink(" Cuenta Twitter", "TwitterConfiguration", "Configuration")</a>
+                <h5><a class="nav-link" href="#">@Html.ActionLink(" Cuenta Twitter", "TwitterConfiguration", "Configuration")</a></h5>
             </li>
         </ul>
     </div>
@@ -54,28 +60,24 @@
                     <th>Categoria</th>
                     <th>TEColones por kg</th>
                 </tr>
-                <tr>
-                    <td>Plastico</td>
-                    <td><input type="number" id="inputPlastic" name="inputPlastic" placeholder="@Model.ConfigurationModel.PlasticValue" /></td>
-                </tr>
-                <tr>
-                    <td>Papel</td>
-                    <td><input type="number" id="inputPaper" name="inputPaper" placeholder="@Model.ConfigurationModel.PaperValue" /></td>
-                </tr>
-                <tr>
-                    <td>Vidrio</td>
-                    <td><input type="number" id="inputGlass" name="inputGlass" placeholder="@Model.ConfigurationModel.GlassValue" /></td>
-                </tr>
-                <tr>
-                    <td>Aluminio</td>
-                    <td><input type="number" id="inputAluminum" name="inputAluminum" placeholder="@Model.ConfigurationModel.AluminumValue" /></td>
-                </tr>
+
+                @{
+                    foreach (KeyValuePair<string, float> item in Model.ConfigurationModel.Materials)
+                    {
+                        <tr>
+                            <td>@item.Key</td>
+                            <td><input type="number" id="@item.Key" name="@item.Key" placeholder="@item.Value" /></td>
+                        </tr>
+                    }
+
+                }
+
             </table>
         </div>
         <div class="row justify-content-center">
             <button type="submit" class="btn btn-primary text-center justify-content-center align-items-center w-30">Guardar</button>
             &nbsp;
-            <button type="reset" class="btn btn-outline-secondary text-center justify-content-center align-items-center w-30">Cancelar</button>
+            <button type="reset" class="btn btn-danger text-center justify-content-center align-items-center w-30">Cancelar</button>
         </div>
     }
     <!--</form> -->

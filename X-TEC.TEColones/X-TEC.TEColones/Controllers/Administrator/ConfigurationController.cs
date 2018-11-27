@@ -10,6 +10,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
 {
     public class ConfigurationController : Controller
     {
+        //"Sede:CA Tonelada:120/Sede:CA Tonelada:150/Sede:CA Tonelada:180/Sede:CA Tonelada:190"
         #region MainViewTabsMethods
         /// <summary>
         /// Get page of configuration values of the materials.
@@ -23,6 +24,7 @@ namespace X_TEC.TEColones.Controllers.Administrator
             return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", AdminModel);
         }
 
+        
         /// <summary>
         /// Get page of configuration values of the TCS (second tab).
         /// </summary>
@@ -55,60 +57,20 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult GetNewMaterialTCSValues()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
-            IDictionary<string, string> dict = new Dictionary<string, string>
+            
+            TwitterConnection.SetCredentials();
+            foreach (KeyValuePair<string, float> item in AdminModel.ConfigurationModel.Materials)
             {
-                {"Plastics", Request["inputPlastic"].ToString()},
-                {"Paper", Request["inputPaper"].ToString()},
-                {"Glass", Request["inputGlass"].ToString()},
-                {"Aluminum", Request["inputAluminum"].ToString()}
-            };
-
-            foreach (KeyValuePair<string, string> item in dict)
-            {
-                if (!string.IsNullOrWhiteSpace(item.Value))
-                {
-
-                    DBConnection.InsertNewMaterialTCSValue(float.Parse(item.Value), float.Parse(item.Value), float.Parse(item.Value), float.Parse(item.Value));
-
-                    AdminModel.ConfigurationModel = new ConfigurationViewModel
-                    {
-                        PlasticValue = float.Parse(item.Value),
-                        PaperValue = float.Parse(item.Value),
-                        GlassValue = float.Parse(item.Value),
-                        AluminumValue = float.Parse(item.Value)
-                    };
-
-                    DBConnection.GetTwitterData();
-                    TwitterConnection.Publish("La tasa de cambio del platisco por kg es: " + float.Parse(item.Value) + " TEColones");
-                    TwitterConnection.Publish("La tasa de cambio del papel y carton por kg es: " + float.Parse(item.Value) + " TEColones");
-                    TwitterConnection.Publish("La tasa de cambio del kg de vidro es: " + float.Parse(item.Value) + " TEColones");
-                    TwitterConnection.Publish("La tasa de cambio del kg de aluminio es: " + float.Parse(item.Value) + " TEColones");
-
-                    return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", AdminModel);
+                string newValue = Request[item.Key];
+                if (!string.IsNullOrWhiteSpace(newValue))
+                {                   
+                    string name = item.Key;
+                    DBConnection.InsertNewMaterialTCSValue(name, float.Parse(newValue));
+                    string message = String.Format("La tasa de cambio del material {0} por kg es: {1} TEColones", name, newValue);
+                    TwitterConnection.Publish(message);
                 }
             }
-
-            float PlasticNewValue = float.Parse(Request["inputPlastic"].ToString());
-            float PaperNewValue = float.Parse(Request["inputPaper"].ToString());
-            float GlassNewValue = float.Parse(Request["inputGlass"].ToString());
-            float AluminumNewValue = float.Parse(Request["inputAluminum"].ToString());
-
-            DBConnection.InsertNewMaterialTCSValue(PlasticNewValue, PaperNewValue, GlassNewValue, AluminumNewValue);
-
-            AdminModel.ConfigurationModel = new ConfigurationViewModel
-            {
-                PlasticValue = PlasticNewValue,
-                PaperValue = PaperNewValue,
-                GlassValue = GlassNewValue,
-                AluminumValue = AluminumNewValue
-            };
-
-            DBConnection.GetTwitterData();
-            TwitterConnection.Publish("La tasa de cambio del platisco por kg es: " + PlasticNewValue + " TEColones");
-            TwitterConnection.Publish("La tasa de cambio del papel y carton por kg es: " + PaperNewValue + " TEColones");
-            TwitterConnection.Publish("La tasa de cambio del kg de vidro es: " + GlassNewValue + " TEColones");
-            TwitterConnection.Publish("La tasa de cambio del kg de aluminio es: " + AluminumNewValue + " TEColones");
-
+            DBConnection.GetMaterialTCSValue(AdminModel.ConfigurationModel);
             return View("~/Views/Administrator/Configuration/MaterialConfig.cshtml", AdminModel);           
         }
         #endregion
@@ -123,21 +85,22 @@ namespace X_TEC.TEColones.Controllers.Administrator
         public ActionResult GetNewBenefitsValues()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
-            float NewStudyExchange = float.Parse(Request["inputTCSStudy"].ToString());
-            float NewDinningExchange = float.Parse(Request["inputTCSDinning"].ToString());
+            string NewStudyExchange = Request["inputTCSStudy"];
+            string NewDinningExchange = Request["inputTCSDinning"];
 
-            DBConnection.InsertNewBenefitsValue(NewDinningExchange, NewStudyExchange);
-
-            DBConnection.GetTwitterData();
-            TwitterConnection.Publish("La tasa de cambio de TEColones en el Comedor Intitucional es: " + NewDinningExchange + "colones");
-            TwitterConnection.Publish("La tasa de cambio de TEColones en los Derechos de Estudio (Matricula) es: " + NewStudyExchange + "colones");
-
-
-            AdminModel.ConfigurationModel = new ConfigurationViewModel
+            TwitterConnection.SetCredentials();
+            if (!string.IsNullOrWhiteSpace(NewStudyExchange))
             {
-                StudyExchange = NewStudyExchange,
-                DinningExchange = NewDinningExchange
-            };
+                DBConnection.InsertNewBenefitsValue(float.Parse(NewStudyExchange), "Matricula");
+                TwitterConnection.Publish("La tasa de cambio de TEColones en los Derechos de Estudio (Matricula) es: " + NewStudyExchange + " colones");
+            }
+            if (!string.IsNullOrWhiteSpace(NewDinningExchange))
+            {
+                DBConnection.InsertNewBenefitsValue(float.Parse(NewDinningExchange), "Comedor");
+                TwitterConnection.Publish("La tasa de cambio de TEColones en el Comedor Intitucional es: " + NewDinningExchange + " colones");
+            }
+            
+            DBConnection.GetBenefitsValue(AdminModel.ConfigurationModel);
             return View("~/Views/Administrator/Configuration/TEColonesConfig.cshtml", AdminModel);
         }
         #endregion

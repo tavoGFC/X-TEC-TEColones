@@ -18,6 +18,11 @@ namespace X_TEC.TEColones
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "LogIn", action = "LogIn", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "ChangePassword", 
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "LogIn", action = "ChangePassword", id = UrlParameter.Optional });
         }
     }
 }

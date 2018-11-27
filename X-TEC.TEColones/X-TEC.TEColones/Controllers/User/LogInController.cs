@@ -7,10 +7,11 @@ using X_TEC.TEColones.Models.StudentModels;
 using X_TEC.TEColones.Models.AdminModels;
 using X_TEC.TEColones.Models.SCMModels;
 using X_TEC.TEColones.Persistence;
-
+using System.Web.Security;
 using System.Net.Mail;
 using System.Configuration;
 using System.Text;
+
 
 namespace X_TEC.TEColones.Controllers
 {
@@ -63,6 +64,8 @@ namespace X_TEC.TEColones.Controllers
         /// <returns></returns>
         public ActionResult LogIn(string message)
         {
+            FormsAuthentication.SignOut();
+            TempData.Clear();
             ViewBag.Message = message;
             return View();
         }
@@ -85,6 +88,37 @@ namespace X_TEC.TEColones.Controllers
         {
 
             return View();
+        }
+
+        /// <summary>
+        /// Get View Change Password
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ChangePassword()
+        {
+            Tuple<int, bool> user = (Tuple<int, bool>)TempData["user"];
+            ViewBag.User = user;
+            return View();
+        }
+        
+
+        /// <summary>
+        /// Action Update Password
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UpdatePassword()
+        {
+            Tuple<int, bool> user = (Tuple<int, bool>)TempData["user"];
+            string password = Request["NewPasswordUser"].ToString();
+
+            if (DBConnection.UpdatePassword(user.Item1, password))
+            {
+                return LogInAdminSCM(user.Item1, user.Item2);
+            }
+            ViewBag.Message = "Ha ocurrido un error, vuelva a interarlo por favor";
+            TempData["user"] = user;
+            return RedirectToAction("ChangePassword", "LogIn");
         }
 
         /// <summary>
@@ -117,42 +151,18 @@ namespace X_TEC.TEColones.Controllers
                         TempData["student"] = student;
                         return RedirectToAction("Home", "Home");
                     }
-                    message = "Verifique los datos ingresados son incorrectos";
+                    message = "Verifique que los datos ingresados son incorrectos";
                     break;
 
                 case 2:
                     var user_Id = DBConnection.VerifyAdminSCM(user, password);
+                    if (user.Equals(password) && user_Id.Item1 != 0){
+                        TempData["user"] = user_Id;
+                        return RedirectToAction("ChangePassword", "LogIn");
+                    }
                     if (user_Id.Item1 != 0)
                     {
-                        //admin
-                        if (user_Id.Item2)
-                        {
-                            //falta agregar lo del admin
-                            AdminModel adminModel = new AdminModel()
-                            {
-                                Id = user_Id.Item1,
-                                FirstName = "Genesis",
-                                LastName = "Adam",
-                                
-                            };
-                            TempData["admin"] = adminModel;
-                            return RedirectToAction("Home", "AdminHome");
-                        }
-                        //scm
-                        else
-                        {
-                            SCM scm = DBConnection.GetSCM(user_Id.Item1);
-                            if (scm.PhotoBytes.Count() == 0)
-                            {
-                                scm.Photo = scm.DefaultPhoto();
-                            }
-                            else
-                            {
-                                scm.RenderImage();
-                            }
-                            TempData["scm"] = scm;
-                            return RedirectToAction("Home", "SCMHome");
-                        }
+                        return LogInAdminSCM(user_Id.Item1, user_Id.Item2);
                     }
                     message = "Verifique los datos ingresados son incorrectos";
                     break;
@@ -165,6 +175,46 @@ namespace X_TEC.TEColones.Controllers
         }
 
 
+        /// <summary>
+        /// Login for user admin or scm
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <param name="isAdmin"></param>
+        /// <returns></returns>
+        protected ActionResult LogInAdminSCM(int idUser, bool isAdmin)
+        {
+            //admin
+            if (isAdmin)
+            {
+                AdminModel adminModel = DBConnection.GetAdmin(idUser);
+                if (adminModel.PhotoBytes.Count() == 0)
+                {
+                    adminModel.Photo = adminModel.DefaultPhoto();
+                }
+                else
+                {
+                    adminModel.RenderImage();
+                }
+
+                TempData["admin"] = adminModel;
+                return RedirectToAction("Home", "AdminHome");
+            }
+            //scm
+            else
+            {
+                SCM scm = DBConnection.GetSCM(idUser);
+                if (scm.PhotoBytes.Count() == 0)
+                {
+                    scm.Photo = scm.DefaultPhoto();
+                }
+                else
+                {
+                    scm.RenderImage();
+                }
+                TempData["scm"] = scm;
+                return RedirectToAction("Home", "SCMHome");
+            }
+        }
 
         /// <summary>
         /// Get Page Log In New Password - Verify User in DB
@@ -198,10 +248,10 @@ namespace X_TEC.TEColones.Controllers
                 message = "El numero de usuario que ingresaste no coincide con ninguna cuenta. Regístrate para crear una cuenta.";
             }
             return ForgotPassword(message);
-            
-
-            //return RedirectToAction("LogInNewPassword", "LogIn");
+      
         }
 
     }
+
+
 }
