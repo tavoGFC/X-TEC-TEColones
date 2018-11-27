@@ -303,6 +303,7 @@
     <Content Include="Views\Administrator\Promotion\CreateComboPromotion.cshtml" />
     <Content Include="Views\Administrator\Promotion\ViewComboPromotion.cshtml" />
     <Content Include="Views\LogIn\ChangePassword.cshtml" />
+    <Content Include="Views\LogIn\LogInNewPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\DATIC\" />

@@ -84,9 +84,9 @@ namespace X_TEC.TEColones.Controllers
         /// Return Page LogInNewPassword
         /// </summary>
         /// <returns></returns>
-        public ActionResult LogInNewPassword()
+        public ActionResult LogInNewPassword(string message)
         {
-
+            ViewBag.Message = message;
             return View();
         }
 
@@ -239,6 +239,7 @@ namespace X_TEC.TEColones.Controllers
                     
                     SendEmail(DBemail,"Su contraseña temporal para el sistema TEColones es: " + newPassword);
 
+                    TempData["usrIn"] = user;
                     return RedirectToAction("LogInNewPassword", "LogIn");
                 }
                 message = "Verifique los datos ingresados son incorrectos";
@@ -249,6 +250,73 @@ namespace X_TEC.TEColones.Controllers
             }
             return ForgotPassword(message);
       
+        }
+
+        /// <summary>
+        /// Return Page LogInNewPassword
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult LogInNewPassword()
+        {
+            string tempPswrd = Request["IdTempPswrd"].ToString();
+            string newPswrd = Request["IdNewPswrd"].ToString();
+            string confirmPswrd = Request["IdConfirmPswrd"].ToString();
+
+            string user = TempData["usrIn"].ToString();
+
+            string message = string.Empty;
+
+            if ( !newPswrd.Equals(confirmPswrd) )
+            {
+                message = "Error las contraseñas no coinciden, intente de nuevo";
+                return LogInNewPassword(message);
+            }
+
+            else
+            {
+                
+                int typeUser = DBConnection.ExistUser(user);
+
+                switch (typeUser)
+                {
+                    case 1:
+                        StudentModel student = DBConnection.VerifyStudent(user, tempPswrd);
+                        if (student.Id != 0)
+                        {
+                            if (student.PhotoBytes.Count() == 0)
+                            {
+                                student.Photo = student.DefaultPhoto();
+                            }
+                            else
+                            {
+                                student.RenderImage();
+                            }
+                            TempData["student"] = student;
+                            DBConnection.UpdatePassword(student.Id,confirmPswrd);
+                            return RedirectToAction("Home", "Home");
+                        }
+                        message = "Verifique que los datos ingresados son incorrectos";
+                        break;
+
+                    case 2:
+                        var user_Id = DBConnection.VerifyAdminSCM(user, tempPswrd);
+                        
+                        if (user_Id.Item1 != 0)
+                        {
+                            DBConnection.UpdatePassword(user_Id.Item1, confirmPswrd);
+                            return LogInAdminSCM(user_Id.Item1, user_Id.Item2);
+                        }
+                        message = "Verifique los datos ingresados son incorrectos";
+                        break;
+
+                    case 0:
+                        message = "El numero de usuario que ingresaste no coincide con ninguna cuenta. Regístrate para crear una cuenta.";
+                        break;
+                }
+                return LogInNewPassword(message);
+            }
+            
         }
 
     }

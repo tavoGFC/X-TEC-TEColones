@@ -273,11 +273,11 @@ namespace X_TEC.TEColones.Controllers.Administrator
             //Actualiza valores en pantalla
             AdminModel.PromotionModel.SinglePromoData = allNewPromoValues;
 
-            /*
+        
             //----------------------------------- INSERT INTO DB ---------------------------------------------
-            //DBConnection.UpdateAllSinglePromotion(allNewPromoValues);
+            DBConnection.EditSinglePromotion(AdminModel.PromotionModel);
             //----------------------------------- INSERT INTO DB ---------------------------------------------
-            */
+            
 
             return View("~/Views/Administrator/Promotion/ViewSinglePromotion.cshtml", AdminModel);
         }

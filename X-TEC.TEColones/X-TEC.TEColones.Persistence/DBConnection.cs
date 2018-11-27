@@ -1091,11 +1091,64 @@ namespace X_TEC.TEColones.Persistence
                 Console.WriteLine("Error Getting Data");
             }
         }
-        
+
+
+        /// <summary>
+        /// Edit the TCS values of the single promotion.
+        /// </summary>
+
+
+        public static void EditSinglePromotion(PromotionViewModel Promo)
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                
+
+                foreach (List<string> item in Promo.SinglePromoData)
+                {
+                    SqlCommand command = new SqlCommand("SP_EditSinglePromotion", Connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    int IdPromo = int.Parse(item[0].ToString());
+                    string MaterialName = item[1].ToString();
+                    int AmountMaterial = int.Parse(item[2].ToString());
+                    float ValueTCS = float.Parse(item[3].ToString());
+                    string FinishDate = item[4];
+
+                    int ActiveValue = 0;
+                    if ( item[5].Equals("True"))
+                    {
+                        ActiveValue = 1;
+                    }
+                    
+
+                    command.Parameters.AddWithValue("IdPromo", IdPromo);
+                    command.Parameters.AddWithValue("MaterialName", MaterialName);
+                    command.Parameters.AddWithValue("AmountMaterial", AmountMaterial);
+                    command.Parameters.AddWithValue("ValueTCS", ValueTCS);
+                    command.Parameters.AddWithValue("FinishDate", FinishDate);
+                    command.Parameters.AddWithValue("ActiveValue", ActiveValue);
+                    
+
+                    command.ExecuteNonQuery();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error SP_EditSinglePromotion" + ex.Message);
+            }
+        }
+
         #endregion
-          
-          #region Create New User Admin or SCM
-         public static bool InsertAdminSCM(NewAdminSCM user, int isAdmin)
+
+        #region Create New User Admin or SCM
+        public static bool InsertAdminSCM(NewAdminSCM user, int isAdmin)
         {
             try
             {
