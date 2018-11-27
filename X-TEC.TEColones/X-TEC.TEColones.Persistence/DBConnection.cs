@@ -11,6 +11,7 @@ using System.Web.Configuration;
 using X_TEC.TEColones.Models.StudentModels;
 using X_TEC.TEColones.Models.SCMModels;
 using X_TEC.TEColones.Models.AdminModels;
+using Tweetinvi.Core.Events;
 
 namespace X_TEC.TEColones.Persistence
 {
@@ -283,7 +284,6 @@ namespace X_TEC.TEColones.Persistence
         }
         #endregion
 
-
         #region  StoregeCenterManager
 
         /// <summary>
@@ -388,7 +388,6 @@ namespace X_TEC.TEColones.Persistence
 
         #endregion
 
-
         #region LogIn
 
 
@@ -405,7 +404,6 @@ namespace X_TEC.TEColones.Persistence
                 };
                 command.Parameters.AddWithValue("Identification", identification);
                 command.Parameters.AddWithValue("NewPassword", password);
-                
                 var returnParameter = command.Parameters.Add("@ReturnVal", SqlDbType.Int);
                 returnParameter.Direction = ParameterDirection.ReturnValue;
 
@@ -569,6 +567,7 @@ namespace X_TEC.TEColones.Persistence
         }
 
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -620,14 +619,54 @@ namespace X_TEC.TEColones.Persistence
         #endregion
 
 
-
         #region Configuration
 
+
         /// <summary>
-        /// Get the value in TEColones of the Materials from the database.
+        /// 
         /// </summary>
-        /// <param name="Config"></param>
-        public static void GetMaterialTCSValue(ConfigurationViewModel Config)
+        /// <param name="identification"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public static string VerifyEmail(string identification, string email )
+        {
+            string DBEmail = "0";
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_Verify_Email", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+                command.Parameters.AddWithValue("Identification", identification);
+                command.Parameters.AddWithValue("EmailVerify", email);
+                var reader = command.ExecuteReader();
+                if (reader.Read())
+                {
+                    DBEmail = reader[0].ToString();
+                    //incorrect email or identification if DBEmail == "0"
+                    return DBEmail;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error VerifyEmailStudent " + ex.Message);
+            }
+            return DBEmail;
+        }
+            #endregion
+
+
+
+            #region Configuration
+
+            /// <summary>
+            /// Get the value in TEColones of the Materials from the database.
+            /// </summary>
+            /// <param name="Config"></param>
+            public static void GetMaterialTCSValue(ConfigurationViewModel Config)
         {
             try
             {
@@ -817,8 +856,7 @@ namespace X_TEC.TEColones.Persistence
         }
         #endregion
 
-
-        #region Promotion
+      #region Promotion
 
         /// <summary>
         /// Get the types (names) of the Materials of the database.
@@ -849,19 +887,221 @@ namespace X_TEC.TEColones.Persistence
             }
             Connection.Close();
         }
-        #endregion
 
-
-        #region Create New User Admin or SCM
-
-        public static bool InsertAdminSCM(NewAdminSCM user, int isAdmin)
+        /// <summary>
+        /// Inserts a new single promotion into the database. 
+        /// </summary>
+        /// <param name="AdminModeId"></param>
+        /// <param name="materialType"></param>
+        /// <param name="amountKg"></param>
+        /// <param name="ValueTCS"></param>
+        /// <param name="FinishDate"></param>
+        /// <param name="ActiveValue"></param>
+        public static void InsertNewPromotion(int AdminModeId, float ValueTCS, string FinishDate, int ActiveValue, int SingleProm)
         {
             try
             {
                 Connection.Close();
                 Connection.Open();
 
-                SqlCommand command = new SqlCommand("SP_Insert_AdminSCM", Connection)
+                SqlCommand command = new SqlCommand("SP_InsertNewPromotion", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("AdminModeId", AdminModeId);
+                command.Parameters.AddWithValue("ValueTCS", ValueTCS);
+                command.Parameters.AddWithValue("FinishDate", FinishDate);
+                command.Parameters.AddWithValue("ActiveValue", ActiveValue);
+                command.Parameters.AddWithValue("SingleProm", SingleProm);
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error InsertNewComboPromotion " + ex.Message);
+            }
+
+        }
+
+        /// <summary>
+        /// Gets the id of the newest promotion inserted in the database.
+        /// </summary>
+        /// <param name="Promo"></param>
+        public static void GetNewestIdPromotion(PromotionViewModel Promo)
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SELECT TOP 1 Id, IdAdmin FROM Promotion ORDER BY Id DESC", Connection)
+                {
+                    CommandType = CommandType.Text
+                };
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                string IdPromoString = string.Empty;
+
+                while (reader.Read())
+                {
+                    IdPromoString = reader["Id"].ToString();
+                }
+
+                Promo.LatestIdPromotion = int.Parse(IdPromoString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Getting Data" + ex.Message);
+            }
+            Connection.Close();
+        }
+
+        /// <summary>
+        /// Inserts the materials and the amount of kg of the materials in association to the promotion, into the database. 
+        /// </summary>
+        /// <param name="IdPromo"></param>
+        /// <param name="Material"></param>
+        /// <param name="AmountKg"></param>
+        public static void InsertPromosMaterial(int IdPromo, string Material, int AmountKg) 
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+
+                SqlCommand command = new SqlCommand("SP_InsertNewPromotionsMaterials", Connection)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("IdPromo", IdPromo);
+                command.Parameters.AddWithValue("Material", Material);
+                command.Parameters.AddWithValue("AmountKg", AmountKg);
+
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error InsertNewComboPromotion " + ex.Message);
+            }
+            Connection.Close();
+        }
+       
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Promo"></param>
+        /// <param name="TypePromo"></param>
+        public static void GetPromotion(PromotionViewModel Promo, string TypePromo)
+        {
+            // if combo promotion
+            if (TypePromo.Equals("single"))
+            {
+                try
+                {
+                    Connection.Close();
+                    Connection.Open();
+
+                    SqlCommand command = new SqlCommand("SP_Get_SinglePromotionData", Connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    Promo.SinglePromoData = new List<List<string>>();
+
+                    while (reader.Read())
+                    {
+                        List<string> listPromo = new List<string>();
+
+                        string id = reader["Id"].ToString();
+                        string type = reader["Type"].ToString();
+                        string valueTCS = reader["ValueTCS"].ToString();
+                        string finishDate = reader["FinishDate"].ToString();
+                        string active = reader["Active"].ToString();
+                        string amountMaterial = reader["AmountMaterial"].ToString();
+
+                        listPromo.Add(id);
+                        listPromo.Add(type);
+                        listPromo.Add(amountMaterial);
+                        listPromo.Add(valueTCS);
+                        listPromo.Add(finishDate);
+                        listPromo.Add(active);
+
+                        Promo.SinglePromoData.Add(listPromo);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error Getting Data" + ex.Message);
+                }
+                Connection.Close();
+            }
+            
+            // if combo promotion
+            if (TypePromo.Equals("combo"))
+            {
+                try
+                {
+                    Connection.Close();
+                    Connection.Open();
+
+                    SqlCommand command = new SqlCommand("SP_Get_ComboPromotionData", Connection)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    Promo.ComboPromoData = new List<List<string>>();
+
+                    while (reader.Read())
+                    {
+                        List<string> listPromo = new List<string>();
+
+                        string id = reader["Id"].ToString();
+                        string type = reader["Type"].ToString();
+                        string valueTCS = reader["ValueTCS"].ToString();
+                        string finishDate = reader["FinishDate"].ToString();
+                        string active = reader["Active"].ToString();
+                        string amountMaterial = reader["AmountMaterial"].ToString();
+
+                        listPromo.Add(id);
+                        listPromo.Add(type);
+                        listPromo.Add(amountMaterial);
+                        listPromo.Add(valueTCS);
+                        listPromo.Add(finishDate);
+                        listPromo.Add(active);
+
+                        Promo.ComboPromoData.Add(listPromo);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error Getting Data" + ex.Message);
+                }
+                Connection.Close();
+            }
+            else
+            {
+                Console.WriteLine("Error Getting Data");
+            }
+        }
+        
+        #endregion
+          
+          #region Create New User Admin or SCM
+         public static bool InsertAdminSCM(NewAdminSCM user, int isAdmin)
+        {
+            try
+            {
+                Connection.Close();
+                Connection.Open();
+                 SqlCommand command = new SqlCommand("SP_Insert_AdminSCM", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -880,8 +1120,7 @@ namespace X_TEC.TEColones.Persistence
                     Value = new byte[] {0x0}
                 };
                 command.Parameters.Add(photo);
-
-                var returnParameter = command.Parameters.Add("@ReturnVal", SqlDbType.Int);
+                 var returnParameter = command.Parameters.Add("@ReturnVal", SqlDbType.Int);
                 returnParameter.Direction = ParameterDirection.ReturnValue;
                 command.ExecuteNonQuery();
                 var result = returnParameter.Value;
@@ -889,22 +1128,16 @@ namespace X_TEC.TEColones.Persistence
                 {
                     return true;
                 }
-
-            }
+             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error SP_Insert_AdminSCM " + ex.Message);
             }
             return false;
-
-        }
-
-        #endregion
-
-
-        #region Dashboard Admin
-
-        /// <summary>
+         }
+         #endregion
+         #region Dashboard Admin
+         /// <summary>
         /// 
         /// </summary>
         /// <param name="dashboard"></param>
@@ -915,13 +1148,11 @@ namespace X_TEC.TEColones.Persistence
             {
                 Connection.Close();
                 Connection.Open();
-
-                SqlCommand command = new SqlCommand("SP_Get_TonsMonth", Connection)
+                 SqlCommand command = new SqlCommand("SP_Get_TonsMonth", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
-
-                var reader = command.ExecuteReader();
+                 var reader = command.ExecuteReader();
                 if (reader.Read())
                 {
                     Dictionary<string, float> valueTonsMonth = new Dictionary<string, float>
@@ -952,9 +1183,7 @@ namespace X_TEC.TEColones.Persistence
                 Console.WriteLine("Error GetTonsMonth " + ex.Message);
             }            
         }
-
-
-        /// <summary>
+         /// <summary>
         /// 
         /// </summary>
         /// <param name="dashboard"></param>
@@ -965,13 +1194,11 @@ namespace X_TEC.TEColones.Persistence
             {
                 Connection.Close();
                 Connection.Open();
-
-                SqlCommand command = new SqlCommand("SP_Get_UsersMonth", Connection)
+                 SqlCommand command = new SqlCommand("SP_Get_UsersMonth", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
-
-                var reader = command.ExecuteReader();
+                 var reader = command.ExecuteReader();
                 if (reader.Read())
                 {
                     Dictionary<string, int> valueTonsMonth = new Dictionary<string, int>
@@ -1002,8 +1229,7 @@ namespace X_TEC.TEColones.Persistence
                 Console.WriteLine("Error GetUsersMonth " + ex.Message);
             }
         }
-
-        /// <summary>
+         /// <summary>
         /// 
         /// </summary>
         /// <param name="dashboard"></param>
@@ -1014,13 +1240,11 @@ namespace X_TEC.TEColones.Persistence
             {
                 Connection.Close();
                 Connection.Open();
-
-                SqlCommand command = new SqlCommand("SP_Get_MoneyMonth", Connection)
+                 SqlCommand command = new SqlCommand("SP_Get_MoneyMonth", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
-
-                var reader = command.ExecuteReader();
+                 var reader = command.ExecuteReader();
                 if (reader.Read())
                 {
                     Dictionary<string, float> valueTonsMonth = new Dictionary<string, float>
@@ -1051,9 +1275,7 @@ namespace X_TEC.TEColones.Persistence
                 Console.WriteLine("Error GetMoneyMonth " + ex.Message);
             }
         }
-
-
-        /// <summary>
+         /// <summary>
         /// 
         /// </summary>
         /// <param name="dashboard"></param>
@@ -1064,13 +1286,11 @@ namespace X_TEC.TEColones.Persistence
             {
                 Connection.Close();
                 Connection.Open();
-
-                SqlCommand command = new SqlCommand("SP_Get_TonsPeriod", Connection)
+                 SqlCommand command = new SqlCommand("SP_Get_TonsPeriod", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
-
-                var reader = command.ExecuteReader();
+                 var reader = command.ExecuteReader();
                 if (reader.Read())
                 {
                     dashboard.ToneladasAnuales = float.Parse(reader["Toneladas"].ToString());
@@ -1081,9 +1301,7 @@ namespace X_TEC.TEColones.Persistence
                 Console.WriteLine("Error GetTonsPeriod " + ex.Message);
             }
         }
-
-
-        /// <summary>
+         /// <summary>
         /// 
         /// </summary>
         /// <param name="dashboard"></param>
@@ -1094,13 +1312,11 @@ namespace X_TEC.TEColones.Persistence
             {
                 Connection.Close();
                 Connection.Open();
-
-                SqlCommand command = new SqlCommand("SP_Get_TopStudents", Connection)
+                 SqlCommand command = new SqlCommand("SP_Get_TopStudents", Connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
-
-                var reader = command.ExecuteReader();
+                 var reader = command.ExecuteReader();
                 
                 while (reader.Read())
                 {
@@ -1129,15 +1345,12 @@ namespace X_TEC.TEColones.Persistence
                 Console.WriteLine("Error GetTopStudents " + ex.Message);
             }
         }
-
-
-        public static void GetTonsCampuses(DashboardModel dashboard)
+         public static void GetTonsCampuses(DashboardModel dashboard)
         {
             dashboard.TxS = "[";
             string start = "{";
             string end = "},";
-
-            try
+             try
             {
                 Connection.Close();
                 Connection.Open();
@@ -1146,10 +1359,8 @@ namespace X_TEC.TEColones.Persistence
                 {
                     CommandType = CommandType.StoredProcedure
                 };
-
-                var reader = command.ExecuteReader();
-
-                //"[ {'Sede':'CA','Tons':16} , {'Sede':'SJ','Tons':12}, {'Sede':'SC','Tons':345}]";
+                 var reader = command.ExecuteReader();
+                 //"[ {'Sede':'CA','Tons':16} , {'Sede':'SJ','Tons':12}, {'Sede':'SC','Tons':345}]";
                 while (reader.Read())
                 {                    
                     string Tons = reader[0].ToString();
@@ -1158,14 +1369,13 @@ namespace X_TEC.TEColones.Persistence
                     dashboard.TxS += start + item + end;
                 }
                 dashboard.TxS += "]";
-
-            }
+             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error GetTopStudents " + ex.Message);
             }
         }
-        #endregion    
-
+        #endregion
+        
     }
 }

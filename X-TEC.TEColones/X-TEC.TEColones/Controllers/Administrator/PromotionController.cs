@@ -11,6 +11,11 @@ namespace X_TEC.TEColones.Controllers.Administrator
     public class PromotionController : Controller
     {
         #region MainViewTabsMethods
+
+        /// <summary>
+        /// Gets the page of creating new single promotions. 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateSinglePromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
@@ -19,40 +24,269 @@ namespace X_TEC.TEColones.Controllers.Administrator
             return View("~/Views/Administrator/Promotion/CreateSinglePromotion.cshtml", AdminModel);
         }
 
+        /// <summary>
+        /// Gets the page of creating new combo promotions. 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreateComboPromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
+            AdminModel.PromotionModel = new PromotionViewModel();
+            DBConnection.GetMaterialType(AdminModel.PromotionModel);
             return View("~/Views/Administrator/Promotion/CreateComboPromotion.cshtml", AdminModel);
         }
 
+        /// <summary>
+        /// Gets the page of viewing all the single promotions created, retrieved from the database. 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ViewSinglePromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
+            AdminModel.PromotionModel = new PromotionViewModel();
+            DBConnection.GetPromotion(AdminModel.PromotionModel, "single");
+            DBConnection.GetMaterialType(AdminModel.PromotionModel);
             return View("~/Views/Administrator/Promotion/ViewSinglePromotion.cshtml", AdminModel);
         }
 
+        /// <summary>
+        /// Gets the page of viewing all the combo promotions created, retrieved from the database. 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ViewComboPromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
+            AdminModel.PromotionModel = new PromotionViewModel();
+            DBConnection.GetPromotion(AdminModel.PromotionModel, "combo");
             return View("~/Views/Administrator/Promotion/ViewComboPromotion.cshtml", AdminModel);
         }
         #endregion
 
-        #region NewSinglePromotionMethods
+        #region NewPromotionMethods
 
+        /// <summary>
+        /// Gets the information of a new single promotion and send it to the database. 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult NewSinglePromotion()
         {
             AdminModel AdminModel = (AdminModel)TempData["admin"];
-            return View("~/Views/Administrator/Promotion/CreateSinglePromotion.cshtml",AdminModel); 
+
+            // get the type of material
+            string materialType = Request["materialType"].ToString();
+
+            // get the amount of kg of the material
+            int amountKg = int.Parse(Request["inputAmountKg"].ToString());
+
+            // get the value of tcs of the promotion
+            float valueTCS = float.Parse(Request["inputValueTCS"].ToString());
+
+            // get the datetime of the promotion
+            string finishDate = Request["inputFinishDate"].ToString();
+
+            // value of the active state of the promotion: 1=active, 0=notactive; by default is 0
+            int activeValue = 0;
+
+            // if the user wants the promotion to be active and publish now, else not
+            if (Request["publish"] != null && Request["save"] == null)
+            {
+                activeValue = 1;
+            }
+
+            // if the user let one option blank is shown a message
+            if (Request["publish"] == null && Request["save"] == null)
+            {
+                ViewBag.Msj = "Se debe seleccionar si desea Activar o Almacenar.";
+            }
+
+            // if the user wants the promotion to be save and ketp for later
+            if (Request["publicar"] == null && Request["almacenar"] != null)
+            {
+                activeValue = 0;
+            }
+
+            // send the information to the database
+            DBConnection.InsertNewPromotion(AdminModel.Id, valueTCS, finishDate, activeValue, 1);
+            DBConnection.GetNewestIdPromotion(AdminModel.PromotionModel);
+            int IdPromotion = AdminModel.PromotionModel.LatestIdPromotion;
+            DBConnection.InsertPromosMaterial(IdPromotion, materialType, amountKg);
+
+            // if the promotion is active, make it a tweet
+            if (activeValue == 1)
+            {
+                TwitterConnection.SetCredentials();
+                TwitterConnection.Publish(
+                    "Hay una nueva promocion de: " + valueTCS + " TEColones. Consiste en entregar: " +
+                    amountKg + " kg de " + materialType +". La promocion es valida hasta: " + finishDate
+                );
+            }
+            return View("~/Views/Administrator/Promotion/CreateSinglePromotion.cshtml", AdminModel);
+        }
+
+        /// <summary>
+        /// Gets the information of a new combo promotion and send it to the database. 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult NewComboPromotion()
+        {
+            AdminModel AdminModel = (AdminModel)TempData["admin"];
+
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+
+            // checks the value of the inputs: name, amount of kg, the checkbox
+            foreach (var item in AdminModel.PromotionModel.ListMaterials)
+            {
+                string materialType = item; // which type of material is, the name of the material
+                string amountKg = Request[item]; // the amount, float, of kg of the material
+                string checkBox = Request["checkbox " + item]; // the value of the checkbox
+
+                if (amountKg != " " && checkBox != null)
+                {
+                    int amountKgInt = int.Parse(amountKg); // converts the string type of amount to float for the sending it to the database
+                    dict.Add(materialType, amountKgInt);
+                }
+                else {
+                    continue;
+                }
+            }
+
+            // to be a combo at least must be two materials, else proceed to choose again. 
+            if (dict.Count < 2)
+            {
+                ViewBag.Msj = "Para crear una PromocionCombo minimo son dos materiales. Si desea solo un material, proceda a la seccion de Promo Individual.";
+            }
+
+            // checks and gets the value of the tcs and the datetime of it
+            float valueTCS = float.Parse(Request["inputValueTCS"]);
+            string finishDate = Request["inputFinishDate"].ToString();
+
+            // value of the active state of the promotion: 1=active, 0=notactive; by default is 0
+            int activeValue = 0;
+
+            // if the user wants the promotion to be active and publish now, else not
+            if(Request["publish"] != null && Request["save"] == null)
+            {
+                activeValue = 1;
+            }
+
+            // if the user let one option blank is shown a message
+            if (Request["publish"] == null && Request["save"] == null)
+            {
+                ViewBag.Msj = "Se debe seleccionar si desea Activar o Almacenar.";
+            }
+            
+            // if the user wants the promotion to be save and ketp for later
+            if (Request["publicar"] == null && Request["almacenar"] != null)
+            {
+                activeValue = 0;
+            }
+
+            // send the information to the database
+            DBConnection.InsertNewPromotion(AdminModel.Id, valueTCS, finishDate, activeValue, 0);
+            DBConnection.GetNewestIdPromotion(AdminModel.PromotionModel);
+            int IdPromotion = AdminModel.PromotionModel.LatestIdPromotion;
+
+            foreach (var item in dict)
+            {
+                DBConnection.InsertPromosMaterial(IdPromotion, item.Key, item.Value);
+            }
+
+            // if the promotion is active, make it a tweet
+            if (activeValue == 1)
+            {
+                TwitterConnection.SetCredentials();
+                TwitterConnection.Publish("Hay una nueva Promocion en Combo de: " + valueTCS + " TEColones. Consiste en entregar: ");
+                foreach (var item in dict)
+                {
+                    TwitterConnection.Publish("Entregar " + item.Value + " kg " + " de " + item.Key);
+                }
+                TwitterConnection.Publish("La promocion es valida hasta: " + finishDate);
+            }
+            
+            return View("~/Views/Administrator/Promotion/CreateComboPromotion.cshtml", AdminModel);
         }
         #endregion
 
-        #region NewComboPromotionMethods
-        public ActionResult NewComboPromotion()
+        #region EditPromosMethods
+
+        /// <summary>
+        /// Reads and gets all the data of the view's input of the single promotions. 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult EditSinglePromotion()
         {
-            return View("~/Views/Administrator/Promotion/CreateSinglePromotion.cshtml");
+            AdminModel AdminModel = (AdminModel)TempData["admin"];
+            DBConnection.GetPromotion(AdminModel.PromotionModel, "single");
+
+            List<List<string>> allNewPromoValues = new List<List<string>>();
+
+            foreach(List<string> item in AdminModel.PromotionModel.SinglePromoData)
+            {
+                //List<string> actualItemItem = item;
+                //int conti = 0;
+
+                //por cada fila en la tabla 
+                List<string> row = item;
+
+                //agrega el id a la subList(temporal)
+                List<string> subList = new List<string>
+                {
+                    row[0]
+                };
+
+                //borra el id, porque ese no se edita
+                row.Remove(row[0]);
+
+                //cada valor en la fila (menos el id)
+                foreach (string data in row)
+                {
+                    string id = "id-" + subList[0];
+
+                    //input
+                    string inputValueRow = Request[id + data].ToString();
+
+                    //si el input esta limpio inserta el original
+                    //sino inserta el nuevo
+                    if (!string.IsNullOrWhiteSpace(inputValueRow))
+                    {
+                        subList.Add(inputValueRow);
+                    }
+                    else
+                    {
+                        subList.Add(data);
+                    }
+                }
+                //string inputValue = Request[actualItemItem[conti].ToString()].ToString();
+
+                //List<string> subList = new List<string>
+                //{
+                //    inputValue
+                //};
+
+                //conti++;
+
+                //valores nuevos de todas la promociones
+                allNewPromoValues.Add(subList);
+            }
+
+
+            //Actualiza valores en pantalla
+            AdminModel.PromotionModel.SinglePromoData = allNewPromoValues;
+
+            /*
+            //----------------------------------- INSERT INTO DB ---------------------------------------------
+            //DBConnection.UpdateAllSinglePromotion(allNewPromoValues);
+            //----------------------------------- INSERT INTO DB ---------------------------------------------
+            */
+
+            return View("~/Views/Administrator/Promotion/ViewSinglePromotion.cshtml", AdminModel);
         }
 
+        public ActionResult EditComboPromotion()
+        {
+            AdminModel AdminModel = (AdminModel)TempData["admin"];
+            return View("~/Views/Administrator/Promotion/ViewComboPromotion.cshtml", AdminModel);
+        }
         #endregion
     }
 }

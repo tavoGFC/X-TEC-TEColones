@@ -38,9 +38,15 @@
             <li class="nav-item">
                 <h5><a class="nav-link active" href="#">@Html.ActionLink("Tasa de Conversion Material-TEColones ", "MaterialValueConfiguration", "Configuration")</a></h5>
             </li>
+          &nbsp;
+          &nbsp;
+          &nbsp;
             <li class="nav-item">
                 <h5><a class="nav-link" href="#">@Html.ActionLink(" Tasa de Conversion TEColones - Colones ", "TCSValueConfiguration", "Configuration")</a></h5>
             </li>
+          &nbsp;
+          &nbsp;
+          &nbsp;
             <li class="nav-item">
                 <h5><a class="nav-link" href="#">@Html.ActionLink(" Cuenta Twitter", "TwitterConfiguration", "Configuration")</a></h5>
             </li>
@@ -54,6 +60,7 @@
                     <th>Categoria</th>
                     <th>TEColones por kg</th>
                 </tr>
+
                 @{
                     foreach (KeyValuePair<string, float> item in Model.ConfigurationModel.Materials)
                     {
@@ -64,6 +71,7 @@
                     }
 
                 }
+
             </table>
         </div>
         <div class="row justify-content-center">

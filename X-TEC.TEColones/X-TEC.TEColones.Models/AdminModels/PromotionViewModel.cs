@@ -9,19 +9,17 @@ namespace X_TEC.TEColones.Models.AdminModels
 {
     public class PromotionViewModel
     {
-        public string Materials { get; set; }
+        // for single promos
+        public List<List<String>> SinglePromoData { get; set; }
 
-        public List<string> ListMaterials { get; set; }
+        // for combos promos
+        public List<List<String>> ComboPromoData { get; set; }
 
-        public List<string> ComboMaterials { get; set; }
+        // for code utilities
+        public int LatestIdPromotion { get; set; } // to get the newest id for the transactions
 
-        public bool Condition { get; set; }
-
-        public float TCSValue { get; set; }
-
-        public string InitialDate { get; set; }
-
-        public string FinalDate { get; set; }
-
+        public List<string> ListMaterials { get; set; } // to show in the dropdown list view
     }
+
+    
 }

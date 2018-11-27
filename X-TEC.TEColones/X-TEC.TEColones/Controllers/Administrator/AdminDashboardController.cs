@@ -42,7 +42,5 @@ namespace X_TEC.TEColones.Controllers.Administrator
             return View("~/Views/Administrator/AdminDashboard/Dashboard.cshtml", AdminModel);
 
         }     
-
-        
     }
 }
