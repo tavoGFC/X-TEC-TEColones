@@ -33,6 +33,6 @@ namespace X_TEC.TEColones.Models.StudentModels
 
         public HomeViewModel HomeVM { get; set; }
 
-        
+        public int kgRecicled { get; set; }
     }
 }
